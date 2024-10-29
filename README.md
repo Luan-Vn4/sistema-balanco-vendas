@@ -1,5 +1,8 @@
-# Escreva aqui o tema da equipe, por exemplo (App Universo, App Animais, App Comidas)
+# Sistema de balanço de vendas
+Sistema busca fazer um balanço dos ganhos e despesas de uma organização de vendas. Ganhos: Parcerias e Vendas; Despesas: Reabastecimento e Local
 
-## Desenolvedores
+## Desenvolvedores
 
-- Seu nome completo aqui;
+- Erick Vinícius Bezerra Martins
+- Ana Beatriz de Oliveira Cavalcanti;
+- Melissa Rêgo Rodrigues;

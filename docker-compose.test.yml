@@ -3,4 +3,4 @@ services:
     container_name: test-sistema-balanco-vendas
     build:
       context: .
-      dockerfile: ./Dockerfile-test
+      dockerfile: ./Dockerfile.test

@@ -70,11 +70,11 @@ if (session.getAttribute("user") != null) {
 					<td scope="col">Coloque aqui sua entidade de trabalho</td>
 					<td scope="col">Coloque aqui sua regra de negócio</td>
 				</tr>
-			<tr>
-				<td scope="col">Ana Beatriz de Oliveira Cavalcanti</th>
-				<td scope="col">Local</th>
-				<td scope="col">Lógica de Despesas</th>
-			</tr>
+				<tr>
+					<td scope="col">Ana Beatriz de Oliveira Cavalcanti</th>
+					<td scope="col">Local</th>
+					<td scope="col">Lógica de Despesas</th>
+				</tr>
 			<tbody>
 			</tbody>
 		</table>

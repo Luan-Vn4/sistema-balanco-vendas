@@ -1,0 +1,16 @@
+name: Integração Contínua (CI)
+
+on:
+  push:
+    branches: [ develop, anaOliveira ]
+  pull_request:
+    branches: [ develop, anaOliveira ]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+      - name: Buildar e executar testes
+        run: docker compose -f docker-compose.test.yml up --build

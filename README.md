@@ -3,7 +3,5 @@
 ## Desenvolvedores
 
 - Erick Vinícius Bezerra Martins
+- Ana Beatriz de Oliveira Cavalcanti;
 
-atualizar o .gitignore
-
-atualizar o about.jsp

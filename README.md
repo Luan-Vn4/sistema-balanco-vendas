@@ -3,6 +3,7 @@ Sistema busca fazer um balanço dos ganhos e despesas de uma organização de ve
 
 ## Desenvolvedores
 
+- Luan Vilaça Nogueira: Vendas;
 - Erick Vinícius Bezerra Martins: Parcerias;
 - Ana Beatriz de Oliveira Cavalcanti: Local;
 - Melissa Rêgo Rodrigues: Reabastecimento;

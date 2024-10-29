@@ -57,14 +57,23 @@ if (session.getAttribute("user") != null) {
 				</tr>
 			</thead>
 				<tr>
-					<td scope="col">Ewerton Mendonça</th>
-					<td scope="col">Users</th>
-					<td scope="col">Autenticação</th>
+					<td scope="col">Ewerton Mendonça</td>
+					<td scope="col">Users</td>
+					<td scope="col">Autenticação</td>
 				</tr>
 				<tr>
-					<td scope="col">Coloque aqui seu nome</th>
+					<td scope="col">Melissa Rêgo Rodrigues</th>
 					<td scope="col">Coloque aqui sua entidade de trabalho</th>
-					<td scope="col">Coloque aqui sua regra de negócio</th>
+					<td scope="col">Coloque aqui sua regra de negócio</th></tr>
+				<tr>
+					<td scope="col">Erick Vinícius Bezerra Martins</td>
+					<td scope="col">Coloque aqui sua entidade de trabalho</td>
+					<td scope="col">Coloque aqui sua regra de negócio</td>
+				</tr>
+				<tr>
+					<td scope="col">Ana Beatriz de Oliveira Cavalcanti</th>
+					<td scope="col">Local</th>
+					<td scope="col">Lógica de Despesas</th>
 				</tr>
 			<tbody>
 			</tbody>

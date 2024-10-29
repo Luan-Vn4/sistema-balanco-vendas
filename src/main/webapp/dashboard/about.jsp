@@ -62,6 +62,10 @@ if (session.getAttribute("user") != null) {
 					<td scope="col">Autenticação</td>
 				</tr>
 				<tr>
+                    <td scope="col">Coloque aqui seu nome</th>
+					<td scope="col">Coloque aqui sua entidade de trabalho</th>
+					<td scope="col">Coloque aqui sua regra de negócio</th></tr>
+				<tr>
 					<td scope="col">Erick Vinícius Bezerra Martins</td>
 					<td scope="col">Coloque aqui sua entidade de trabalho</td>
 					<td scope="col">Coloque aqui sua regra de negócio</td>
@@ -84,7 +88,7 @@ if (session.getAttribute("user") != null) {
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 		crossorigin="anonymous">
-		
+
 	</script>
 </body>
 </html>

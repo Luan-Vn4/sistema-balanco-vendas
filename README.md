@@ -3,3 +3,4 @@
 ## Desenolvedores
 
 - Seu nome completo aqui;
+- Ana Beatriz de Oliveira Cavalcanti;

@@ -2,9 +2,9 @@ name: Integração Contínua (CI)
 
 on:
   push:
-    branches: [develop]
+    branches: [develop, luanvn]
   pull_request:
-    branches: [develop]
+    branches: [develop, luanvn]
 
 jobs:
   build-test:

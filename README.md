@@ -1,5 +1,9 @@
-# Escreva aqui o tema da equipe, por exemplo (App Universo, App Animais, App Comidas)
+# Sistema Balanço de Vendas
 
-## Desenolvedores
+## Desenvolvedores
 
-- Seu nome completo aqui;
+- Erick Vinícius Bezerra Martins
+
+atualizar o .gitignore
+
+atualizar o about.jsp

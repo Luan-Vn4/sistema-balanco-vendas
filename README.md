@@ -2,6 +2,10 @@
 
 ## Desenvolvedores
 
-- Erick Vinícius Bezerra Martins
-- Ana Beatriz de Oliveira Cavalcanti;
+- Erick Vinícius Bezerra Martins: Parcerias;
+- Ana Beatriz de Oliveira Cavalcanti: Local;
+
+## Render
+
+- Link da página do cliente:
 

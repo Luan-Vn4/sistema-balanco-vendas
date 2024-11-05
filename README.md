@@ -1,10 +1,11 @@
-# Sistema de balanço de vendas
-Sistema busca fazer um balanço dos ganhos e despesas de uma organização de vendas. Ganhos: Parcerias e Vendas; Despesas: Reabastecimento e Local
+# Sistema Escolar
 
 ## Desenvolvedores
 
 - Luan Vilaça Nogueira: Vendas;
-- Erick Vinícius Bezerra Martins: Parcerias;
+
+- Erick Vinícius Bezerra Martins: Aluno;
+
 - Ana Beatriz de Oliveira Cavalcanti: Local;
 - Melissa Rêgo Rodrigues: Reabastecimento;
 
@@ -21,4 +22,11 @@ Sistema busca fazer um balanço dos ganhos e despesas de uma organização de ve
 - atualizar página Sobre com seu nome
 - atualizar o README com as demandas prontas
 
+### Semana 1 - Erick
+- atualizar o .gitignore
+- atualizar o about.jsp
+
 ### Semana 2 - Melissa
+
+### Semana 2 - Erick
+

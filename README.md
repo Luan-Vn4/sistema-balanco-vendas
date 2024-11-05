@@ -1,9 +1,29 @@
-# Sistema Balanço de Vendas
+# Sistema Escolar
 
 ## Desenvolvedores
 
-- Erick Vinícius Bezerra Martins
+- Luan Vilaça Nogueira: Vendas;
+- Erick Vinícius Bezerra Martins: Aluno;
+- Ana Beatriz de Oliveira Cavalcanti: Local;
+- Melissa Rêgo Rodrigues: Reabastecimento;
 
-atualizar o .gitignore
+## Render
 
-atualizar o about.jsp
+- Link da página do cliente: https://balanco-sistema.onrender.com
+
+
+## Demandas realizadas
+### Semana 1 - Melissa
+- atualizar o .gitgnore
+- estrutura de branchs
+- github actions
+- atualizar página Sobre com seu nome
+- atualizar o README com as demandas prontas
+
+### Semana 2 - Erick
+- atualizar o .gitignore
+- atualizar o about.jsp
+
+### Semana 2 - Melissa
+
+### Semana 2 - Erick

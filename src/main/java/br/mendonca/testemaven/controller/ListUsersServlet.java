@@ -25,12 +25,12 @@ public class ListUsersServlet extends HttpServlet {
 			UserService service = new UserService();
 			List<UserDTO> lista = service.listAllUsers();
 			
-			// Anexa ‡ requisiÁ„o um objeto ArrayList e despacha a requisiÁ„o para uma JSP.
+			// Anexa √† requisi√ß√£o um objeto ArrayList e despacha a requisi√ß√£o para uma JSP.
 			request.setAttribute("lista", lista);
 			request.getRequestDispatcher("list-users.jsp").forward(request, response);
 		} catch (Exception e) {
-			// Escreve as mensagens de Exception em uma p·gina de resposta.
-			// N„o apagar este bloco.
+			// Escreve as mensagens de Exception em uma p√°gina de resposta.
+			// N√£o apagar este bloco.
 			StringWriter sw = new StringWriter();
 			PrintWriter pw = new PrintWriter(sw);
 			e.printStackTrace(pw);
@@ -51,8 +51,8 @@ public class ListUsersServlet extends HttpServlet {
 		PrintWriter page = response.getWriter();
 		
 		try {
-			// A programaÁ„o do servlet deve ser colocada neste bloco try.
-			// Apague o conte˙do deste bloco try e escreva seu cÛdigo.
+			// A programa√ß√£o do servlet deve ser colocada neste bloco try.
+			// Apague o conte√∫do deste bloco try e escreva seu c√≥digo.
 			String parametro = request.getParameter("nomeparametro");
 			
 			page.println("Parametro: " + parametro);
@@ -60,8 +60,8 @@ public class ListUsersServlet extends HttpServlet {
 			
 			
 		} catch (Exception e) {
-			// Escreve as mensagens de Exception em uma p·gina de resposta.
-			// N„o apagar este bloco.
+			// Escreve as mensagens de Exception em uma p√°gina de resposta.
+			// N√£o apagar este bloco.
 			StringWriter sw = new StringWriter();
 			PrintWriter pw = new PrintWriter(sw);
 			e.printStackTrace(pw);

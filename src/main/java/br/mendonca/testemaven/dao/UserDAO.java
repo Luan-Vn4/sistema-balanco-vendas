@@ -59,7 +59,7 @@ public class UserDAO {
 		PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?");
 		ps.setString(1, email);
 		ps.setString(2, password);
-		System.out.println(ps); // Exibe no console do Docker a query j� montada.
+		System.out.println(ps); // Exibe no console do Docker a query j montada.
 		
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
@@ -76,13 +76,13 @@ public class UserDAO {
 		return user;
 	}
 
-	// TODO: N�o testado
+	// TODO: No testado
 	public List<User> search(String name) throws ClassNotFoundException, SQLException {
 		ArrayList<User> lista = new ArrayList<User>();
 		
 		Connection conn = ConnectionPostgres.getConexao();
 		conn.setAutoCommit(true);
-		
+
 		// Apesar de qualquer SQL funcionar com Statement, a abordagem de usar Prepared Statement evita SQL Injection.
 		PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE ? LIKE LOWER(?) || LOWER(name) || '%'");
 		ps.setString(1, name);

@@ -37,7 +37,7 @@ public class LogonServlet extends HttpServlet {
 				response.sendRedirect("/dashboard/dashboard.jsp");
 			}
 			
-			request.setAttribute("msg", "E-mail ou senha inv·lida.");
+			request.setAttribute("msg", "E-mail ou senha inv√°lida.");
 			request.getRequestDispatcher("//index.jsp").forward(request, response);
 			
 		} catch (Exception e) {

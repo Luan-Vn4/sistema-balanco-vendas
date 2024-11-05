@@ -34,7 +34,7 @@ public class InstallService {
 	}
 
 	public void deleteProfessoresTable() throws ClassNotFoundException, SQLException {
-		statement("DROP TABLE IF EXISTS professores");
+		statement("DROP TABLE IF EXISTS professores CASCADE");
 	}
 
 	public void createProfessoresTable() throws ClassNotFoundException, SQLException {
@@ -47,7 +47,7 @@ public class InstallService {
 	}
 
     public void deleteAlunoTable() throws ClassNotFoundException, SQLException {
-        statement("DROP TABLE IF EXISTS alunos");
+        statement("DROP TABLE IF EXISTS alunos CASCADE");
     }
 
     public void createAlunoTable() throws ClassNotFoundException, SQLException {
@@ -59,7 +59,7 @@ public class InstallService {
     }
 
     public void deleteCursoTable() throws ClassNotFoundException, SQLException {
-        statement("DROP TABLE IF EXISTS cursos");
+        statement("DROP TABLE IF EXISTS cursos CASCADE");
     }
 
     public void createCursoTable() throws ClassNotFoundException, SQLException {
@@ -69,7 +69,7 @@ public class InstallService {
             + "    media_mec DOUBLE PRECISION,"
             + "    is_ativo BOOLEAN,"
             + "    user_uuid UUID,"
-            + "    FOREIGN KEY (user_uuid) REFERENCES users(uuid)"
+            + "    FOREIGN KEY (user_uuid) REFERENCES users(uuid) ON DELETE SET NULL"
             + ")");
     }
 

@@ -1,5 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%--@elvariable id="userUuid" type="java.util.UUID"--%>
+<%-- Imprime o UUID do usuário para depuração --%>
+<% String userUuid = (String) request.getAttribute("userUuid"); %>
+<% System.out.println("UUID do usuário: " + userUuid); %>
+
 <html lang="pt-br" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">

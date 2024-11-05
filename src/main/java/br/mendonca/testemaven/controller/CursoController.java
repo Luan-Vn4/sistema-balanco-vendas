@@ -28,11 +28,13 @@ public class CursoController extends HttpServlet {
             return;
         }
 
+        String userUuidStr = req.getParameter("user-uuid");
+        System.out.println("UUID do usuário recebido: " + userUuidStr);
+
         Map<String, String[]> params = req.getParameterMap();
         if (params.isEmpty() || !params.containsKey("nome") || !params.containsKey("mediaMec") ||
                 !params.containsKey("isAtivo") || !params.containsKey("user-uuid")) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "É necessário enviar todos os dados necessários");
-            return;
         }
 
         Curso curso = new Curso();
@@ -90,7 +92,7 @@ public class CursoController extends HttpServlet {
     private void getAll(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             List<Curso> cursos = cursoService.listAllCurso();
-            req.setAttribute("curso", cursos);
+            req.setAttribute("cursos", cursos);
             getServletContext().getRequestDispatcher("/cursos/listar-cursos.jsp").forward(req, resp);
         } catch (Exception e) {
             logger.log(Level.SEVERE , e.getMessage(), e);

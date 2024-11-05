@@ -23,6 +23,10 @@ Sistema busca fazer um balanço dos ganhos e despesas de uma organização de ve
 ### Semana 1 - Erick
 - atualizar o .gitignore
 - atualizar o about.jsp
+- estrutura de branchs
+- github actions
+- atualizar pagina about com meu nome
+- atualizar README com demandas
 
 ### Semana 1 - Ana
 - atualizar o .gitgnore

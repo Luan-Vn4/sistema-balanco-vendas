@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.util.UUID;
 
 public class UserTest {
 	
@@ -19,10 +20,10 @@ public class UserTest {
 	@Test
 	@DisplayName("Configurando o UUID")
 	void testUUID() {
-		String UUID = "1";
-		user.setUuid(UUID);
-		
-		assertEquals(UUID, user.getUuid(), "O UUID configurado no objeto User não é o mesmo retornado.");
+		UUID uuid = UUID.randomUUID();
+		user.setUuid(uuid);
+
+		assertEquals(uuid, user.getUuid(), "O UUID configurado no objeto User não é o mesmo retornado.");
 		assertNotEquals("11", user.getUuid(), "O UUID configurado no objeto User deveria apresentar erro.");
 	}
 

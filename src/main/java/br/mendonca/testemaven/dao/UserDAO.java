@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import br.mendonca.testemaven.model.entities.User;
 
@@ -35,7 +36,7 @@ public class UserDAO {
 		
 		while (rs.next()) {
 			User user = new User();
-			user.setUuid(rs.getString("uuid"));
+			user.setUuid((UUID) rs.getObject("uuid"));
 			user.setName(rs.getString("name"));
 			user.setEmail(rs.getString("email"));
 			user.setPassword(rs.getString("password"));
@@ -64,7 +65,7 @@ public class UserDAO {
 		if (rs.next()) {
 			
 			user = new User();
-			user.setUuid(rs.getString("uuid"));
+			user.setUuid((UUID) rs.getObject("uuid"));
 			user.setName(rs.getString("name"));
 			user.setEmail(rs.getString("email"));
 			user.setPassword(rs.getString("password"));
@@ -90,7 +91,7 @@ public class UserDAO {
 		
 		if (rs.next()) {
 			User user = new User();
-			user.setUuid(rs.getString("uuid"));
+			user.setUuid((UUID) rs.getObject("uuid"));
 			user.setName(rs.getString("name"));
 			user.setEmail(rs.getString("email"));
 			user.setPassword(rs.getString("password"));

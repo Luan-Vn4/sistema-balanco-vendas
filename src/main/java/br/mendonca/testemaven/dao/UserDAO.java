@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import br.mendonca.testemaven.model.entities.User;
 
@@ -35,7 +36,7 @@ public class UserDAO {
 		
 		while (rs.next()) {
 			User user = new User();
-			user.setUuid(rs.getString("uuid"));
+			user.setUuid((UUID) rs.getObject("uuid"));
 			user.setName(rs.getString("name"));
 			user.setEmail(rs.getString("email"));
 			user.setPassword(rs.getString("password"));
@@ -58,13 +59,13 @@ public class UserDAO {
 		PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE email = ? AND password = ?");
 		ps.setString(1, email);
 		ps.setString(2, password);
-		System.out.println(ps); // Exibe no console do Docker a query já montada.
+		System.out.println(ps); // Exibe no console do Docker a query jï¿½ montada.
 		
 		ResultSet rs = ps.executeQuery();
 		if (rs.next()) {
 			
 			user = new User();
-			user.setUuid(rs.getString("uuid"));
+			user.setUuid((UUID) rs.getObject("uuid"));
 			user.setName(rs.getString("name"));
 			user.setEmail(rs.getString("email"));
 			user.setPassword(rs.getString("password"));
@@ -75,7 +76,7 @@ public class UserDAO {
 		return user;
 	}
 
-	// TODO: Não testado
+	// TODO: Nï¿½o testado
 	public List<User> search(String name) throws ClassNotFoundException, SQLException {
 		ArrayList<User> lista = new ArrayList<User>();
 		
@@ -90,7 +91,7 @@ public class UserDAO {
 		
 		if (rs.next()) {
 			User user = new User();
-			user.setUuid(rs.getString("uuid"));
+			user.setUuid((UUID) rs.getObject("uuid"));
 			user.setName(rs.getString("name"));
 			user.setEmail(rs.getString("email"));
 			user.setPassword(rs.getString("password"));

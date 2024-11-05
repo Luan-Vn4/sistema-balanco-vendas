@@ -31,8 +31,20 @@ public class InstallDatabaseServlet extends HttpServlet {
 			
 			service.createUserTable();
 			msg += "<h2>Create table user sucessful!</h2>\n";
-			
-			page.println("<html lang='pt-br'><head><title>Teste</title></head><body>");
+
+			service.deleteAlunoTable();
+			msg += "<h2>Delete table alunos sucessful!</h2>\n";
+
+			service.createAlunoTable();
+			msg += "<h2>Create table alunos sucessful!</h2>\n";
+
+            service.deleteCursoTable();
+            msg += "<h2>Delete table cursos sucessful!</h2>\n";
+
+            service.createCursoTable();
+            msg += "<h2>Create table cursos sucessful!</h2>\n";
+
+            page.println("<html lang='pt-br'><head><title>Teste</title></head><body>");
 			page.println(msg);
 			/*/
 			page.println("<code>");
@@ -46,8 +58,8 @@ public class InstallDatabaseServlet extends HttpServlet {
 			page.close();
 			
 		} catch (Exception e) {
-			// Escreve as mensagens de Exception em uma página de resposta.
-			// Não apagar este bloco.
+			// Escreve as mensagens de Exception em uma pï¿½gina de resposta.
+			// Nï¿½o apagar este bloco.
 			StringWriter sw = new StringWriter();
 			PrintWriter pw = new PrintWriter(sw);
 			e.printStackTrace(pw);

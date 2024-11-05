@@ -1,5 +1,5 @@
-# Sistema de balanço de vendas
-Sistema busca fazer um balanço dos ganhos e despesas de uma organização de vendas. Ganhos: Parcerias e Vendas; Despesas: Reabastecimento e Local
+# Sistema de gerenciamento da UPE
+Sistema busca fazer um controle das entidades: Professor, Aluno, Curso e Disciplina.
 
 ## Desenvolvedores
 

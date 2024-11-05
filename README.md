@@ -35,6 +35,9 @@ Sistema busca fazer um controle das entidades: Professor, Aluno, Curso e Discipl
 ### Semana 2 - Melissa
 
 ### Semana 2 - Erick
+- Permitir instalar tabela Aluno pelo /install
+- Permitir adicionar uma entidade ao sistema
+- Permitir listar todos os alunos cadastrados
 
 ### Semana 2 - Ana
 - o usuario consegue instalar as tabelas BD no install

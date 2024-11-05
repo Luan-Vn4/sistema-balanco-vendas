@@ -43,4 +43,20 @@ public class InstallService {
                 + " media DECIMAL NOT NULL,"
                 + "isAtivo BOOLEAN NOT NULL)");
     }
+
+    public void deleteCursoTable() throws ClassNotFoundException, SQLException {
+        statement("DROP TABLE IF EXISTS cursos");
+    }
+
+    public void createCursoTable() throws ClassNotFoundException, SQLException {
+        statement("CREATE TABLE cursos ("
+                + "    uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
+                + "    nome VARCHAR(255) NOT NULL,"
+                + "    media_mec DOUBLE PRECISION,"
+                + "    is_ativo BOOLEAN,"
+                + "    user_uuid UUID,"
+                + "    FOREIGN KEY (user_uuid) REFERENCES users(uuid)"
+                + ")");
+    }
+
 }

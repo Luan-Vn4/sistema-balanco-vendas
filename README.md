@@ -49,7 +49,9 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 - Permitir instalar tabela Aluno pelo /install
 - Permitir adicionar uma entidade ao sistema
 - Permitir listar todos os alunos cadastrados
-
+- Permitir ver propeidades do aluno selecionado
+- preencher about
+- preencher readme
 ### Semana 2 - Ana
 - o usuario consegue instalar as tabelas BD no install
 - o usuario consegue adicionar dado da entidade atraves do menu

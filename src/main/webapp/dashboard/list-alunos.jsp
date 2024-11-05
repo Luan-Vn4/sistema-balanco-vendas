@@ -26,6 +26,7 @@
     <table class="table">
         <thead>
         <tr>
+            <th scope="col"></th>
             <th scope="col">Nome</th>
             <th scope="col">Média</th>
             <th scope="col">Ativo</th>
@@ -39,7 +40,7 @@
         %>
         <tr>
             <td>Editar</td>
-            <td><%= aluno.getNome() %></td>
+            <td><a href="${pageContext.request.contextPath}/dashboard/detalhes-aluno.jsp?id=<%= aluno.getUuid() %>"><%= aluno.getNome() %></a></td>
             <td><%= aluno.getMedia() %></td>
             <td><%= aluno.isAtivo() %></td>
             <td>Apagar</td>

@@ -50,7 +50,7 @@
         </tr>
         <tr>
             <td scope="col">Ana Beatriz de Oliveira Cavalcanti</td>
-            <td scope="col">Local</td>
+            <td scope="col">Curso</td>
             <td scope="col">Lógica de Despesas</td>
 				<tr>
             <td scope="col">Luan Vilaça Nogueira</td>

@@ -1,16 +1,18 @@
 package br.mendonca.testemaven.model.entities;
 
+import java.util.UUID;
+
 public class User {
-	
-	private String uuid;
+
+	private UUID uuid;
 	private String name;
 	private String email;
 	private String password;
 	
-	public String getUuid() {
+	public UUID getUuid() {
 		return uuid;
 	}
-	public void setUuid(String uuid) {
+	public void setUuid(UUID uuid) {
 		this.uuid = uuid;
 	}
 	public String getName() {

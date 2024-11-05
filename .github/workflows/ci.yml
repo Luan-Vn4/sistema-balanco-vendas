@@ -2,9 +2,9 @@ name: Integração Contínua (CI)
 
 on:
   push:
-    branches: [develop, luanvn, melissaRegoRodrigues]
+    branches: [develop, luanvn, melissaRegoRodrigues, anaOliveira]
   pull_request:
-    branches: [develop, luanvn, melissaRegoRodrigues]
+    branches: [develop, luanvn, melissaRegoRodrigues, anaOliveira]
 
 jobs:
   build-test:

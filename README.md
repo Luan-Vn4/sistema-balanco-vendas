@@ -47,6 +47,9 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 - Permitir instalar tabela Disciplina pelo /install
 - Permitir adicionar uma entidade ao sistema
 - Permitir listar todos as disciplas cadastradas
+- Preencher about
+- atualizar README
+- permitir ver propriedas das disciplinas
 
 ### Semana 2 - Erick
 - Permitir instalar tabela Aluno pelo /install

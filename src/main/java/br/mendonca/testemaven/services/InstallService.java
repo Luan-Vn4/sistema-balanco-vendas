@@ -22,7 +22,9 @@ public class InstallService {
 	}
 	
 	public void deleteUserTable() throws ClassNotFoundException, SQLException {
-		statement("DROP TABLE IF EXISTS users");
+
+		statement("DROP TABLE IF EXISTS users CASCADE");
+
 	}
 	
 	public void createUserTable() throws ClassNotFoundException, SQLException {
@@ -32,6 +34,7 @@ public class InstallService {
 					+ "    email VARCHAR(255) NOT NULL,"
 					+ "    password VARCHAR(255) NOT NULL)");
 	}
+
     public void deleteDisciplinaTable() throws ClassNotFoundException, SQLException {
         statement("DROP TABLE IF EXISTS disciplinas");
     }
@@ -44,30 +47,45 @@ public class InstallService {
                 + "is_ativo BOOLEAN NOT NULL)");
     }
 
+
+	public void deleteProfessoresTable() throws ClassNotFoundException, SQLException {
+		statement("DROP TABLE IF EXISTS professores CASCADE");
+	}
+
+	public void createProfessoresTable() throws ClassNotFoundException, SQLException {
+		statement("CREATE TABLE professores ("
+			+ "uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
+			+ "nome VARCHAR(255) NOT NULL,"
+			+ "salario DECIMAL(10,2) NOT NULL,"
+			+ "ativo BOOLEAN NOT NULL)"
+		);
+	}
+
+
     public void deleteAlunoTable() throws ClassNotFoundException, SQLException {
-        statement("DROP TABLE IF EXISTS alunos");
+        statement("DROP TABLE IF EXISTS alunos CASCADE");
     }
 
     public void createAlunoTable() throws ClassNotFoundException, SQLException {
         statement("CREATE TABLE alunos ("
-                + " uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
-                + " nome VARCHAR(255) NOT NULL,"
-                + " media DECIMAL NOT NULL,"
-                + "isAtivo BOOLEAN NOT NULL)");
+            + " uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
+            + " nome VARCHAR(255) NOT NULL,"
+            + " media DECIMAL NOT NULL,"
+            + "isAtivo BOOLEAN NOT NULL)");
     }
 
     public void deleteCursoTable() throws ClassNotFoundException, SQLException {
-        statement("DROP TABLE IF EXISTS cursos");
+        statement("DROP TABLE IF EXISTS cursos CASCADE");
     }
 
     public void createCursoTable() throws ClassNotFoundException, SQLException {
         statement("CREATE TABLE cursos ("
-                + "    uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
-                + "    nome VARCHAR(255) NOT NULL,"
-                + "    media_mec DOUBLE PRECISION,"
-                + "    is_ativo BOOLEAN,"
-                + "    user_uuid UUID,"
-                + "    FOREIGN KEY (user_uuid) REFERENCES users(uuid)"
-                + ")");
+            + "    uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
+            + "    nome VARCHAR(255) NOT NULL,"
+            + "    media_mec DOUBLE PRECISION,"
+            + "    is_ativo BOOLEAN,"
+            + "    user_uuid UUID,"
+            + "    FOREIGN KEY (user_uuid) REFERENCES users(uuid) ON DELETE SET NULL"
+            + ")");
     }
 }

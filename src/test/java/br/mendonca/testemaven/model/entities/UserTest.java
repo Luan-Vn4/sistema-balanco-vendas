@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import java.util.UUID;
 
 public class UserTest {
@@ -34,7 +33,7 @@ public class UserTest {
 		String name = "Fulano de Tal";
 		user.setName(name);
 		
-		assertEquals(name, user.getName(), "O Name configurado no objeto User n�o � o mesmo retornado.");
+		assertEquals(name, user.getName(), "O Name configurado no objeto User não é o mesmo retornado.");
 		assertNotEquals("Beltrano", user.getName(), "O Name configurado no objeto deveria apresentar erro.");
 	}
 
@@ -44,7 +43,7 @@ public class UserTest {
 		String email = "fulano@email.com";
 		user.setEmail(email);
 		
-		assertEquals(email, user.getEmail(), "O E-mail configurado no objeto User n�o � o mesmo retornado.");
+		assertEquals(email, user.getEmail(), "O E-mail configurado no objeto User não é o mesmo retornado.");
 		assertNotEquals("email@email", user.getEmail(), "O E-mail configurado no objeto deveria apresentar erro.");
 	}
 
@@ -54,7 +53,7 @@ public class UserTest {
 		String pass = "xyz";
 		user.setPassword(pass);
 		
-		assertEquals(pass, user.getPassword(), "O Password configurado no objeto User n�o � o mesmo retornado.");
+		assertEquals(pass, user.getPassword(), "O Password configurado no objeto User não é o mesmo retornado.");
 		assertNotEquals("zxy", user.getPassword(), "O Password configurado no objeto deveria apresentar erro.");
 	}
 }

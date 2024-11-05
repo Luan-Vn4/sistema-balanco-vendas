@@ -22,7 +22,7 @@ public class InstallService {
 	}
 	
 	public void deleteUserTable() throws ClassNotFoundException, SQLException {
-		statement("DROP TABLE IF EXISTS users");
+		statement("DROP TABLE IF EXISTS users CASCADE");
 	}
 	
 	public void createUserTable() throws ClassNotFoundException, SQLException {

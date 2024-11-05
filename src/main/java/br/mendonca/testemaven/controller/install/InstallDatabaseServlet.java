@@ -46,8 +46,8 @@ public class InstallDatabaseServlet extends HttpServlet {
 			page.close();
 			
 		} catch (Exception e) {
-			// Escreve as mensagens de Exception em uma página de resposta.
-			// Não apagar este bloco.
+			// Escreve as mensagens de Exception em uma pgina de resposta.
+			// No apagar este bloco.
 			StringWriter sw = new StringWriter();
 			PrintWriter pw = new PrintWriter(sw);
 			e.printStackTrace(pw);

@@ -39,7 +39,7 @@
     <tr>
       <td><%= professor.getNome() %></td>
       <td><%= String.format("R$ %.2f", professor.getSalario()) %></td>
-      <td><%= professor.isAtivo() %></td>
+      <td><%= professor.isAtivo() ? "Ativo ✅" : "Inativo ❌" %></td>
     </tr>
     <%
       }

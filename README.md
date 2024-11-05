@@ -1,12 +1,24 @@
 # Sistema de balanço de vendas
 Sistema busca fazer um balanço dos ganhos e despesas de uma organização de vendas. Ganhos: Parcerias e Vendas; Despesas: Reabastecimento e Local
 
-## Desenolvedores
+## Desenvolvedores
 
-- Melissa Rêgo Rodrigues;
+- Luan Vilaça Nogueira: Vendas;
+- Erick Vinícius Bezerra Martins: Parcerias;
+- Ana Beatriz de Oliveira Cavalcanti: Local;
+- Melissa Rêgo Rodrigues: Reabastecimento;
+
+## Render
+
+- Link da página do cliente:
+
 
 ## Demandas realizadas
+### Semana 1 - Melissa
 - atualizar o .gitgnore
-- atualizar página Sobre
-- atualizar o README
-- Fazer o script de teste do docker
+- estrutura de branchs
+- github actions
+- atualizar página Sobre com seu nome
+- atualizar o README com as demandas prontas
+
+### Semana 2 - Melissa

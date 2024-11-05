@@ -37,4 +37,10 @@ Sistema busca fazer um balanço dos ganhos e despesas de uma organização de ve
 ### Semana 2 - Erick
 
 ### Semana 2 - Ana
+- o usuario consegue instalar as tabelas BD no install
+- o usuario consegue adicionar dado da entidade atraves do menu
+- o usuario consegue listar a entidade atraves do menu
+- o usuario consegue ver as propriedades da entidade
+- preencher about
+- preencher readme
 

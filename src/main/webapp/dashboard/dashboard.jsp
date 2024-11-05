@@ -23,7 +23,10 @@ if (session.getAttribute("user") != null) {
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
 
 	<main class="w-100 m-auto form-container">
+
 		<jsp:include page="../resources/components/header.jsp"/>
+
+
 	</main>
 
 

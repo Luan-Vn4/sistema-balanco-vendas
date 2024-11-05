@@ -26,8 +26,9 @@
 
 
                 <li class="nav-item"><a class="nav-link" href="/dashboard/users">Users</a></li>
-                <li class="nav-item"><a class="nav-link" href="/cursos">Cursos</a></li>
 
+                <li class="nav-item"><a class="nav-link" href="/dashboard/alunos">Alunos</a></li>
+                <li class="nav-item"><a class="nav-link" href="/cursos">Cursos</a></li>
 
                 <li class="nav-item"><a class="nav-link" href="/dashboard/about.jsp">About</a></li>
             </ul>

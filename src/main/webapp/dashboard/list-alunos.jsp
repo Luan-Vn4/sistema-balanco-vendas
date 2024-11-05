@@ -26,6 +26,7 @@
     <table class="table">
         <thead>
         <tr>
+            <th scope="col"></th>
             <th scope="col">Nome</th>
             <th scope="col">Média</th>
             <th scope="col">Ativo</th>

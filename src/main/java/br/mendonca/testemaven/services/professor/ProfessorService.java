@@ -5,6 +5,8 @@ import br.mendonca.testemaven.model.entities.Professor;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public class ProfessorService {
 
@@ -16,6 +18,10 @@ public class ProfessorService {
 
     public List<Professor> getAll() throws SQLException, ClassNotFoundException {
         return professorDAO.findAll();
+    }
+
+    public Optional<Professor> getByUuid(UUID uuid) throws SQLException, ClassNotFoundException {
+        return professorDAO.findByUID(uuid);
     }
 
 }

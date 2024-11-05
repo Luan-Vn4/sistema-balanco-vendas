@@ -1,9 +1,11 @@
 package br.mendonca.testemaven.dao;
 
 import br.mendonca.testemaven.model.entities.Professor;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class ProfessorDAO {
@@ -42,6 +44,29 @@ public class ProfessorDAO {
         rs.close();
 
         return lista;
+    }
+
+    public Optional<Professor> findByUID(UUID uuid) throws SQLException, ClassNotFoundException {
+        Connection conn = ConnectionPostgres.getConexao();
+        conn.setAutoCommit(true);
+
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM professores WHERE uuid = ?");
+        ps.setObject(1, uuid);
+        System.out.println(ps);
+
+        Professor professor = null;
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            professor = new Professor();
+            professor.setUuid((UUID) rs.getObject("uuid"));
+            professor.setNome(rs.getString("nome"));
+            professor.setSalario(rs.getDouble("salario"));
+            professor.setAtivo(rs.getBoolean("ativo"));
+        }
+
+        rs.close();
+
+        return Optional.ofNullable(professor);
     }
 
 }

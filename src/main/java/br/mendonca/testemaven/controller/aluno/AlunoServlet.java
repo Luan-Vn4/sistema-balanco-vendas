@@ -1,4 +1,4 @@
-package br.mendonca.testemaven.controller;
+package br.mendonca.testemaven.controller.aluno;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -57,10 +57,10 @@ public class AlunoServlet extends HttpServlet {
             String referer = request.getHeader("Referer");
 
             if (referer != null && referer.contains("/dashboard/alunos")) {
-                // Redireciona de volta para a página anterior (ou algum outro caminho)
+                // Redireciona de volta para a pï¿½gina anterior (ou algum outro caminho)
                 response.sendRedirect(referer);
             } else {
-                // Caso o referer não esteja disponível ou a URL não seja a esperada
+                // Caso o referer nï¿½o esteja disponï¿½vel ou a URL nï¿½o seja a esperada
                 response.sendRedirect(request.getContextPath() + "/dashboard/alunos");
             }
 

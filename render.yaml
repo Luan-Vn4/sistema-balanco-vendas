@@ -1,0 +1,9 @@
+services:
+  - type: web
+    plan: free
+    name: balanco-sistema
+    runtime: docker
+    repo: https://github.com/Luan-Vn4/sistema-balanco-vendas
+    branch: main
+    rootDir: .
+    dockerfilePath: ./Dockerfile

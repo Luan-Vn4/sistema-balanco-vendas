@@ -2,7 +2,7 @@
 <%@ page import="java.util.List"%>
 <%@ page import="br.mendonca.testemaven.model.entities.Disciplina" %>
 
-<% if (session.getAttribute("user") != null && request.getAttribute("disciplinas") != null) { %>
+<% if (session.getAttribute("user") != null ) { %>
 
 <!doctype html>
 <html lang="pt-br" data-bs-theme="dark">
@@ -16,7 +16,7 @@
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
 
 <main class="w-100 m-auto form-container">
-    <jsp:include page="../resources/components/header.jsp"/>
+    <jsp:include page="/resources/components/header.jsp"/>
 
     <h1 class="h3 mb-3 fw-normal">Lista de Disciplinas</h1>
     <table class="table">
@@ -30,7 +30,9 @@
         <tbody>
         <%
             List<Disciplina> disciplinas = (List<Disciplina>) request.getAttribute("disciplinas");
-            for (Disciplina disciplina : disciplinas) {
+            System.out.println("Disciplinas recebidas: " + disciplinas);
+            if (disciplinas != null && !disciplinas.isEmpty()) {
+                for (Disciplina disciplina : disciplinas) {
         %>
         <tr>
             <td><%= disciplina.getNome() %></td>
@@ -41,11 +43,22 @@
                 <a href="/disciplina/delete?uuid=<%= disciplina.getUuid() %>" class="btn btn-danger btn-sm" onclick="return confirm('Deseja realmente apagar esta disciplina?');">Apagar</a>
             </td>
         </tr>
-        <% } %>
+        <%
+            }
+        } else {
+        %>
+        <tr>
+            <td colspan="4">Nenhuma disciplina cadastrada.</td>
+        </tr>
+        <%
+            }
+        %>
+
         </tbody>
+
     </table>
 
-    <a href="/disciplina/new.jsp" class="btn btn-success">Adicionar Nova Disciplina</a>
+    <a href="/disciplina/disciplinaAdd.jsp" class="btn btn-success">Adicionar Nova Disciplina</a>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

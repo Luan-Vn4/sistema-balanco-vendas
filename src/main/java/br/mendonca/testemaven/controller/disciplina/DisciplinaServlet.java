@@ -13,51 +13,69 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-@WebServlet
+@WebServlet("/disciplina")
 public class DisciplinaServlet extends HttpServlet {
 
-    DisciplinaService disciplinaService = new DisciplinaService();
+    private final DisciplinaService disciplinaService = new DisciplinaService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String nome = req.getParameter("nome");
         int cargaHoraria = Integer.parseInt(req.getParameter("cargaHoraria"));
-        boolean isAtiva = Boolean.parseBoolean(req.getParameter("isAtiva"));
+        // Verifica se o parâmetro 'isAtiva' foi enviado (checkbox pode não estar presente se não marcado)
+        boolean isAtiva = req.getParameter("isAtiva") != null;
 
         Disciplina disciplina = new Disciplina();
         disciplina.setNome(nome);
         disciplina.setCargaHoraria(cargaHoraria);
         disciplina.setIsAtiva(isAtiva);
 
+        System.out.println("Disciplina: " + disciplina.getNome());
+        System.out.println("CargaHoraria: " + cargaHoraria);
+        System.out.println("isAtiva" + isAtiva);
+
         try {
             disciplinaService.register(disciplina);
+            // Redirecionar para a lista de disciplinas após a adição bem-sucedida
+            resp.sendRedirect(req.getContextPath() + "/disciplina/disciplinas.jsp"); // Redireciona para o método doGet
         } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
+            // Lidar com erro, pode redirecionar para uma página de erro ou mostrar uma mensagem
+            e.printStackTrace(); // Loga o erro no console
+            req.setAttribute("error", "Erro ao adicionar a disciplina");
+            req.getRequestDispatcher("/disciplina").forward(req, resp); // Redireciona de volta para a página de adição
         }
-
-
-        req.getRequestDispatcher("/disciplina/disciplinas.jsp").forward(req, resp);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        System.out.println("doGet chamado!");
         try {
-            if(req.getParameter("uuid") != null){
-                UUID uuid = UUID.fromString(req.getParameter("uuid"));
-               Disciplina disciplina = disciplinaService.listDisciplinaByUuid(uuid);
-               req.setAttribute("disciplina", disciplina);
-                req.getRequestDispatcher("/disciplina/disciplinaView.jsp").forward(req, resp);
-            } else {
-                List<Disciplina> disciplinas = disciplinaService.listAllDisciplinas();
-                req.setAttribute("disciplinas", disciplinas);
-                req.getRequestDispatcher("/disciplina/disciplinas.jsp").forward(req, resp);
-            }
-
+            List<Disciplina> disciplinas = disciplinaService.listAllDisciplinas();
+            req.setAttribute("disciplinas", disciplinas);
+            System.out.println(disciplinas);// Definindo a lista no request
+            req.getRequestDispatcher("/disciplina/disciplinas.jsp").forward(req, resp);
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String uuidParam = req.getParameter("uuid");
 
+        if (uuidParam == null || uuidParam.isEmpty()) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "UUID inválido ou ausente.");
+            return;
+        }
+
+        try {
+            UUID uuid = UUID.fromString(uuidParam);
+            disciplinaService.deletar(uuid);
+            resp.setStatus(HttpServletResponse.SC_NO_CONTENT); // Indica que a exclusão foi bem-sucedida
+        } catch (IllegalArgumentException e) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "UUID inválido.");
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException("Erro ao deletar a disciplina", e);
+        }
+    }
 }

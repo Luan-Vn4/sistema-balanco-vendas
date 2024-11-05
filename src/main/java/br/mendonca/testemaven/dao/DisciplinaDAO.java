@@ -22,19 +22,20 @@ public class DisciplinaDAO {
         ps.setString(1, disciplina.getNome());
         ps.setInt(2, disciplina.getCargaHoraria());
         ps.setBoolean(3, disciplina.getIsAtiva());
-        ps.execute();
+        ps.executeUpdate();
 
     }
 
     // Método para listar todas as disciplinas
     public List<Disciplina> listAllDisciplinas() throws ClassNotFoundException, SQLException {
         ArrayList<Disciplina> lista = new ArrayList<>();
-
         Connection conn = ConnectionPostgres.getConexao();
+        System.out.println("Conexão estabelecida: " + (conn != null));
         conn.setAutoCommit(true);
 
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery("SELECT * FROM disciplinas");
+        System.out.println("Consulta executada.");
 
         while (rs.next()) {
             Disciplina disciplina = new Disciplina();
@@ -42,10 +43,9 @@ public class DisciplinaDAO {
             disciplina.setNome(rs.getString("nome"));
             disciplina.setCargaHoraria(rs.getInt("carga_horaria"));
             disciplina.setIsAtiva(rs.getBoolean("is_ativo"));
-
             lista.add(disciplina);
         }
-
+        System.out.println("Total de disciplinas recuperadas: " + lista.size());
         return lista;
     }
 

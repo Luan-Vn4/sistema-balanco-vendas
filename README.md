@@ -4,14 +4,37 @@ Sistema busca fazer um balanço dos ganhos e despesas de uma organização de ve
 ## Desenvolvedores
 
 - Erick Vinícius Bezerra Martins: Parcerias;
-- Ana Beatriz de Oliveira Cavalcanti: 
-
-  #Semana 1 - atualizar o gitignore, montar estrutura de branch, editar pag com o nome, readme com demanda
-  #Semana 2 - CURSO - instalar tabela install, dao, service, controller, navbar acessivel, listar
-
+- Ana Beatriz de Oliveira Cavalcanti: Local;
 - Melissa Rêgo Rodrigues: Reabastecimento;
 
 ## Render
 
-- Link da página do cliente:
+- Link da página do cliente: https://balanco-sistema.onrender.com
+
+
+## Demandas realizadas
+### Semana 1 - Melissa
+- atualizar o .gitgnore
+- estrutura de branchs
+- github actions
+- atualizar página Sobre com seu nome
+- atualizar o README com as demandas prontas
+
+### Semana 1 - Erick
+- atualizar o .gitignore
+- atualizar o about.jsp
+
+### Semana 1 - Ana
+- atualizar o .gitgnore
+- estrutura de branchs
+- github actions
+- atualizar página Sobre com seu nome
+- atualizar o README com as demandas prontas
+
+
+### Semana 2 - Melissa
+
+### Semana 2 - Erick
+
+### Semana 2 - Ana
 

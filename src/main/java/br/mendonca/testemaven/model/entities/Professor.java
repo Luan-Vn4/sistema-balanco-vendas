@@ -1,5 +1,6 @@
 package br.mendonca.testemaven.model.entities;
 
+import java.util.StringJoiner;
 import java.util.UUID;
 
 public class Professor {
@@ -44,4 +45,13 @@ public class Professor {
         this.ativo = ativo;
     }
 
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Professor.class.getSimpleName() + "[", "]")
+            .add("uuid=" + uuid)
+            .add("nome='" + nome + "'")
+            .add("salario=" + salario)
+            .add("ativo=" + ativo)
+            .toString();
+    }
 }

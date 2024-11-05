@@ -21,7 +21,7 @@ public class ProfessorDAO {
     }
 
     public List<Professor> findAll() throws ClassNotFoundException, SQLException {
-        ArrayList<Professor> lista = new ArrayList();
+        ArrayList<Professor> lista = new ArrayList<>();
 
         Connection conn = ConnectionPostgres.getConexao();
         conn.setAutoCommit(true);

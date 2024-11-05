@@ -39,18 +39,31 @@
             <td scope="col">Users</td>
             <td scope="col">Autenticação</td>
         </tr>
+      <tr>
+					<td scope="col">Melissa Rêgo Rodrigues</td>
+					<td scope="col">Coloque aqui sua entidade de trabalho</td>
+					<td scope="col">Coloque aqui sua regra de negócio</td>
         <tr>
             <td scope="col">Erick Vinícius Bezerra Martins</td>
             <td scope="col">Aluno</td>
             <td scope="col">Coloque aqui sua regra de negócio</td>
         </tr>
+        <tr>
+            <td scope="col">Ana Beatriz de Oliveira Cavalcanti</td>
+            <td scope="col">Curso</td>
+            <td scope="col">Lógica de Despesas</td>
+				<tr>
+            <td scope="col">Luan Vilaça Nogueira</td>
+            <td scope="col">Vendas</td>
+            <td scope="col">Lógica de Despesas relacionadas às vendas</td>
+
+        <td scope="col">Melissa Rêgo Rodrigues</td>
+        <td scope="col">Disciplina</td>
+        <td scope="col">Lógica de disciplina do curso</td>
+				</tr>
         <tbody>
         </tbody>
     </table>
-
-
-</main>
-
 
 <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -61,5 +74,5 @@
 </body>
 </html>
 <%
-    }
+}
 %>

@@ -4,15 +4,15 @@ import java.util.UUID;
 
 public class User {
 	
-	private UUID uuid;
+	private String uuid;
 	private String name;
 	private String email;
 	private String password;
 	
-	public UUID getUuid() {
+	public String getUuid() {
 		return uuid;
 	}
-	public void setUuid(UUID uuid) {
+	public void setUuid(String uuid) {
 		this.uuid = uuid;
 	}
 	public String getName() {

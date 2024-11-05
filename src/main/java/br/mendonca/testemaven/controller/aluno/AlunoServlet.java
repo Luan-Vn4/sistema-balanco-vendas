@@ -54,8 +54,15 @@ public class AlunoServlet extends HttpServlet {
             Double media = Double.parseDouble(request.getParameter("media"));
             Boolean isAtivo = true;
             service.register(nome, media, isAtivo);
-            request.getRequestDispatcher("/dashboard/alunos").forward(request, response);
-            page.close();
+            String referer = request.getHeader("Referer");
+
+            if (referer != null && referer.contains("/dashboard/alunos")) {
+                // Redireciona de volta para a página anterior (ou algum outro caminho)
+                response.sendRedirect(referer);
+            } else {
+                // Caso o referer não esteja disponível ou a URL não seja a esperada
+                response.sendRedirect(request.getContextPath() + "/dashboard/alunos");
+            }
 
 
         } catch (Exception e) {
@@ -71,7 +78,7 @@ public class AlunoServlet extends HttpServlet {
             page.println("</body></html>");
             page.close();
         } finally {
-
+    page.close();
         }
     }
 }

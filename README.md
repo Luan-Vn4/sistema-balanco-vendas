@@ -29,4 +29,7 @@
 ### Semana 2 - Melissa
 
 ### Semana 2 - Erick
+- Permitir instalar tabela Aluno pelo /install
+- Permitir adicionar uma entidade ao sistema
+- Permitir listar todos os alunos cadastrados
 

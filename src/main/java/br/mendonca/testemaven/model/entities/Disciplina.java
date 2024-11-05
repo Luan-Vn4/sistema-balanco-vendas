@@ -23,5 +23,5 @@ public class Disciplina {
     public int getCargaHoraria() { return cargaHoraria; }
     public int setCargaHoraria(int cargaHoraria) { return cargaHoraria; }
     public boolean getIsAtiva() { return isAtiva; }
-    public void setIsAtiva(boolean is_ativa) { this.isAtiva = is_ativa; }
+    public void setIsAtiva(boolean isAtiva) { this.isAtiva = isAtiva; }
 }

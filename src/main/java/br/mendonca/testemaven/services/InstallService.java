@@ -80,12 +80,11 @@ public class InstallService {
 
     public void createCursoTable() throws ClassNotFoundException, SQLException {
         statement("CREATE TABLE cursos ("
-            + "    uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
-            + "    nome VARCHAR(255) NOT NULL,"
-            + "    media_mec DOUBLE PRECISION,"
-            + "    is_ativo BOOLEAN,"
-            + "    user_uuid UUID,"
-            + "    FOREIGN KEY (user_uuid) REFERENCES users(uuid) ON DELETE SET NULL"
-            + ")");
+                + "    uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
+                + "    nome VARCHAR(255) NOT NULL,"
+                + "    media_mec DOUBLE PRECISION,"
+                + "    is_ativo BOOLEAN,"
+                + "    user_uuid UUID REFERENCES users(uuid) ON DELETE SET NULL"
+                + ")");
     }
 }

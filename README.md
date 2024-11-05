@@ -33,6 +33,9 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 
 
 ### Semana 2 - Melissa
+- Permitir instalar tabela Disciplina pelo /install
+- Permitir adicionar uma entidade ao sistema
+- Permitir listar todos as disciplas cadastradas
 
 ### Semana 2 - Erick
 - Permitir instalar tabela Aluno pelo /install

@@ -22,7 +22,9 @@ public class InstallService {
 	}
 	
 	public void deleteUserTable() throws ClassNotFoundException, SQLException {
+
 		statement("DROP TABLE IF EXISTS users CASCADE");
+
 	}
 	
 	public void createUserTable() throws ClassNotFoundException, SQLException {
@@ -32,6 +34,19 @@ public class InstallService {
 					+ "    email VARCHAR(255) NOT NULL,"
 					+ "    password VARCHAR(255) NOT NULL)");
 	}
+
+    public void deleteDisciplinaTable() throws ClassNotFoundException, SQLException {
+        statement("DROP TABLE IF EXISTS disciplinas");
+    }
+
+    public void createDisciplinaTable() throws ClassNotFoundException, SQLException {
+        statement("CREATE TABLE disciplinas ("
+                + "uuid UUID DEFAULT gen_random_uuid() NOT NULL,"
+                + "nome VARCHAR(255) NOT NULL,"
+                + "carga_horaria INT NOT NULL,"
+                + "is_ativo BOOLEAN NOT NULL)");
+    }
+
 
 	public void deleteProfessoresTable() throws ClassNotFoundException, SQLException {
 		statement("DROP TABLE IF EXISTS professores CASCADE");
@@ -45,6 +60,7 @@ public class InstallService {
 			+ "ativo BOOLEAN NOT NULL)"
 		);
 	}
+
 
     public void deleteAlunoTable() throws ClassNotFoundException, SQLException {
         statement("DROP TABLE IF EXISTS alunos CASCADE");
@@ -72,5 +88,4 @@ public class InstallService {
             + "    FOREIGN KEY (user_uuid) REFERENCES users(uuid) ON DELETE SET NULL"
             + ")");
     }
-
 }

@@ -23,3 +23,10 @@ Sistema busca fazer um balanço dos ganhos e despesas de uma organização de ve
 - [x] Linkei o github com o Render.com através do Render.yaml
 - [x] Editei a página sobre com o meu nome
 - [ ] Coloquei as demandas no README.md
+
+### SEMANA 2
+#### Luan Vilaça Nogueira
+- [x] O usuário consegue instalar a tabela de professor pelo endpoint /install
+- [x] O usuário é capaz de criar um novo professor informando seu nome, salário e se ele está ativo
+- [x] O usuário consegue visualizar todos os professores ao selecionar "professores" na navbar. A página de listagem fornece uma tabela com as propriedades de cada professor
+- [x] O usuário consegue visualizar as propriedades de um professor ao clicar em um registro da lista

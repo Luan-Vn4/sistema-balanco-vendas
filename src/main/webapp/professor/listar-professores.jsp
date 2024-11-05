@@ -29,6 +29,7 @@
       <th>Nome</th>
       <th>Salário</th>
       <th>Ativo</th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -40,6 +41,7 @@
       <td><%= professor.getNome() %></td>
       <td><%= String.format("R$ %.2f", professor.getSalario()) %></td>
       <td><%= professor.isAtivo() ? "Ativo ✅" : "Inativo ❌" %></td>
+      <td><a href="professores?uuid=<%= professor.getUuid() %>">Visualizar</a></td>
     </tr>
     <%
       }

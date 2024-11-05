@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 @SuppressWarnings("CallToPrintStackTrace")
 @WebServlet(value = {"/professores", "/professores/create"})
@@ -51,10 +53,13 @@ public class ProfessorController extends HttpServlet {
             return;
         }
 
-        if (req.getServletPath().equals("/professores")) {
-            getListPage(req, resp);
-        } else if (req.getServletPath().equals("/professores/create")) {
+        Map<String, String[]> params = req.getParameterMap();
+        if (req.getServletPath().equals("/professores/create")) {
             getCreationPage(req, resp);
+        } else if (req.getServletPath().equals("/professores") && params.isEmpty()) {
+            getListPage(req, resp);
+        } else if (req.getServletPath().equals("/professores") && params.containsKey("uuid")) {
+            getViewPage(req, resp);
         } else {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
@@ -75,6 +80,29 @@ public class ProfessorController extends HttpServlet {
     private void getCreationPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             req.getRequestDispatcher("/professor/criar-professor.jsp").forward(req, resp);
+        } catch (Exception e) {
+            System.out.println("Erro ao obter página de criar professor");
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private void getViewPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        try {
+            Optional<Professor> professor = professorService.getByUuid(UUID.fromString(req.getParameter("uuid")));
+
+            if (professor.isEmpty()) {
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Não foi encontrado nenhum professor com o " +
+                    "UUID: " + req.getParameter("uuid"));
+                return;
+            }
+
+            req.setAttribute("professor", professor.get());
+            req.getRequestDispatcher("/professor/visualizar-professor.jsp").forward(req, resp);
+        } catch (IllegalArgumentException e) {
+            System.out.println("UUID enviado é inválido: " + req.getParameter("uuid"));
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         } catch (Exception e) {
             System.out.println("Erro ao obter página de criar professor");
             e.printStackTrace();

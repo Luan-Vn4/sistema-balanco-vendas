@@ -61,6 +61,17 @@ public class InstallService {
 		);
 	}
 
+	public void populateProfessoresTable() throws ClassNotFoundException, SQLException {
+		statement("INSERT INTO professores (nome, salario, ativo) VALUES " +
+			"('Jonas', 15000.50, false)," +
+			"('Maria', 16500.99, true)," +
+			"('Eduardo', 2500.35, true)," +
+			"('Aécio', 5000.25, false)," +
+			"('Marilha', 8350.32, false)," +
+			"('João', 3500.50, true)," +
+			"('Lucas', 1500.95, false)"
+		);
+	}
 
     public void deleteAlunoTable() throws ClassNotFoundException, SQLException {
         statement("DROP TABLE IF EXISTS alunos CASCADE");

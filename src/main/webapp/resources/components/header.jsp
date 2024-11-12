@@ -24,9 +24,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link" href="/dashboard/dashboard.jsp">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="/dashboard/users">Users</a></li>
-
                 <li class="nav-item"><a class="nav-link" href="/disciplina">Disciplinas</a></li>
-
                 <li class="nav-item"><a class="nav-link" href="/dashboard/alunos">Alunos</a></li>
                 <li class="nav-item"><a class="nav-link" href="/cursos">Cursos</a></li>
                 <li class="nav-item"><a class="nav-link" href="/professores">Professores</a></li>

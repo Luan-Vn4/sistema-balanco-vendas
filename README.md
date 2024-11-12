@@ -52,3 +52,5 @@ Sistema busca fazer um balanço dos ganhos e despesas de uma organização de ve
 - o usuario consegue ver as propriedades da entidade
 - preencher about
 - preencher readme
+### Semana 3 - Erick
+- O usuário instala as novas tabelas do banco com 7 indivíduos pelo endpoint "install"

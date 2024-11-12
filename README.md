@@ -107,3 +107,4 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 ### Semana 3 - Ana
 - pendencia da S2: - o usuario consegue ver as propriedades da entidade
 - por meio do endpoint install povoar o BD com 7 entidades de Cursos
+- o usuario pode visualizar por meio de paginaçao

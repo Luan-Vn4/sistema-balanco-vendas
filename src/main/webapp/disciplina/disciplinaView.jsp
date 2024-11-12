@@ -31,8 +31,12 @@
 
     <div class="mt-3">
         <a href="javascript:history.back()" class="btn btn-secondary">Voltar</a>
-        <a href="/disciplina/delete?uuid=<%= disciplina.getUuid() %>" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja deletar esta disciplina?');">Deletar</a>
-        <a href="/disciplina/edit?uuid=<%= disciplina.getUuid() %>" class="btn btn-warning">Editar</a>
+        <form action="disciplina/delete?uuid=<%= disciplina.getUuid() %>" method="post">
+            <button class="btn btn-danger">
+                Deletar <i class="bi-trash"></i>
+            </button>
+        </form>
+
     </div>
 </main>
 

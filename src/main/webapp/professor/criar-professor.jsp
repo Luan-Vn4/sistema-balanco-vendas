@@ -16,7 +16,7 @@
   <jsp:include page="../resources/components/header.jsp"/>
   <h1>Criar Professor</h1>
   <main class="p-3">
-    <form action="/professores" method="post" class="d-flex flex-column" style="margin: 0 30%">
+    <form action="/professores/create" method="post" class="d-flex flex-column" style="margin: 0 30%">
       <label for="nome" style="font-size: 1.5em">Nome</label>
       <input type="text" id="nome" name="nome" required style="font-size: 2em">
       <label for="salario" style="font-size: 1.5em">Salário (R$)</label>

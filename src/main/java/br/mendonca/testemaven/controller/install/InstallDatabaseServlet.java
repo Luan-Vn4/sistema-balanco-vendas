@@ -53,6 +53,9 @@ public class InstallDatabaseServlet extends HttpServlet {
             service.createCursoTable();
             msg += "<h2>Create table cursos sucessful!</h2>\n";
 
+			service.populateAlunosTable();
+			msg += "<h2>populate table alunos sucessful!</h2>\n";
+
             page.println("<html lang='pt-br'><head><title>Teste</title></head><body>");
 			page.println(msg);
 			/*/

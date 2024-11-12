@@ -76,3 +76,5 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 - [x] O usuário consegue visualizar todos os professores ao selecionar "professores" na navbar. A página de listagem fornece uma tabela com as propriedades de cada professor
 - [x] O usuário consegue visualizar as propriedades de um professor ao clicar em um registro da lista
 - [x] Coloquei as demandas resolvidas no README.md
+### Semana 3 - Erick
+- O usuário instala as novas tabelas do banco com 7 indivíduos pelo endpoint "install"

@@ -65,9 +65,11 @@
         <%
             int currentPage = (Integer) request.getAttribute("currentPage");
             int totalPages = (Integer) request.getAttribute("totalPages");
+            String ocultarParam = request.getParameter("ocultar") != null ? "&ocultar=true" : "";
+
             if (currentPage > 1) {
         %>
-        <a href="?page=<%= currentPage - 1 %>" class="btn btn-primary">Anterior</a>
+        <a href="?page=<%= currentPage - 1 %><%= ocultarParam %>" class="btn btn-primary">Anterior</a>
         <% } else { %>
         <button class="btn btn-secondary" disabled>Anterior</button>
         <% } %>
@@ -77,7 +79,7 @@
         <%
             if (currentPage < totalPages) {
         %>
-        <a href="?page=<%= currentPage + 1 %>" class="btn btn-primary">Próxima</a>
+        <a href="?page=<%= currentPage + 1 %><%= ocultarParam %>" class="btn btn-primary">Próxima</a>
         <% } else { %>
         <button class="btn btn-secondary" disabled>Próxima</button>
         <% } %>

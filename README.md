@@ -94,3 +94,6 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 ### Semana 3 - Erick
 - O usuário instala as novas tabelas do banco com 7 indivíduos pelo endpoint "install"
 - O usuário visualiza todos os indivíduos listados com paginação de 3 indivíduos
+- O usuário pode deletar um indivíduo cadastrado da listagem, sem apagá-lo do banco
+- O usuário através de um item de menu pode listar os "ocultos"
+- atualização do README com demandas de hoje.

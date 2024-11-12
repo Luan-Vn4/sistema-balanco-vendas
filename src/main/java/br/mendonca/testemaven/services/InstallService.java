@@ -41,7 +41,8 @@ public class InstallService {
                 + " uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
                 + " nome VARCHAR(255) NOT NULL,"
                 + " media DECIMAL NOT NULL,"
-                + "isAtivo BOOLEAN NOT NULL)");
+                + " deletado BOOLEAN NOT NULL,"
+                + " isAtivo BOOLEAN NOT NULL)");
     }
 
     public void deleteCursoTable() throws ClassNotFoundException, SQLException {
@@ -57,6 +58,17 @@ public class InstallService {
                 + "    user_uuid UUID,"
                 + "    FOREIGN KEY (user_uuid) REFERENCES users(uuid)"
                 + ")");
+    }
+
+    public void populateAlunosTable() throws ClassNotFoundException, SQLException {
+        statement("INSERT INTO alunos (nome, media, deletado, isAtivo) VALUES "
+                + "('Alice', 8.5, false, true),"
+                + "('Bruno', 7.2, false, false),"
+                + "('Carla', 9.0,false, true),"
+                + "('Daniel', 5.8, false, false),"
+                + "('Elisa', 7.9, false, true),"
+                + "('Felipe', 6.3, false, true),"
+                + "('Gabriela', 8.7, false, false)");
     }
 
 }

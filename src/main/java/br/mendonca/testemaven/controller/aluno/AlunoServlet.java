@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import br.mendonca.testemaven.model.entities.Aluno;
 import br.mendonca.testemaven.services.AlunoService;
@@ -25,13 +27,28 @@ public class AlunoServlet extends HttpServlet {
         if (pageParam != null) {
             pageNumber = Integer.parseInt(pageParam);
         }
+        Map<String, String[]> params = request.getParameterMap();
+
+        if (params.containsKey("deletar") && params.containsKey("id")) {
+            UUID uuid = UUID.fromString(request.getParameter("id"));
+            try {
+                service.deletar(uuid);
+                response.sendRedirect("/dashboard/alunos");
+                return;
+            } catch (Exception e) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Aluno não encontrado");
+                return;
+            }
+        }
 
         try {
-            List<Aluno> lista = service.listAlunosPaginated(pageNumber);
-            int totalPages = service.getTotalPages();
+            boolean mostrarOcultos = request.getParameter("ocultar") != null;
+            List<Aluno> lista = service.listAlunosPaginated(pageNumber, mostrarOcultos);
+            int totalPages = service.getTotalPages(mostrarOcultos);
             request.setAttribute("lista", lista);
             request.setAttribute("currentPage", pageNumber);
             request.setAttribute("totalPages", totalPages);
+            request.setAttribute("ocultar", mostrarOcultos);
             request.getRequestDispatcher("list-alunos.jsp").forward(request, response);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -40,7 +57,8 @@ public class AlunoServlet extends HttpServlet {
     }
 
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
+            ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter page = response.getWriter();
 
@@ -75,7 +93,7 @@ public class AlunoServlet extends HttpServlet {
             page.println("</body></html>");
             page.close();
         } finally {
-    page.close();
+            page.close();
         }
     }
 }

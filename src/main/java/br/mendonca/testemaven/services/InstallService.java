@@ -36,7 +36,7 @@ public class InstallService {
 	}
 
     public void deleteDisciplinaTable() throws ClassNotFoundException, SQLException {
-        statement("DROP TABLE IF EXISTS disciplinas");
+        statement("DROP TABLE IF EXISTS disciplinas CASCADE");
     }
 
     public void createDisciplinaTable() throws ClassNotFoundException, SQLException {
@@ -50,11 +50,11 @@ public class InstallService {
 
 	public void populateDisciplinaTable() throws ClassNotFoundException, SQLException {
 		statement("INSERT INTO disciplinas (nome, carga_horaria, is_ativo, visualizacao) VALUES "
-				+ "('Matemática', 60, true, true), "
-				+ "('Física', 45, true, true), "
-				+ "('Química', 50, true, true), "
+				+ "('Matemï¿½tica', 60, true, true), "
+				+ "('Fï¿½sica', 45, true, true), "
+				+ "('Quï¿½mica', 50, true, true), "
 				+ "('Biologia', 40, true, true), "
-				+ "('História', 35, true, true), "
+				+ "('Histï¿½ria', 35, true, true), "
 				+ "('Geografia', 30, true, true), "
 				+ "('Literatura', 55, true, true)"
 		);
@@ -100,20 +100,6 @@ public class InstallService {
                 + " isAtivo BOOLEAN NOT NULL)");
     }
 
-    public void deleteCursoTable() throws ClassNotFoundException, SQLException {
-        statement("DROP TABLE IF EXISTS cursos CASCADE");
-    }
-
-    public void createCursoTable() throws ClassNotFoundException, SQLException {
-        statement("CREATE TABLE cursos ("
-                + "    uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
-                + "    nome VARCHAR(255) NOT NULL,"
-                + "    media_mec DOUBLE PRECISION,"
-                + "    is_ativo BOOLEAN,"
-                + "    user_uuid UUID REFERENCES users(uuid) ON DELETE SET NULL"
-                + ")");
-    }
-
     public void populateAlunosTable() throws ClassNotFoundException, SQLException {
         statement("INSERT INTO alunos (nome, media, deletado, isAtivo) VALUES "
                 + "('Alice', 8.5, false, true),"
@@ -125,4 +111,28 @@ public class InstallService {
                 + "('Gabriela', 8.7, false, false)");
     }
 
+    public void deleteCursoTable() throws ClassNotFoundException, SQLException {
+        statement("DROP TABLE IF EXISTS cursos CASCADE");
+    }
+
+    public void createCursoTable() throws ClassNotFoundException, SQLException {
+        statement("CREATE TABLE cursos ("
+                + "    uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
+                + "    nome VARCHAR(255) NOT NULL,"
+                + "    media_mec DOUBLE PRECISION,"
+                + "    is_ativo BOOLEAN)"
+		);
+    }
+
+	public void populateCursosTable() throws ClassNotFoundException, SQLException {
+		statement("INSERT INTO cursos (nome, media_mec, is_ativo) VALUES " +
+				"('Psicologia', 4, true)," +
+				"('Matematica', 3, true)," +
+				"('Farmacia', 1, false)," +
+				"('Engenharia de Software', 4, true)," +
+				"('Pedagogia', 2, false)," +
+				"('Medicina', 4, false)," +
+				"('Letras', 3, true)"
+		);
+	}
 }

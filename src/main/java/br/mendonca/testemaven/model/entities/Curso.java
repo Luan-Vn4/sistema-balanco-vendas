@@ -1,23 +1,16 @@
 package br.mendonca.testemaven.model.entities;
 
+import java.util.StringJoiner;
 import java.util.UUID;
 
 public class Curso {
     private UUID uuid;
     private String nome;
     private double mediaMec;
-    private Boolean isAtivo;
-    private UUID userUuid;
+    private boolean isAtivo;
+//    private UUID userUuid;
 
-    public Curso() {}
 
-    public Curso(UUID uuid, String nome, double mediaMec, Boolean isAtivo, UUID userUuid) {
-        this.uuid = uuid;
-        this.nome = nome;
-        this.mediaMec = mediaMec;
-        this.isAtivo = isAtivo;
-        this.userUuid = userUuid;
-    }
 
     public UUID getUuid() {
         return uuid;
@@ -43,19 +36,30 @@ public class Curso {
         this.mediaMec = mediaMec;
     }
 
-    public Boolean getAtivo() {
+    public boolean getAtivo() {
         return isAtivo;
     }
 
-    public void setAtivo(Boolean ativo) {
+    public void setAtivo(boolean ativo) {
         isAtivo = ativo;
     }
 
-    public UUID getUserUuid() {
-        return userUuid;
-    }
+//    public UUID getUserUuid() {
+//        return userUuid;
+//    }
+//
+//    public void setUserUuid(UUID userUuid) {
+//        this.userUuid = userUuid;
+//    }
 
-    public void setUserUuid(UUID userUuid) {
-        this.userUuid = userUuid;
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Curso.class.getSimpleName() + "[", "]")
+                .add("uuid=" + uuid)
+                .add("nome='" + nome + "'")
+                .add("mediaMec=" + mediaMec)
+                .add("isAtivo=" + isAtivo)
+                .toString();
     }
 }

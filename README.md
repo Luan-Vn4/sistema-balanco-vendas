@@ -78,3 +78,4 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 - [x] Coloquei as demandas resolvidas no README.md
 ### Semana 3 - Erick
 - O usuário instala as novas tabelas do banco com 7 indivíduos pelo endpoint "install"
+- O usuário visualiza todos os indivíduos listados com paginação de 3 indivíduos

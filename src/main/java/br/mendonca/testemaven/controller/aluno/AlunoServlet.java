@@ -1,13 +1,13 @@
-package br.mendonca.testemaven.controller;
+package br.mendonca.testemaven.controller.aluno;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.sql.SQLException;
 import java.util.List;
 
 import br.mendonca.testemaven.model.entities.Aluno;
 import br.mendonca.testemaven.services.AlunoService;
-import br.mendonca.testemaven.services.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,26 +20,22 @@ public class AlunoServlet extends HttpServlet {
     private static final AlunoService service = new AlunoService();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        PrintWriter page = response.getWriter();
-        String path = request.getServletPath();
+        int pageNumber = 1;
+        String pageParam = request.getParameter("page");
+        if (pageParam != null) {
+            pageNumber = Integer.parseInt(pageParam);
+        }
+
         try {
-            List<Aluno> lista = service.listAllAlunos();
+            List<Aluno> lista = service.listAlunosPaginated(pageNumber);
+            int totalPages = service.getTotalPages();
             request.setAttribute("lista", lista);
+            request.setAttribute("currentPage", pageNumber);
+            request.setAttribute("totalPages", totalPages);
             request.getRequestDispatcher("list-alunos.jsp").forward(request, response);
-
-        } catch (Exception e) {
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-
-            page.println("<html lang='pt-br'><head><title>Error</title></head><body>");
-            page.println("<h1>Error</h1>");
-            page.println("<code>" + sw.toString() + "</code>");
-            page.println("</body></html>");
-            page.close();
-        } finally {
-
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao buscar alunos");
         }
     }
 
@@ -53,14 +49,15 @@ public class AlunoServlet extends HttpServlet {
             String nome = request.getParameter("nome");
             Double media = Double.parseDouble(request.getParameter("media"));
             Boolean isAtivo = true;
-            service.register(nome, media, isAtivo);
+            Boolean deletado = false;
+            service.register(nome, media, deletado, isAtivo);
             String referer = request.getHeader("Referer");
 
             if (referer != null && referer.contains("/dashboard/alunos")) {
-                // Redireciona de volta para a página anterior (ou algum outro caminho)
+                // Redireciona de volta para a pï¿½gina anterior (ou algum outro caminho)
                 response.sendRedirect(referer);
             } else {
-                // Caso o referer não esteja disponível ou a URL não seja a esperada
+                // Caso o referer nï¿½o esteja disponï¿½vel ou a URL nï¿½o seja a esperada
                 response.sendRedirect(request.getContextPath() + "/dashboard/alunos");
             }
 

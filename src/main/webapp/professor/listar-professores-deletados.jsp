@@ -46,7 +46,7 @@
       <td><%= professor.isAtivo() ? "Ativo ✅" : "Inativo ❌" %></td>
       <td>
         <a class="text-decoration-none text-light"
-           href="professores?uuid=<%= professor.getUuid() %>">
+           href="/professores?uuid=<%= professor.getUuid() %>">
           Visualizar <i class="bi bi-eye"></i>
         </a>
       </td>

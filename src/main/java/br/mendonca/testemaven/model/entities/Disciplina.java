@@ -7,13 +7,15 @@ public class Disciplina {
     private String nome;
     private int cargaHoraria;
     private boolean isAtiva;
+    private boolean visualizacao;
 
     public Disciplina() {}
 
-    public Disciplina(String nome, int cargaHoraria, boolean isAtiva) {
+    public Disciplina(String nome, int cargaHoraria, boolean isAtiva, boolean visualizacao) {
         this.nome = nome;
         this.cargaHoraria = cargaHoraria;
         this.isAtiva = isAtiva;
+        this.visualizacao = visualizacao;
     }
 
     public UUID getUuid() { return uuid; }
@@ -24,4 +26,6 @@ public class Disciplina {
     public void setCargaHoraria(int cargaHoraria) { this.cargaHoraria = cargaHoraria; }
     public boolean getIsAtiva() { return isAtiva; }
     public void setIsAtiva(boolean isAtiva) { this.isAtiva = isAtiva; }
+    public boolean getVisualizacao() { return visualizacao; }
+    public void setVisualizacao(boolean visualizacao) {this.visualizacao = visualizacao; }
 }

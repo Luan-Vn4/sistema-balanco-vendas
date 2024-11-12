@@ -42,11 +42,13 @@ public class AlunoServlet extends HttpServlet {
         }
 
         try {
-            List<Aluno> lista = service.listAlunosPaginated(pageNumber, false);
-            int totalPages = service.getTotalPages(false);
+            boolean mostrarOcultos = request.getParameter("ocultar") != null;
+            List<Aluno> lista = service.listAlunosPaginated(pageNumber, mostrarOcultos);
+            int totalPages = service.getTotalPages(mostrarOcultos);
             request.setAttribute("lista", lista);
             request.setAttribute("currentPage", pageNumber);
             request.setAttribute("totalPages", totalPages);
+            request.setAttribute("ocultar", mostrarOcultos);
             request.getRequestDispatcher("list-alunos.jsp").forward(request, response);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

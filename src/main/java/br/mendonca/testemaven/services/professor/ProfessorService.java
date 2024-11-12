@@ -37,4 +37,8 @@ public class ProfessorService {
         return professorDAO.findByUID(uuid);
     }
 
+    public void delete(UUID uuid) throws SQLException, ClassNotFoundException {
+        professorDAO.deleteProfessor(uuid);
+    }
+
 }

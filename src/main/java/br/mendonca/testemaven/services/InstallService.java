@@ -7,26 +7,26 @@ import java.sql.Statement;
 import br.mendonca.testemaven.dao.ConnectionPostgres;
 
 public class InstallService {
-	
+
 	private void statement(String sql) throws ClassNotFoundException, SQLException {
 		Connection conn = ConnectionPostgres.getConexao();
 		conn.setAutoCommit(true);
-		
+
 		Statement st = conn.createStatement();
 		st.executeUpdate(sql);
 		st.close();
 	}
-	
+
 	public void testConnection() throws ClassNotFoundException, SQLException {
 		ConnectionPostgres.getConexao();
 	}
-	
+
 	public void deleteUserTable() throws ClassNotFoundException, SQLException {
 
 		statement("DROP TABLE IF EXISTS users CASCADE");
 
 	}
-	
+
 	public void createUserTable() throws ClassNotFoundException, SQLException {
 		statement("CREATE TABLE users ("
 					+ "    uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
@@ -44,8 +44,21 @@ public class InstallService {
                 + "uuid UUID DEFAULT gen_random_uuid() NOT NULL,"
                 + "nome VARCHAR(255) NOT NULL,"
                 + "carga_horaria INT NOT NULL,"
-                + "is_ativo BOOLEAN NOT NULL)");
+                + "is_ativo BOOLEAN NOT NULL," +
+				"visualizacao BOOLEAN NOT NULL)");
     }
+
+	public void populateDisciplinaTable() throws ClassNotFoundException, SQLException {
+		statement("INSERT INTO disciplinas (nome, carga_horaria, is_ativo, visualizacao) VALUES "
+				+ "('Matem�tica', 60, true, true), "
+				+ "('F�sica', 45, true, true), "
+				+ "('Qu�mica', 50, true, true), "
+				+ "('Biologia', 40, true, true), "
+				+ "('Hist�ria', 35, true, true), "
+				+ "('Geografia', 30, true, true), "
+				+ "('Literatura', 55, true, true)"
+		);
+	}
 
 
 	public void deleteProfessoresTable() throws ClassNotFoundException, SQLException {
@@ -57,7 +70,8 @@ public class InstallService {
 			+ "uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
 			+ "nome VARCHAR(255) NOT NULL,"
 			+ "salario DECIMAL(10,2) NOT NULL,"
-			+ "ativo BOOLEAN NOT NULL)"
+			+ "ativo BOOLEAN NOT NULL,"
+			+ "deleted BOOLEAN DEFAULT false NOT NULL)"
 		);
 	}
 
@@ -79,10 +93,22 @@ public class InstallService {
 
     public void createAlunoTable() throws ClassNotFoundException, SQLException {
         statement("CREATE TABLE alunos ("
-            + " uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
-            + " nome VARCHAR(255) NOT NULL,"
-            + " media DECIMAL NOT NULL,"
-            + "isAtivo BOOLEAN NOT NULL)");
+                + " uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
+                + " nome VARCHAR(255) NOT NULL,"
+                + " media DECIMAL NOT NULL,"
+                + " deletado BOOLEAN NOT NULL,"
+                + " isAtivo BOOLEAN NOT NULL)");
+    }
+
+    public void populateAlunosTable() throws ClassNotFoundException, SQLException {
+        statement("INSERT INTO alunos (nome, media, deletado, isAtivo) VALUES "
+                + "('Alice', 8.5, false, true),"
+                + "('Bruno', 7.2, false, false),"
+                + "('Carla', 9.0,false, true),"
+                + "('Daniel', 5.8, false, false),"
+                + "('Elisa', 7.9, false, true),"
+                + "('Felipe', 6.3, false, true),"
+                + "('Gabriela', 8.7, false, false)");
     }
 
     public void deleteCursoTable() throws ClassNotFoundException, SQLException {

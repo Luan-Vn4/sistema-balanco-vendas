@@ -46,6 +46,7 @@ public class ProfessorDAO {
             professor.setNome(rs.getString("nome"));
             professor.setSalario(rs.getDouble("salario"));
             professor.setAtivo(rs.getBoolean("ativo"));
+            professor.setDeleted(rs.getBoolean("deleted"));
 
             lista.add(professor);
         }
@@ -64,7 +65,7 @@ public class ProfessorDAO {
         int totalElements = countAll();
         int totalPages = (int) Math.ceil(totalElements / (double) pageRequest.getSize());
 
-        PreparedStatement st = conn.prepareStatement("SELECT * FROM professores LIMIT ? OFFSET ?");
+        PreparedStatement st = conn.prepareStatement("SELECT * FROM professores WHERE deleted=false LIMIT ? OFFSET ?");
         st.setInt(1, pageRequest.getSize());
         st.setInt(2, pageRequest.getSize() * pageRequest.getPage());
         ResultSet rs = st.executeQuery();
@@ -85,7 +86,7 @@ public class ProfessorDAO {
         conn.setAutoCommit(true);
 
         Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM professores");
+        ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM professores WHERE deleted=false");
 
         rs.next();
         int count = rs.getInt(1);
@@ -116,6 +117,18 @@ public class ProfessorDAO {
         rs.close();
 
         return Optional.ofNullable(professor);
+    }
+
+    public void deleteProfessor(UUID uuid) throws SQLException, ClassNotFoundException {
+        Connection conn = ConnectionPostgres.getConexao();
+        conn.setAutoCommit(true);
+
+        PreparedStatement ps = conn.prepareStatement("UPDATE professores SET deleted=true WHERE uuid=?");
+        ps.setObject(1, uuid);
+        System.out.println(ps);
+
+        ps.executeUpdate();
+        ps.close();
     }
 
 }

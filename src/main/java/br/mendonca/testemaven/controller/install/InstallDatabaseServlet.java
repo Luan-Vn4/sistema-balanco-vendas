@@ -32,9 +32,14 @@ public class InstallDatabaseServlet extends HttpServlet {
 			service.createUserTable();
 			msg += "<h2>Create table user sucessful!</h2>\n";
 
-			// TODO faltou o comando de deletar as disciplinas
-			//service.createDisciplinaTable();
-			//msg += "<h2>Create table disciplina sucessful!</h2>\n";
+			service.deleteDisciplinaTable();
+			msg += "<h2>Delete table disciplinas sucessful!</h2>\n";
+
+			service.createDisciplinaTable();
+			msg += "<h2>Create table disciplina sucessful!</h2>\n";
+
+			service.populateDisciplinaTable();
+			msg += "<h2>Populate table disciplina sucessful!</h2>\n";
 
 			service.deleteProfessoresTable();
 			msg += "<h2>Delete table professores sucessful!</h2>\n";
@@ -50,6 +55,8 @@ public class InstallDatabaseServlet extends HttpServlet {
 
 			service.createAlunoTable();
 			msg += "<h2>Create table alunos sucessful!</h2>\n";
+            service.populateAlunosTable();
+            msg += "<h2>populate table alunos sucessful!</h2>\n";
 
             service.deleteCursoTable();
             msg += "<h2>Delete table cursos sucessful!</h2>\n";

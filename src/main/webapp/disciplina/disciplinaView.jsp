@@ -14,10 +14,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="style.css" rel="stylesheet">
 </head>
-<body class="d-flex align-items-center py-4 bg-body-tertiary">
-
+<body>
+<jsp:include page="../resources/components/header.jsp"/>
 <main class="container mt-5">
-    <jsp:include page="../resources/components/header.jsp"/>
 
     <h1 class="h3 mb-3 fw-normal">Detalhes da Disciplina</h1>
 
@@ -32,8 +31,12 @@
 
     <div class="mt-3">
         <a href="javascript:history.back()" class="btn btn-secondary">Voltar</a>
-        <a href="/disciplina/delete?uuid=<%= disciplina.getUuid() %>" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja deletar esta disciplina?');">Deletar</a>
-        <a href="/disciplina/edit?uuid=<%= disciplina.getUuid() %>" class="btn btn-warning">Editar</a>
+        <form action="disciplina/delete?uuid=<%= disciplina.getUuid() %>" method="post">
+            <button class="btn btn-danger">
+                Deletar <i class="bi-trash"></i>
+            </button>
+        </form>
+
     </div>
 </main>
 

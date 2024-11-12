@@ -16,36 +16,50 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-@WebServlet("/disciplina")
+@WebServlet(value = {"/disciplina", "/disciplina/create", "/disciplina/delete"})
 public class DisciplinaServlet extends HttpServlet {
 
     private final DisciplinaService disciplinaService = new DisciplinaService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (req.getSession(false) == null) {
+            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+
+        Map<String, String[]> params = req.getParameterMap();
+        if (req.getServletPath().equals("/disciplina/create") && !params.isEmpty() && params.containsKey("nome") && params.containsKey("cargaHoraria")
+                && params.containsKey("isAtiva")) {
+            create(req, resp);
+        } else if (req.getServletPath().equals("/disciplina/delete") && params.containsKey("uuid")) {
+            delete(req, resp);
+        } else {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+        }
+    }
+
+    private void create(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String nome = req.getParameter("nome");
         int cargaHoraria = Integer.parseInt(req.getParameter("cargaHoraria"));
-        // Verifica se o par�metro 'isAtiva' foi enviado (checkbox pode n�o estar presente se n�o marcado)
-        boolean isAtiva = req.getParameter("isAtiva") != null;
 
         Disciplina disciplina = new Disciplina();
         disciplina.setNome(nome);
         disciplina.setCargaHoraria(cargaHoraria);
-        disciplina.setIsAtiva(isAtiva);
+        disciplina.setIsAtiva(Boolean.parseBoolean(req.getParameter("isAtiva")));
 
         System.out.println("Disciplina: " + disciplina.getNome());
         System.out.println("CargaHoraria: " + cargaHoraria);
-        System.out.println("isAtiva" + isAtiva);
+        System.out.println("isAtiva" + req.getParameter("isAtiva"));
 
         try {
             disciplinaService.register(disciplina);
-            // Redirecionar para a lista de disciplinas ap�s a adi��o bem-sucedida
+
             resp.sendRedirect(req.getContextPath() + "/disciplina");
         } catch (ClassNotFoundException | SQLException e) {
-            // Lidar com erro, pode redirecionar para uma p�gina de erro ou mostrar uma mensagem
-            e.printStackTrace(); // Loga o erro no console
+            e.printStackTrace();
             req.setAttribute("error", "Erro ao adicionar a disciplina");
-            req.getRequestDispatcher("/disciplina").forward(req, resp); // Redireciona de volta para a p�gina de adi��o
+            req.getRequestDispatcher("/disciplina").forward(req, resp);
         }
     }
 
@@ -55,20 +69,63 @@ public class DisciplinaServlet extends HttpServlet {
 
         if (req.getParameterMap().isEmpty()) {
             getAll(req, resp);
+        } else if (req.getServletPath().equals("/disciplina") && params.containsKey("page") && "true".equals(req.getParameter("deleted"))) {
+            getAllDeleted(req, resp);
+        }  else if (req.getServletPath().equals("/disciplina") && params.containsKey("page")) {
+            getAll(req, resp);
         } else if (req.getServletPath().equals("/disciplina") && params.containsKey("uuid")){
             getViewPage(req, resp);
-        }else {
+        } else {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
     public void getAll(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            List<Disciplina> disciplinas = disciplinaService.listAllDisciplinas();
+            int page = 1;
+            int pageSize = 3;
+
+            if (req.getParameter("page") != null) {
+                page = Integer.parseInt(req.getParameter("page"));
+            }
+
+            int totalDisciplinas = disciplinaService.countDisciplinas();
+            int totalPages = (int) Math.ceil((double) totalDisciplinas / pageSize);
+
+            List<Disciplina> disciplinas = disciplinaService.getDisciplinasPaginated(page, pageSize);
+
             req.setAttribute("disciplinas", disciplinas);
+            req.setAttribute("currentPage", page);
+            req.setAttribute("totalPages", totalPages);
+
             req.getRequestDispatcher("/disciplina/disciplinas.jsp").forward(req, resp);
         } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Erro ao listar disciplinas paginadas", e);
+        }
+    }
+
+    public void getAllDeleted(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            int page = 1;
+            int pageSize = 3;
+
+            if (req.getParameter("page") != null) {
+                page = Integer.parseInt(req.getParameter("page"));
+            }
+
+            int totalDisciplinas = disciplinaService.countDeletedDisciplinas();
+            int totalPages = (int) Math.ceil((double) totalDisciplinas / pageSize);
+
+            List<Disciplina> disciplinas = disciplinaService.getDeletedDisciplinasPaginated(page, pageSize);
+            System.out.println("Disciplinas deletadas: " + disciplinas);
+
+            req.setAttribute("disciplinas", disciplinas);
+            req.setAttribute("currentPage", page);
+            req.setAttribute("totalPages", totalPages);
+
+            req.getRequestDispatcher("/disciplina/disciplinas.jsp").forward(req, resp);
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException("Erro ao listar disciplinas deletadas paginadas", e);
         }
     }
 
@@ -95,23 +152,29 @@ public class DisciplinaServlet extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uuidParam = req.getParameter("uuid");
 
         if (uuidParam == null || uuidParam.isEmpty()) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "UUID inv�lido ou ausente.");
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "UUID inválido ou ausente.");
             return;
         }
 
         try {
             UUID uuid = UUID.fromString(uuidParam);
-            disciplinaService.deletar(uuid);
-            resp.setStatus(HttpServletResponse.SC_NO_CONTENT); // Indica que a exclus�o foi bem-sucedida
+
+            boolean updated = disciplinaService.deletar(uuid);
+
+            if (updated) {
+                resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                resp.sendRedirect(req.getContextPath() + "/disciplina");
+            } else {
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Disciplina não encontrada.");
+            }
         } catch (IllegalArgumentException e) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "UUID inv�lido.");
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "UUID inválido.");
         } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException("Erro ao deletar a disciplina", e);
+            throw new RuntimeException("Erro ao marcar a disciplina como invisível", e);
         }
     }
 }

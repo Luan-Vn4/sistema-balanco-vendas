@@ -18,11 +18,32 @@ public class DisciplinaService {
         return dao.listAllDisciplinas();
     }
 
+    public List<Disciplina> listAllDeletedDisciplinas() throws ClassNotFoundException, SQLException {
+        return dao.listAllDeletedDisciplinas();
+    }
+
     public Disciplina listDisciplinaByUuid(UUID uuid) throws ClassNotFoundException, SQLException {
         return dao.searchByUuid(uuid);
     }
 
-    public void deletar(UUID uuid) throws ClassNotFoundException, SQLException {
-        dao.deleteByUuid(uuid);
+    public boolean deletar(UUID uuid) throws ClassNotFoundException, SQLException {
+        return dao.deleteByUuid(uuid);
     }
+
+    public List<Disciplina> getDisciplinasPaginated(int page, int pageSize) throws ClassNotFoundException, SQLException {
+        return dao.getDisciplinasPaginated(page, pageSize);
+    }
+
+    public List<Disciplina> getDeletedDisciplinasPaginated(int page, int pageSize) throws ClassNotFoundException, SQLException {
+        return dao.getDeletedDisciplinasPaginated(page, pageSize);
+    }
+
+    public int countDeletedDisciplinas() throws ClassNotFoundException, SQLException {
+        return dao.countDeletedDisciplinas();
+    }
+
+    public int countDisciplinas() throws ClassNotFoundException, SQLException {
+        return dao.countDisciplinas();
+    }
+
 }

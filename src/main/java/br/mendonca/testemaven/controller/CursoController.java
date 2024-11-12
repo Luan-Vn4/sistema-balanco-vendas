@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -99,6 +100,29 @@ public class CursoController extends HttpServlet {
             req.getRequestDispatcher("/cursos/listar-cursos.jsp").forward(req, resp);
         } catch (Exception e) {
             System.out.println("Erro ao listar cursos");
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private void getViewPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        try {
+            Optional<Curso> curso = cursoService.getByUuid(UUID.fromString(req.getParameter("uuid")));
+
+            if (curso.isEmpty()) {
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Não foi encontrado nenhum curso com o " +
+                        "UUID: " + req.getParameter("uuid"));
+                return;
+            }
+
+            req.setAttribute("curso", curso.get());
+            req.getRequestDispatcher("/cursos/visualizar-curso.jsp").forward(req, resp);
+        } catch (IllegalArgumentException e) {
+            System.out.println("UUID enviado é inválido: " + req.getParameter("uuid"));
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        } catch (Exception e) {
+            System.out.println("Erro ao obter página de criar curso");
             e.printStackTrace();
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }

@@ -5,6 +5,7 @@ import br.mendonca.testemaven.model.entities.Curso;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class CursoService {
@@ -21,6 +22,10 @@ public class CursoService {
 
     public List<Curso> listAllCurso() throws SQLException, ClassNotFoundException {
         return dao.listAllCursos();
+    }
+
+    public Optional<Curso> getByUuid(UUID uuid) throws SQLException, ClassNotFoundException {
+        return dao.findByUID(uuid);
     }
 
     public void deletar(UUID uuid) throws SQLException, ClassNotFoundException {

@@ -33,10 +33,13 @@ public class InstallDatabaseServlet extends HttpServlet {
 			msg += "<h2>Create table user sucessful!</h2>\n";
 
 			service.deleteDisciplinaTable();
-			msg += "<h2>Delete table disciplina sucessful!</h2>\n";
+			msg += "<h2>Delete table disciplinas sucessful!</h2>\n";
 
 			service.createDisciplinaTable();
 			msg += "<h2>Create table disciplina sucessful!</h2>\n";
+
+			service.populateDisciplinaTable();
+			msg += "<h2>Populate table disciplina sucessful!</h2>\n";
 
 			service.deleteProfessoresTable();
 			msg += "<h2>Delete table professores sucessful!</h2>\n";

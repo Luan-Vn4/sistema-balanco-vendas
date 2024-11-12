@@ -12,7 +12,7 @@
     <jsp:include page="../resources/components/header.jsp"/>
 
     <h1>Adicionar Nova Disciplina</h1>
-    <form action="/disciplina" method="post">
+    <form action="/disciplina/create" method="post">
         <div class="mb-3">
             <label for="nome" class="form-label">Nome da Disciplina</label>
             <input type="text" class="form-control" id="nome" name="nome" required>
@@ -21,10 +21,10 @@
             <label for="cargaHoraria" class="form-label">Carga Horária</label>
             <input type="number" class="form-control" id="cargaHoraria" name="cargaHoraria" required>
         </div>
-        <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="isAtiva" name="isAtiva">
-            <label for="isAtiva" class="form-check-label">Disciplina Ativa</label>
-        </div>
+        <select id="atividade" name="isAtiva" style="font-size: 1.4em">
+            <option value="true">Ativo</option>
+            <option value="false">Inativo</option>
+        </select>
         <button type="submit" class="btn btn-primary">Adicionar Disciplina</button>
     </form>
 </main>

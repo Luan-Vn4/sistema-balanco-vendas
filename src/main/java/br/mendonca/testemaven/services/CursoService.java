@@ -2,7 +2,6 @@ package br.mendonca.testemaven.services;
 
 import br.mendonca.testemaven.dao.CursoDAO;
 import br.mendonca.testemaven.model.entities.Curso;
-import br.mendonca.testemaven.model.entities.Professor;
 import br.mendonca.testemaven.utils.PageRequest;
 import br.mendonca.testemaven.utils.PagedResult;
 
@@ -36,6 +35,10 @@ public class CursoService {
 
     public Optional<Curso> getByUuid(UUID uuid) throws SQLException, ClassNotFoundException {
         return dao.findByUID(uuid);
+    }
+
+    public void delete(UUID uuid) throws SQLException, ClassNotFoundException {
+        dao.deleteCurso(uuid);
     }
 
 

@@ -48,6 +48,7 @@ public class CursoDAO {
             curso.setNome(rs.getString("nome"));
             curso.setMediaMec(rs.getDouble("media_mec"));
             curso.setAtivo(rs.getBoolean("is_ativo"));
+            curso.setDeleted(rs.getBoolean("deleted"));
             lista.add(curso);
         }
         return lista;
@@ -61,7 +62,8 @@ public class CursoDAO {
         conn.setAutoCommit(true);
         int totalElements = countAll();
         int totalPages = (int) Math.ceil(totalElements / (double) pageRequest.getSize());
-        PreparedStatement st = conn.prepareStatement("SELECT * FROM cursos LIMIT ? OFFSET ?");
+
+        PreparedStatement st = conn.prepareStatement("SELECT * FROM cursos WHERE deleted=false LIMIT ? OFFSET ?");
         st.setInt(1, pageRequest.getSize());
         st.setInt(2, pageRequest.getSize() * (pageRequest.getPage()));
         ResultSet rs = st.executeQuery();
@@ -78,7 +80,7 @@ public class CursoDAO {
         Connection conn = ConnectionPostgres.getConexao();
         conn.setAutoCommit(true);
         Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM cursos");
+        ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM cursos WHERE deleted=false");
 
         rs.next();
         int count = rs.getInt(1);
@@ -170,6 +172,16 @@ public class CursoDAO {
 //            throw new RuntimeException("Não foi possível achar um curso com UUID: " + uuid);
 //        }
 //    }
+
+    public void deleteCurso(UUID uuid) throws SQLException, ClassNotFoundException {
+        Connection conn = ConnectionPostgres.getConexao();
+        conn.setAutoCommit(true);
+        PreparedStatement ps = conn.prepareStatement("UPDATE cursos SET deleted=true WHERE uuid=?");
+        ps.setObject(1, uuid);
+        System.out.println(ps);
+        ps.executeUpdate();
+        ps.close();
+    }
 
 
 

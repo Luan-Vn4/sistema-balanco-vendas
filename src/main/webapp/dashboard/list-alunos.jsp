@@ -29,8 +29,6 @@
         <tr>
             <th scope="col"></th>
             <th scope="col">Nome</th>
-            <th scope="col">Média</th>
-            <th scope="col">Ativo</th>
             <th scope="col"></th>
         </tr>
         </thead>
@@ -42,9 +40,7 @@
         <tr>
             <td>Editar</td>
             <td><a href="${pageContext.request.contextPath}/dashboard/detalhes-aluno.jsp?id=<%= aluno.getUuid() %>"><%= aluno.getNome() %></a></td>
-            <td><%= aluno.getMedia() %></td>
-            <td><%= aluno.isAtivo() %></td>
-            <td>Apagar</td>
+            <td><a href="${pageContext.request.contextPath}/dashboard/alunos?deletar=true&id=<%= aluno.getUuid() %>">Apagar</a></td>
         </tr>
         <% } %>
         </tbody>

@@ -91,7 +91,7 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
   endpoint "/install"
 - [X] O usuário visualiza todos os professores listados, mas com paginação de três
   indivíduos
-- [ ] O usuário pode deletar um professor cadastrado na listagem,
+- [X] O usuário pode deletar um professor cadastrado na listagem,
   mas o indivíduo não é apagado do banco, ele é marcado para
   não visualização
 - [ ] O usuário, por meio de um item de menu, pode listas os

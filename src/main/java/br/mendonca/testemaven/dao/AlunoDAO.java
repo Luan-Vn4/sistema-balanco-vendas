@@ -100,16 +100,17 @@ public class AlunoDAO {
         return aluno;
     }
 
-    public List<Aluno> listAlunosPaginated(int pageNumber, int pageSize) throws ClassNotFoundException, SQLException {
+    public List<Aluno> listAlunosPaginated(int pageNumber, int pageSize, boolean deletado) throws ClassNotFoundException, SQLException {
         List<Aluno> lista = new ArrayList<>();
         int offset = (pageNumber - 1) * pageSize;
 
         Connection conn = ConnectionPostgres.getConexao();
         conn.setAutoCommit(true);
-
-        PreparedStatement ps = conn.prepareStatement("SELECT * FROM alunos ORDER BY nome LIMIT ? OFFSET ?");
-        ps.setInt(1, pageSize);
-        ps.setInt(2, offset);
+        String sql = "SELECT * FROM alunos WHERE deletado = ? ORDER BY nome LIMIT ? OFFSET ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setBoolean(1, deletado);
+        ps.setInt(2, pageSize);
+        ps.setInt(3, offset);
 
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
@@ -128,24 +129,37 @@ public class AlunoDAO {
         return lista;
     }
 
-    public int countAllAlunos() throws ClassNotFoundException, SQLException {
+    public int countAllAlunos(boolean deletado) throws ClassNotFoundException, SQLException {
         int count = 0;
 
         Connection conn = ConnectionPostgres.getConexao();
         conn.setAutoCommit(true);
 
-        Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM alunos");
+        String sql = "SELECT COUNT(*) FROM alunos WHERE deletado = ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setBoolean(1, deletado);
 
+        ResultSet rs = ps.executeQuery();
         if (rs.next()) {
             count = rs.getInt(1);
         }
 
         rs.close();
-        st.close();
+        ps.close();
 
         return count;
     }
 
+    public void deleteByUuid(UUID uuid) throws ClassNotFoundException, SQLException {
+        Connection conn = ConnectionPostgres.getConexao();
+        conn.setAutoCommit(true);
+
+        String sql = "UPDATE alunos SET deletado = true WHERE uuid = ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setObject(1, uuid);
+
+        ps.executeUpdate();
+        ps.close();
+    }
 
 }

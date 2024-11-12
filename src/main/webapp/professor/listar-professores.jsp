@@ -1,8 +1,6 @@
 <%--suppress unchecked --%>
-<%@ page import="java.util.List" %>
 <%@ page import="br.mendonca.testemaven.model.entities.Professor" %>
 <%@ page import="br.mendonca.testemaven.utils.PagedResult" %>
-<%@ page import="java.util.Iterator" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!doctype html>
 <html lang="pt-br" data-bs-theme="dark">

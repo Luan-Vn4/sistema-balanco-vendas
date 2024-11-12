@@ -33,6 +33,7 @@ public class UserDTO {
 
 	public static UserDTO userMapper(User user) {
 		UserDTO dto = new UserDTO();
+		dto.setUuid(user.getUuid());
 		dto.setName(user.getName());
 		dto.setEmail(user.getEmail());
 		

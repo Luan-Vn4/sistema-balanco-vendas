@@ -66,7 +66,6 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 - o usuario consegue instalar as tabelas BD no install
 - o usuario consegue adicionar dado da entidade atraves do menu
 - o usuario consegue listar a entidade atraves do menu
-- o usuario consegue ver as propriedades da entidade
 - preencher about
 - preencher readme
 
@@ -104,3 +103,8 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 - O usuário pode deletar um indivíduo cadastrado da listagem, sem apagá-lo do banco
 - O usuário através de um item de menu pode listar os "ocultos"
 - atualização do README com demandas de hoje.
+
+### Semana 3 - Ana
+- pendencia da S2: - o usuario consegue ver as propriedades da entidade
+- por meio do endpoint install povoar o BD com 7 entidades de Cursos
+- o usuario pode visualizar por meio de paginaçao

@@ -32,8 +32,9 @@ public class InstallDatabaseServlet extends HttpServlet {
 			service.createUserTable();
 			msg += "<h2>Create table user sucessful!</h2>\n";
 
-			service.createDisciplinaTable();
-			msg += "<h2>Create table disciplina sucessful!</h2>\n";
+//			service.createDisciplinaTable();
+//			msg += "<h2>Create table disciplina sucessful!</h2>\n";
+
 
 			service.deleteProfessoresTable();
 			msg += "<h2>Delete table professores sucessful!</h2>\n";
@@ -52,6 +53,9 @@ public class InstallDatabaseServlet extends HttpServlet {
 
             service.createCursoTable();
             msg += "<h2>Create table cursos sucessful!</h2>\n";
+
+			service.populateCursosTable();
+			msg += "<h2>Populate table cursos sucessful!</h2>\n";
 
             page.println("<html lang='pt-br'><head><title>Teste</title></head><body>");
 			page.println(msg);

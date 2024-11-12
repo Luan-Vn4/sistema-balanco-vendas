@@ -36,7 +36,7 @@ public class InstallService {
 	}
 
     public void deleteDisciplinaTable() throws ClassNotFoundException, SQLException {
-        statement("DROP TABLE IF EXISTS disciplinas");
+        statement("DROP TABLE IF EXISTS disciplinas CASCADE");
     }
 
     public void createDisciplinaTable() throws ClassNotFoundException, SQLException {
@@ -87,4 +87,16 @@ public class InstallService {
                 + "    user_uuid UUID REFERENCES users(uuid) ON DELETE SET NULL"
                 + ")");
     }
+
+	public void populateCursosTable() throws ClassNotFoundException, SQLException {
+		statement("INSERT INTO cursos (nome, media_mec, is_ativo) VALUES " +
+				"('Psicologia', 4, true)," +
+				"('Matematica', 3, true)," +
+				"('Farmacia', 1, false)," +
+				"('Engenharia de Software', 4, true)," +
+				"('Pedagogia', 2, false)," +
+				"('Medicina', 4, false)," +
+				"('Letras', 3, true)"
+		);
+	}
 }

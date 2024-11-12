@@ -49,11 +49,22 @@
       <td><%= curso.getNome() %></td>
       <td><%= String.format("%.2f", curso.getMediaMec()) %></td>
       <td><%= curso.getAtivo() ? "Ativo ✅" : "Inativo ❌" %></td>
-      <td><a href="cursos?uuid=<%= curso.getUuid() %>">Visualizar</a></td>
+
+      <td>
+        <a class="text-decoration-none text-light"
+           href="cursos?uuid=<%= curso.getUuid() %>">
+          Visualizar <i class="bi bi-eye"></i>
+        </a>
+      </td>
+      <td>
+        <form action="cursos/delete?uuid=<%= curso.getUuid() %>" method="post">
+          <button class="text-decoration-none text-light btn btn-link p-0">
+            Deletar <i class="bi-trash"></i>
+          </button>
+        </form>
+      </td>
     </tr>
-    <%
-      }
-    %>
+
     </tbody>
   </table>
 </main>

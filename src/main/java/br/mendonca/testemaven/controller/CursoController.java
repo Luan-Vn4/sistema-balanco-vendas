@@ -1,6 +1,7 @@
 package br.mendonca.testemaven.controller;
 
 import br.mendonca.testemaven.model.entities.Curso;
+import br.mendonca.testemaven.model.entities.Professor;
 import br.mendonca.testemaven.services.CursoService;
 import br.mendonca.testemaven.utils.PageRequest;
 import br.mendonca.testemaven.utils.PagedResult;
@@ -14,7 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-@WebServlet({"/cursos", "/cursos/create"})
+@WebServlet({"/cursos", "/cursos/create", "/cursos/delete"})
 public class CursoController extends HttpServlet {
 
     private static final CursoService cursoService = new CursoService();
@@ -30,9 +31,15 @@ public class CursoController extends HttpServlet {
         Map<String, String[]> params = req.getParameterMap();
         if (params.isEmpty() || !params.containsKey("nome") || !params.containsKey("mediaMec") ||
                 !params.containsKey("isAtivo")) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "É necessário enviar todos os dados necessários");
+            create(req, resp);
+        }else if (req.getServletPath().equals("/cursos/delete") && params.containsKey("uuid")) {
+            delete(req, resp);
+        }else{
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
+    }
 
+    private void create(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Curso curso = new Curso();
         curso.setNome(req.getParameter("nome"));
         curso.setMediaMec(Double.parseDouble(req.getParameter("mediaMec")));
@@ -42,9 +49,28 @@ public class CursoController extends HttpServlet {
             cursoService.register(curso);
             resp.sendRedirect(req.getContextPath() + "/cursos");
         } catch (Exception e) {
-            System.out.println("Erro ao criar curso: " + curso);
+            System.out.println("Erro ao registrar curso: " + curso);
             e.printStackTrace();
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);;
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private void delete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        try {
+            cursoService.delete(UUID.fromString(req.getParameter("uuid")));
+
+            Map<String, String[]> params = req.getParameterMap();
+            if (params.containsKey("page") && params.containsKey("page-size")) {
+                resp.sendRedirect(String.format("/cursos?page=%d&page-size=%d",
+                        Integer.parseInt(req.getParameter("page")),
+                        Integer.parseInt(req.getParameter("page-size")))
+                );
+                return;
+            }
+            resp.sendRedirect("/cursos");
+        } catch (Exception e) {
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 

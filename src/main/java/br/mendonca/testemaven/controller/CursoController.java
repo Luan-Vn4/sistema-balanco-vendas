@@ -1,7 +1,6 @@
 package br.mendonca.testemaven.controller;
 
 import br.mendonca.testemaven.model.entities.Curso;
-import br.mendonca.testemaven.model.entities.Professor;
 import br.mendonca.testemaven.services.CursoService;
 import br.mendonca.testemaven.utils.PageRequest;
 import br.mendonca.testemaven.utils.PagedResult;

@@ -108,3 +108,4 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 - pendencia da S2: - o usuario consegue ver as propriedades da entidade
 - por meio do endpoint install povoar o BD com 7 entidades de Cursos
 - o usuario pode visualizar por meio de paginaçao
+- atualizar o readme

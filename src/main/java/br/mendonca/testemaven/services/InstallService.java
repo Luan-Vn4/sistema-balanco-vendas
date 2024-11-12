@@ -94,8 +94,8 @@ public class InstallService {
                 + "    uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
                 + "    nome VARCHAR(255) NOT NULL,"
                 + "    media_mec DOUBLE PRECISION,"
-                + "    is_ativo BOOLEAN,"
-                + ")");
+                + "    is_ativo BOOLEAN)"
+		);
     }
 
 	public void populateCursosTable() throws ClassNotFoundException, SQLException {

@@ -2,6 +2,7 @@ package br.mendonca.testemaven.services;
 
 import br.mendonca.testemaven.dao.CursoDAO;
 import br.mendonca.testemaven.model.entities.Curso;
+import br.mendonca.testemaven.model.entities.Professor;
 import br.mendonca.testemaven.utils.PageRequest;
 import br.mendonca.testemaven.utils.PagedResult;
 
@@ -18,27 +19,25 @@ public class CursoService {
         dao.register(curso);
     }
 
-//    public void update(Curso curso) throws SQLException, ClassNotFoundException {
-//        dao.update(curso);
-//    }
+    public List<Curso> getAll() throws SQLException, ClassNotFoundException {
+        return dao.findAll();
+    }
 
+    /**
+     * @throws IllegalArgumentException caso o tamanho da página ou o número da página sejam negativos
+     */
     public PagedResult<Curso> getAll(PageRequest pageRequest) throws SQLException, ClassNotFoundException {
         if (pageRequest.getSize() < 0 || pageRequest.getPage() < 0) {
             throw new IllegalArgumentException("O tamanho e número da página devem ser positivos");
         }
+
         return dao.findAll(pageRequest);
     }
-
-
-
 
     public Optional<Curso> getByUuid(UUID uuid) throws SQLException, ClassNotFoundException {
         return dao.findByUID(uuid);
     }
 
-//    public void deletar(UUID uuid) throws SQLException, ClassNotFoundException {
-//        dao.deletar(uuid);
-//    }
 
 
 }

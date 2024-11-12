@@ -92,8 +92,6 @@
       <%= curso.getAtivo() ? "Ativo ✅" : "Inativo ❌" %>
     </p>
 
-    <h2 class="text-center">UUID do Usuário</h2>
-    <p class="text-center"><%= curso.getUserUuid() %></p>
   </div>
 
   <a href="/cursos" class="btn-back">Voltar para a lista de cursos</a>

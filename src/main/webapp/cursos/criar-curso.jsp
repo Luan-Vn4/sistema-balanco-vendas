@@ -27,8 +27,6 @@
         <option value="false">Não</option>
     </select>
 
-    <input type="text" name="user-uuid" value="${userUuid}" hidden="hidden">
-
     <div class="d-flex justify-content-center">
         <button class="btn btn-primary py-3 mt-5 px-5 shadow-lg"
                 style="font-size: 1.5em; width: auto; background-color: #007bff; border-radius: 12px; transition: all 0.3s ease;">

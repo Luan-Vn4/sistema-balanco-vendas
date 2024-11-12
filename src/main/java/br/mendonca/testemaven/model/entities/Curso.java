@@ -7,7 +7,7 @@ public class Curso {
     private UUID uuid;
     private String nome;
     private double mediaMec;
-    private Boolean isAtivo;
+    private boolean isAtivo;
 //    private UUID userUuid;
 
 
@@ -36,11 +36,11 @@ public class Curso {
         this.mediaMec = mediaMec;
     }
 
-    public Boolean getAtivo() {
+    public boolean getAtivo() {
         return isAtivo;
     }
 
-    public void setAtivo(Boolean ativo) {
+    public void setAtivo(boolean ativo) {
         isAtivo = ativo;
     }
 

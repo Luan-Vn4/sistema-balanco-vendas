@@ -18,11 +18,11 @@ public class CursoDAO {
         Connection conn = ConnectionPostgres.getConexao();
         conn.setAutoCommit(true);
 
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO cursos (nome, media_mec, is_ativo, user_uuid) values (?, ?, ?, ?)");
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO cursos (nome, media_mec, is_ativo) values (?, ?, ?)");
         ps.setString(1, curso.getNome());
         ps.setDouble(2, curso.getMediaMec());
         ps.setBoolean(3, curso.getAtivo());
-        ps.setObject(4, curso.getUserUuid()); // Usar setObject para UUID
+
 
         ps.execute();
         ps.close();
@@ -45,6 +45,9 @@ public class CursoDAO {
         while (rs.next()) {
             Curso curso = new Curso();
             curso.setUuid((UUID) rs.getObject("uuid"));
+            curso.setNome(rs.getString("nome"));
+            curso.setMediaMec(rs.getDouble("media_mec"));
+            curso.setAtivo(rs.getBoolean("is_ativo"));
             lista.add(curso);
         }
         return lista;
@@ -60,11 +63,13 @@ public class CursoDAO {
         int totalPages = (int) Math.ceil(totalElements / (double) pageRequest.getSize());
         PreparedStatement st = conn.prepareStatement("SELECT * FROM cursos LIMIT ? OFFSET ?");
         st.setInt(1, pageRequest.getSize());
-        st.setInt(2, pageRequest.getSize() * (pageRequest.getSize() - 1));
+        st.setInt(2, pageRequest.getSize() * (pageRequest.getPage()));
         ResultSet rs = st.executeQuery();
         ArrayList<Curso> lista = unwrapResultSet(rs);
         var result = new PagedResult<>(lista, pageRequest.getPage(), totalPages, totalElements,
                 pageRequest.getSize());
+
+        System.out.println(lista);
         rs.close();
         return result;
     }
@@ -74,11 +79,15 @@ public class CursoDAO {
         conn.setAutoCommit(true);
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM cursos");
+
+        rs.next();
         int count = rs.getInt(1);
+
         st.close();
         rs.close();
         return count;
     }
+
 
 
 //    public void update(Curso curso) throws ClassNotFoundException, SQLException {
@@ -115,7 +124,6 @@ public class CursoDAO {
             curso.setNome(rs.getString("nome"));
             curso.setMediaMec(rs.getDouble("media_mec"));
             curso.setAtivo(rs.getBoolean("is_ativo"));
-            curso.setUserUuid((UUID) rs.getObject("user_uuid"));
         }
 
         rs.close();

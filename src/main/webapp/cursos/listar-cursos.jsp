@@ -46,9 +46,6 @@
       <td><a href="cursos?uuid=<%= curso.getUuid() %>" class="text-decoration-none text-light">
         Visualizar <i class="bi-eye"></i></a>
       </td>
-      <td><a href="cursos/update?uuid=<%= curso.getUuid() %>" class="text-decoration-none text-light">
-        Editar <i class="bi-pencil"></i></a>
-      <td>
         <form action="cursos/delete?uuid=<%= curso.getUuid() %>" method="post">
           <button class="text-decoration-none text-light btn btn-link p-0">
             Deletar <i class="bi-trash"></i>

@@ -77,6 +77,13 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 - [x] O usuário consegue visualizar as propriedades de um professor ao clicar em um registro da lista
 - [x] Coloquei as demandas resolvidas no README.md
 
+### Semana 3 - Melissa
+- o usuario ao usar /install popula a tabela disciplinas com 7 disciplinas
+- o usuario visualiza todos os itens listados com paginação
+- o usuário pode deletar uma entidade cadastrada da listagem, mas a entidade não é apagada do banco, so muda sua visualização
+- o usuario atraves de um item do menu pode listar os "ocultos"
+- README atualizado com as demandas de hoje
+
 ---
 
 ### Semana 3 - Luan Vilaça Nogueira
@@ -94,3 +101,6 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 ### Semana 3 - Erick
 - O usuário instala as novas tabelas do banco com 7 indivíduos pelo endpoint "install"
 - O usuário visualiza todos os indivíduos listados com paginação de 3 indivíduos
+- O usuário pode deletar um indivíduo cadastrado da listagem, sem apagá-lo do banco
+- O usuário através de um item de menu pode listar os "ocultos"
+- atualização do README com demandas de hoje.

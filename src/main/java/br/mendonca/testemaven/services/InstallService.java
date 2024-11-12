@@ -44,8 +44,21 @@ public class InstallService {
                 + "uuid UUID DEFAULT gen_random_uuid() NOT NULL,"
                 + "nome VARCHAR(255) NOT NULL,"
                 + "carga_horaria INT NOT NULL,"
-                + "is_ativo BOOLEAN NOT NULL)");
+                + "is_ativo BOOLEAN NOT NULL," +
+				"visualizacao BOOLEAN NOT NULL)");
     }
+
+	public void populateDisciplinaTable() throws ClassNotFoundException, SQLException {
+		statement("INSERT INTO disciplinas (nome, carga_horaria, is_ativo, visualizacao) VALUES "
+				+ "('Matemática', 60, true, true), "
+				+ "('Física', 45, true, true), "
+				+ "('Química', 50, true, true), "
+				+ "('Biologia', 40, true, true), "
+				+ "('História', 35, true, true), "
+				+ "('Geografia', 30, true, true), "
+				+ "('Literatura', 55, true, true)"
+		);
+	}
 
 
 	public void deleteProfessoresTable() throws ClassNotFoundException, SQLException {

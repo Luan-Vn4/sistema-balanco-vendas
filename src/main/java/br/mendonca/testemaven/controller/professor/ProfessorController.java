@@ -12,7 +12,8 @@ import java.io.IOException;
 import java.util.*;
 
 @SuppressWarnings("CallToPrintStackTrace")
-@WebServlet(value = {"/professores", "/professores/create", "/professores/delete"})
+@WebServlet(value = {"/professores", "/professores/create", "/professores/delete",
+    "/professores/deleted"})
 public class ProfessorController extends HttpServlet {
 
     ProfessorService professorService = new ProfessorService();
@@ -82,6 +83,11 @@ public class ProfessorController extends HttpServlet {
             getCreationPage(req, resp);
         } else if (req.getServletPath().equals("/professores") && params.isEmpty()) {
             resp.sendRedirect("/professores?page=0&page-size=3");
+        } else if (req.getServletPath().equals("/professores/deleted") && params.isEmpty()) {
+            resp.sendRedirect("professores/deleted?page=0&page-size=3");
+        } else if (req.getServletPath().equals("/professores/deleted") && params.containsKey("page")
+            && params.containsKey("page-size") ) {
+            getDeletedList(req, resp);
         } else if (req.getServletPath().equals("/professores") && params.containsKey("uuid")) {
             getViewPage(req, resp);
         } else if (req.getServletPath().equals("/professores") && params.containsKey("page")
@@ -151,6 +157,24 @@ public class ProfessorController extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         } catch (Exception e) {
             System.out.println("Erro ao obter página de criar professor");
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private void getDeletedList(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        int page = Integer.parseInt(req.getParameter("page"));
+        int pageSize = Integer.parseInt(req.getParameter("page-size"));
+        PageRequest pageRequest = new PageRequest(page, pageSize);
+
+        try {
+            PagedResult<Professor> professores = professorService.getAllDeleted(pageRequest);
+            req.setAttribute("professores", professores);
+            req.getRequestDispatcher("/professor/listar-professores-deletados.jsp").forward(req, resp);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        } catch (Exception e) {
             e.printStackTrace();
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }

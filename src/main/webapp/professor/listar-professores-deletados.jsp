@@ -24,26 +24,15 @@
 %>
 
 <main class="p-3">
-  <h1>Listagem de Professores</h1>
+  <h1>Listagem de Professores Deletados</h1>
   <br>
   <h3>Total: <%= pagedResult.getTotalElements() %></h3>
-  <div class="d-flex justify-content-end text-decoration-none text-light" style="font-size:1.25em">
-    <a class="text-decoration-none text-light me-3"
-       href="${pageContext.request.contextPath}/professores/deleted?page=0&page-size=<%= pageSize %>">
-      <p>Ver Deletados <i class="bi bi-eye-slash"></i></p>
-    </a>
-    <a class="text-decoration-none text-light"
-       href="${pageContext.request.contextPath}/professores/create">
-      <p>Adicionar <i class="bi bi-plus-circle"></i></p>
-    </a>
-  </div>
   <table class="table">
     <thead>
     <tr>
       <th>Nome</th>
       <th>Salário</th>
       <th>Ativo</th>
-      <th></th>
       <th></th>
     </tr>
     </thead>
@@ -57,16 +46,9 @@
       <td><%= professor.isAtivo() ? "Ativo ✅" : "Inativo ❌" %></td>
       <td>
         <a class="text-decoration-none text-light"
-           href="professores?uuid=<%= professor.getUuid() %>">
+           href="/professores?uuid=<%= professor.getUuid() %>">
           Visualizar <i class="bi bi-eye"></i>
         </a>
-      </td>
-      <td>
-        <form action="professores/delete?uuid=<%= professor.getUuid() %>" method="post">
-          <button class="text-decoration-none text-light btn btn-link p-0">
-            Deletar <i class="bi-trash"></i>
-          </button>
-        </form>
       </td>
     </tr>
     <%
@@ -85,7 +67,7 @@
       %>
       <li class="page-item">
         <a class="page-link"
-           href="/professores?page=<%= pagedResult.getCurrentPage()-1 %>&page-size=<%= pageSize %>">
+           href="/professores/deleted?page=<%= pagedResult.getCurrentPage()-1 %>&page-size=<%= pageSize %>">
           Voltar
         </a>
       </li>
@@ -99,7 +81,7 @@
       %>
       <li class="page-item">
         <a class="page-link"
-           href="/professores?page=<%=i%>&page-size=<%= pageSize %>">
+           href="/professores/deleted?page=<%=i%>&page-size=<%= pageSize %>">
           <%= i+1 %>
         </a>
       </li>
@@ -113,7 +95,7 @@
       %>
       <li class="page-item">
         <a class="page-link"
-           href="/professores?page=<%= pagedResult.getCurrentPage()+1 %>&page-size=<%= pageSize %>">
+           href="/professores/deleted?page=<%= pagedResult.getCurrentPage()+1 %>&page-size=<%= pageSize %>">
           Avançar
         </a>
       </li>

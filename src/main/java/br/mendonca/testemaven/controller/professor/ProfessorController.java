@@ -9,13 +9,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @SuppressWarnings("CallToPrintStackTrace")
-@WebServlet(value = {"/professores", "/professores/create"})
+@WebServlet(value = {"/professores", "/professores/create", "/professores/delete"})
 public class ProfessorController extends HttpServlet {
 
     ProfessorService professorService = new ProfessorService();
@@ -28,11 +25,17 @@ public class ProfessorController extends HttpServlet {
         }
 
         Map<String, String[]> params = req.getParameterMap();
-        if (params.isEmpty() | !params.containsKey("nome") | !params.containsKey("salario")
-            | !params.containsKey("ativo")) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Há dados do professor que estão faltando");
+        if (req.getServletPath().equals("/professores/create") && !params.isEmpty() && params.containsKey("nome")
+            && params.containsKey("salario") && params.containsKey("ativo")) {
+            create(req, resp);
+        } else if (req.getServletPath().equals("/professores/delete") && params.containsKey("uuid")) {
+            delete(req, resp);
+        } else {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
+    }
 
+    private void create(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Professor professor = new Professor();
         professor.setNome(req.getParameter("nome"));
         professor.setSalario(Double.parseDouble(req.getParameter("salario")));
@@ -43,6 +46,25 @@ public class ProfessorController extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/professores");
         } catch (Exception e) {
             System.out.println("Erro ao cadastrar professor: " + professor);
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private void delete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        try {
+            professorService.delete(UUID.fromString(req.getParameter("uuid")));
+
+            Map<String, String[]> params = req.getParameterMap();
+            if (params.containsKey("page") && params.containsKey("page-size")) {
+                resp.sendRedirect(String.format("/professores?page=%d&page-size=%d",
+                    Integer.parseInt(req.getParameter("page")),
+                    Integer.parseInt(req.getParameter("page-size")))
+                );
+                return;
+            }
+            resp.sendRedirect("/professores");
+        } catch (Exception e) {
             e.printStackTrace();
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }

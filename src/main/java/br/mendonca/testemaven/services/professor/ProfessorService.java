@@ -33,6 +33,14 @@ public class ProfessorService {
         return professorDAO.findAll(pageRequest);
     }
 
+    public PagedResult<Professor> getAllDeleted(PageRequest pageRequest) throws SQLException, ClassNotFoundException {
+        if (pageRequest.getSize() < 0 || pageRequest.getPage() < 0) {
+            throw new IllegalArgumentException("O tamanho e número da página devem ser positivos");
+        }
+
+        return professorDAO.findAllDeleted(pageRequest);
+    }
+
     public Optional<Professor> getByUuid(UUID uuid) throws SQLException, ClassNotFoundException {
         return professorDAO.findByUID(uuid);
     }

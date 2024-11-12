@@ -14,10 +14,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="style.css" rel="stylesheet">
 </head>
-<body class="d-flex align-items-center py-4 bg-body-tertiary">
-
+<body>
+<jsp:include page="../resources/components/header.jsp"/>
 <main class="container mt-5">
-    <jsp:include page="../resources/components/header.jsp"/>
 
     <h1 class="h3 mb-3 fw-normal">Detalhes da Disciplina</h1>
 

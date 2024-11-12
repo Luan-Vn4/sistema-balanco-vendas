@@ -1,68 +1,57 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.List"%>
+<%--suppress unchecked --%>
+<%@ page import="java.util.List" %>
+<%@ page import="br.mendonca.testemaven.model.entities.Professor" %>
 <%@ page import="br.mendonca.testemaven.model.entities.Disciplina" %>
-
-<% if (session.getAttribute("user") != null ) { %>
-
+<%@ page contentType="text/html;charset=UTF-8" %>
 <!doctype html>
 <html lang="pt-br" data-bs-theme="dark">
+
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Gerência de Disciplinas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="style.css" rel="stylesheet">
+    <title>Listar Professores</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 </head>
-<body class="d-flex align-items-center py-4 bg-body-tertiary">
 
-<main class="w-100 m-auto form-container">
-    <jsp:include page="/resources/components/header.jsp"/>
-
-    <h1 class="h3 mb-3 fw-normal">Lista de Disciplinas</h1>
+<body>
+<jsp:include page="/resources/components/header.jsp"/>
+<main class="p-3">
+    <h1>Listagem de Disciplinas</h1>
+    <a class="d-flex justify-content-end text-decoration-none text-light" style="font-size:1.25em"
+       href="${pageContext.request.contextPath}/disciplina/disciplinaAdd.jsp">
+        <p>Adicionar <i class="bi bi-plus-circle"></i></p>
+    </a>
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">Nome</th>
-            <th scope="col">Carga Horária</th>
-            <th scope="col">Ativo</th>
+            <th>Nome</th>
+            <th>Carga horária</th>
+            <th>Ativo</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
         <%
             List<Disciplina> disciplinas = (List<Disciplina>) request.getAttribute("disciplinas");
-            System.out.println("Disciplinas recebidas: " + disciplinas);
-            if (disciplinas != null && !disciplinas.isEmpty()) {
-                for (Disciplina disciplina : disciplinas) {
+            for (Disciplina disciplina : disciplinas) {
         %>
         <tr>
-            <td><%= disciplina.getNome() %></td>
-            <td><%= disciplina.getCargaHoraria() %> horas</td>
-            <td><%= disciplina.getIsAtiva() ? "Sim" : "Não" %></td>
-            <td>
-                <a href="/disciplina/edit?uuid=<%= disciplina.getUuid() %>" class="btn btn-primary btn-sm">Editar</a>
-                <a href="/disciplina/delete?uuid=<%= disciplina.getUuid() %>" class="btn btn-danger btn-sm" onclick="return confirm('Deseja realmente apagar esta disciplina?');">Apagar</a>
-            </td>
+            <td><a href="disciplina?uuid=<%= disciplina.getUuid() %>"><%= disciplina.getNome() %></a></td>
+            <td><%= disciplina.getCargaHoraria() %></td>
+            <td><%= disciplina.getIsAtiva() ? "Ativo ✅" : "Inativo ❌" %></td>
         </tr>
-        <%
-            }
-        } else {
-        %>
-        <tr>
-            <td colspan="4">Nenhuma disciplina cadastrada.</td>
         </tr>
         <%
             }
         %>
-
         </tbody>
-
     </table>
-
-    <a href="/disciplina/disciplinaAdd.jsp" class="btn btn-success">Adicionar Nova Disciplina</a>
 </main>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 </body>
 </html>
-
-<% } %>

@@ -1,6 +1,7 @@
 package br.mendonca.testemaven.controller.disciplina;
 
 import br.mendonca.testemaven.model.entities.Disciplina;
+import br.mendonca.testemaven.model.entities.Professor;
 import br.mendonca.testemaven.services.DisciplinaService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,6 +12,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @WebServlet("/disciplina")
@@ -22,7 +25,7 @@ public class DisciplinaServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String nome = req.getParameter("nome");
         int cargaHoraria = Integer.parseInt(req.getParameter("cargaHoraria"));
-        // Verifica se o parâmetro 'isAtiva' foi enviado (checkbox pode não estar presente se não marcado)
+        // Verifica se o parï¿½metro 'isAtiva' foi enviado (checkbox pode nï¿½o estar presente se nï¿½o marcado)
         boolean isAtiva = req.getParameter("isAtiva") != null;
 
         Disciplina disciplina = new Disciplina();
@@ -36,26 +39,59 @@ public class DisciplinaServlet extends HttpServlet {
 
         try {
             disciplinaService.register(disciplina);
-            // Redirecionar para a lista de disciplinas após a adição bem-sucedida
-            resp.sendRedirect(req.getContextPath() + "/disciplina/disciplinas.jsp"); // Redireciona para o método doGet
+            // Redirecionar para a lista de disciplinas apï¿½s a adiï¿½ï¿½o bem-sucedida
+            resp.sendRedirect(req.getContextPath() + "/disciplina");
         } catch (ClassNotFoundException | SQLException e) {
-            // Lidar com erro, pode redirecionar para uma página de erro ou mostrar uma mensagem
+            // Lidar com erro, pode redirecionar para uma pï¿½gina de erro ou mostrar uma mensagem
             e.printStackTrace(); // Loga o erro no console
             req.setAttribute("error", "Erro ao adicionar a disciplina");
-            req.getRequestDispatcher("/disciplina").forward(req, resp); // Redireciona de volta para a página de adição
+            req.getRequestDispatcher("/disciplina").forward(req, resp); // Redireciona de volta para a pï¿½gina de adiï¿½ï¿½o
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("doGet chamado!");
+        Map<String, String[]> params = req.getParameterMap();
+
+        if (req.getParameterMap().isEmpty()) {
+            getAll(req, resp);
+        } else if (req.getServletPath().equals("/disciplina") && params.containsKey("uuid")){
+            getViewPage(req, resp);
+        }else {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+        }
+    }
+
+    public void getAll(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             List<Disciplina> disciplinas = disciplinaService.listAllDisciplinas();
             req.setAttribute("disciplinas", disciplinas);
-            System.out.println(disciplinas);// Definindo a lista no request
             req.getRequestDispatcher("/disciplina/disciplinas.jsp").forward(req, resp);
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void getViewPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        try {
+            Optional<Disciplina> disciplina = Optional.ofNullable(disciplinaService.listDisciplinaByUuid(UUID.fromString(req.getParameter("uuid"))));
+
+            if (disciplina.isEmpty()) {
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND, "NÃ£o foi encontrado nenhuma disciplina com o " +
+                        "UUID: " + req.getParameter("uuid"));
+                return;
+            }
+
+            req.setAttribute("disciplina", disciplina.get());
+            req.getRequestDispatcher("/disciplina/disciplinaView.jsp").forward(req, resp);
+        } catch (IllegalArgumentException e) {
+            System.out.println("UUID enviado Ã© invÃ¡lido: " + req.getParameter("uuid"));
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        } catch (Exception e) {
+            System.out.println("Erro ao obter pÃ¡gina");
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -64,16 +100,16 @@ public class DisciplinaServlet extends HttpServlet {
         String uuidParam = req.getParameter("uuid");
 
         if (uuidParam == null || uuidParam.isEmpty()) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "UUID inválido ou ausente.");
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "UUID invï¿½lido ou ausente.");
             return;
         }
 
         try {
             UUID uuid = UUID.fromString(uuidParam);
             disciplinaService.deletar(uuid);
-            resp.setStatus(HttpServletResponse.SC_NO_CONTENT); // Indica que a exclusão foi bem-sucedida
+            resp.setStatus(HttpServletResponse.SC_NO_CONTENT); // Indica que a exclusï¿½o foi bem-sucedida
         } catch (IllegalArgumentException e) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "UUID inválido.");
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "UUID invï¿½lido.");
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException("Erro ao deletar a disciplina", e);
         }

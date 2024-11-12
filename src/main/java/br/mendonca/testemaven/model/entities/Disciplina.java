@@ -21,7 +21,7 @@ public class Disciplina {
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
     public int getCargaHoraria() { return cargaHoraria; }
-    public int setCargaHoraria(int cargaHoraria) { return cargaHoraria; }
+    public void setCargaHoraria(int cargaHoraria) { this.cargaHoraria = cargaHoraria; }
     public boolean getIsAtiva() { return isAtiva; }
     public void setIsAtiva(boolean isAtiva) { this.isAtiva = isAtiva; }
 }

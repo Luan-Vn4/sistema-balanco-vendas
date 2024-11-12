@@ -57,7 +57,8 @@ public class InstallService {
 			+ "uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
 			+ "nome VARCHAR(255) NOT NULL,"
 			+ "salario DECIMAL(10,2) NOT NULL,"
-			+ "ativo BOOLEAN NOT NULL)"
+			+ "ativo BOOLEAN NOT NULL,"
+			+ "deleted BOOLEAN DEFAULT false NOT NULL)"
 		);
 	}
 

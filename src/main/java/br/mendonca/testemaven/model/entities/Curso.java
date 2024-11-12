@@ -8,6 +8,7 @@ public class Curso {
     private String nome;
     private double mediaMec;
     private boolean isAtivo;
+    private boolean deleted;
 //    private UUID userUuid;
 
 
@@ -44,7 +45,18 @@ public class Curso {
         isAtivo = ativo;
     }
 
-//    public UUID getUserUuid() {
+    public boolean isAtivo() {
+        return isAtivo;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+    //    public UUID getUserUuid() {
 //        return userUuid;
 //    }
 //

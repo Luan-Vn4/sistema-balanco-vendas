@@ -66,13 +66,15 @@ public class ProfessorDAO {
 
         PreparedStatement st = conn.prepareStatement("SELECT * FROM professores LIMIT ? OFFSET ?");
         st.setInt(1, pageRequest.getSize());
-        st.setInt(2, pageRequest.getSize() * (pageRequest.getSize() - 1));
+        st.setInt(2, pageRequest.getSize() * pageRequest.getPage());
         ResultSet rs = st.executeQuery();
 
         ArrayList<Professor> lista = unwrapResultSet(rs);
 
         var result = new PagedResult<>(lista, pageRequest.getPage(), totalPages, totalElements,
                                        pageRequest.getSize());
+
+        System.out.println(lista);
 
         rs.close();
         return result;
@@ -85,6 +87,7 @@ public class ProfessorDAO {
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM professores");
 
+        rs.next();
         int count = rs.getInt(1);
 
         st.close();

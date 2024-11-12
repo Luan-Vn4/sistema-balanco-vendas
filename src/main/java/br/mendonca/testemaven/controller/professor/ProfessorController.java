@@ -2,6 +2,8 @@ package br.mendonca.testemaven.controller.professor;
 
 import br.mendonca.testemaven.model.entities.Professor;
 import br.mendonca.testemaven.services.professor.ProfessorService;
+import br.mendonca.testemaven.utils.PageRequest;
+import br.mendonca.testemaven.utils.PagedResult;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -57,9 +59,12 @@ public class ProfessorController extends HttpServlet {
         if (req.getServletPath().equals("/professores/create")) {
             getCreationPage(req, resp);
         } else if (req.getServletPath().equals("/professores") && params.isEmpty()) {
-            getListPage(req, resp);
+            resp.sendRedirect("/professores?page=0&page-size=3");
         } else if (req.getServletPath().equals("/professores") && params.containsKey("uuid")) {
             getViewPage(req, resp);
+        } else if (req.getServletPath().equals("/professores") && params.containsKey("page")
+            && params.containsKey("page-size")) {
+            getPaginatedListPage(req, resp);
         } else {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
@@ -75,6 +80,25 @@ public class ProfessorController extends HttpServlet {
             e.printStackTrace();
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    private void getPaginatedListPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        int page = Integer.parseInt(req.getParameter("page"));
+        int pageSize = Integer.parseInt(req.getParameter("page-size"));
+        PageRequest pageRequest = new PageRequest(page, pageSize);
+
+        try {
+            PagedResult<Professor> professores = professorService.getAll(pageRequest);
+            req.setAttribute("professores", professores);
+            req.getRequestDispatcher("/professor/listar-professores.jsp").forward(req, resp);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     private void getCreationPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {

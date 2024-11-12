@@ -52,6 +52,3 @@ Sistema busca fazer um balanço dos ganhos e despesas de uma organização de ve
 - o usuario consegue ver as propriedades da entidade
 - preencher about
 - preencher readme
-- ### Semana 3 - Erick
-- o usuário consegue instalar tabela alunos com 7 individuos no /install
-

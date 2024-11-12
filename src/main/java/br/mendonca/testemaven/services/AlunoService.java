@@ -9,12 +9,13 @@ import br.mendonca.testemaven.model.entities.Aluno;
 
 public class AlunoService {
 
-    public void register(String nome, double media, boolean isAtivo) throws ClassNotFoundException, SQLException {
+    public void register(String nome, double media,boolean deletado, boolean isAtivo) throws ClassNotFoundException, SQLException {
         AlunoDAO dao = new AlunoDAO();
 
         Aluno aluno = new Aluno();
         aluno.setNome(nome);
         aluno.setMedia(media);
+        aluno.setDeletado(deletado);
         aluno.setAtivo(isAtivo);
 
         dao.register(aluno);
@@ -40,4 +41,19 @@ public class AlunoService {
 
         return aluno != null ? aluno : null;
     }
+
+    public List<Aluno> listAlunosPaginated(int pageNumber) throws ClassNotFoundException, SQLException {
+        AlunoDAO dao = new AlunoDAO();
+        int pageSize = 3;
+        return dao.listAlunosPaginated(pageNumber, pageSize);
+    }
+
+    public int getTotalPages() throws ClassNotFoundException, SQLException {
+        AlunoDAO dao = new AlunoDAO();
+        int totalAlunos = dao.countAllAlunos();
+        int pageSize = 3;
+        return (int) Math.ceil((double) totalAlunos / pageSize);
+    }
+
+
 }

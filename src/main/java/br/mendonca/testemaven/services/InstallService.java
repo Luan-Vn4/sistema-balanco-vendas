@@ -95,7 +95,6 @@ public class InstallService {
                 + "    nome VARCHAR(255) NOT NULL,"
                 + "    media_mec DOUBLE PRECISION,"
                 + "    is_ativo BOOLEAN,"
-                + "    user_uuid UUID REFERENCES users(uuid) ON DELETE SET NULL"
                 + ")");
     }
 

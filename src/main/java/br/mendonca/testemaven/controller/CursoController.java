@@ -59,12 +59,15 @@ public class CursoController extends HttpServlet {
             return;
         }
 
+        Map<String, String[]> params = req.getParameterMap();
         if (req.getServletPath().equals("/cursos/create")) {
             getCreationPage(req, resp);
         } else if (req.getServletPath().equals("/cursos/update")) {
             getUpdatePage(req, resp);
-        } else if (req.getParameterMap().isEmpty()) {
-            getAll(req, resp);
+        } else if (req.getServletPath().equals("/cursos") && params.isEmpty()) {
+            getListPage(req, resp);
+        } else if (req.getServletPath().equals("/cursos") && params.containsKey("uuid")) {
+            getViewPage(req, resp);
         } else {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
@@ -89,14 +92,15 @@ public class CursoController extends HttpServlet {
         //TODO página de update
     }
 
-    private void getAll(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    private void getListPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
-            List<Curso> cursos = cursoService.listAllCurso();
-            req.setAttribute("cursos", cursos);
-            getServletContext().getRequestDispatcher("/cursos/listar-cursos.jsp").forward(req, resp);
+            List<Curso> list = cursoService.listAllCurso();
+            req.setAttribute("cursos", list);
+            req.getRequestDispatcher("/cursos/listar-cursos.jsp").forward(req, resp);
         } catch (Exception e) {
-            logger.log(Level.SEVERE , e.getMessage(), e);
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+            System.out.println("Erro ao listar cursos");
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 

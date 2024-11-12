@@ -7,26 +7,26 @@ import java.sql.Statement;
 import br.mendonca.testemaven.dao.ConnectionPostgres;
 
 public class InstallService {
-	
+
 	private void statement(String sql) throws ClassNotFoundException, SQLException {
 		Connection conn = ConnectionPostgres.getConexao();
 		conn.setAutoCommit(true);
-		
+
 		Statement st = conn.createStatement();
 		st.executeUpdate(sql);
 		st.close();
 	}
-	
+
 	public void testConnection() throws ClassNotFoundException, SQLException {
 		ConnectionPostgres.getConexao();
 	}
-	
+
 	public void deleteUserTable() throws ClassNotFoundException, SQLException {
 
 		statement("DROP TABLE IF EXISTS users CASCADE");
 
 	}
-	
+
 	public void createUserTable() throws ClassNotFoundException, SQLException {
 		statement("CREATE TABLE users ("
 					+ "    uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
@@ -79,10 +79,11 @@ public class InstallService {
 
     public void createAlunoTable() throws ClassNotFoundException, SQLException {
         statement("CREATE TABLE alunos ("
-            + " uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
-            + " nome VARCHAR(255) NOT NULL,"
-            + " media DECIMAL NOT NULL,"
-            + "isAtivo BOOLEAN NOT NULL)");
+                + " uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
+                + " nome VARCHAR(255) NOT NULL,"
+                + " media DECIMAL NOT NULL,"
+                + " deletado BOOLEAN NOT NULL,"
+                + " isAtivo BOOLEAN NOT NULL)");
     }
 
     public void deleteCursoTable() throws ClassNotFoundException, SQLException {
@@ -98,4 +99,16 @@ public class InstallService {
                 + "    user_uuid UUID REFERENCES users(uuid) ON DELETE SET NULL"
                 + ")");
     }
+
+    public void populateAlunosTable() throws ClassNotFoundException, SQLException {
+        statement("INSERT INTO alunos (nome, media, deletado, isAtivo) VALUES "
+                + "('Alice', 8.5, false, true),"
+                + "('Bruno', 7.2, false, false),"
+                + "('Carla', 9.0,false, true),"
+                + "('Daniel', 5.8, false, false),"
+                + "('Elisa', 7.9, false, true),"
+                + "('Felipe', 6.3, false, true),"
+                + "('Gabriela', 8.7, false, false)");
+    }
+
 }

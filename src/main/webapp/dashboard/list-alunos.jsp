@@ -23,13 +23,12 @@
        href="${pageContext.request.contextPath}/dashboard/criar-aluno.jsp">
         <p>Adicionar <i class="bi bi-plus-circle"></i></p>
     </a>
+
     <table class="table">
         <thead>
         <tr>
             <th scope="col"></th>
             <th scope="col">Nome</th>
-            <th scope="col">Média</th>
-            <th scope="col">Ativo</th>
             <th scope="col"></th>
         </tr>
         </thead>
@@ -41,18 +40,34 @@
         <tr>
             <td>Editar</td>
             <td><a href="${pageContext.request.contextPath}/dashboard/detalhes-aluno.jsp?id=<%= aluno.getUuid() %>"><%= aluno.getNome() %></a></td>
-            <td><%= aluno.getMedia() %></td>
-            <td><%= aluno.isAtivo() %></td>
-            <td>Apagar</td>
+            <td><a href="${pageContext.request.contextPath}/dashboard/alunos?deletar=true&id=<%= aluno.getUuid() %>">Apagar</a></td>
         </tr>
         <% } %>
         </tbody>
     </table>
 
+    <div class="pagination">
+        <%
+            int currentPage = (Integer) request.getAttribute("currentPage");
+            int totalPages = (Integer) request.getAttribute("totalPages");
+            if (currentPage > 1) {
+        %>
+        <a href="?page=<%= currentPage - 1 %>" class="btn btn-primary">Anterior</a>
+        <% } else { %>
+        <button class="btn btn-secondary" disabled>Anterior</button>
+        <% } %>
 
+        <span>Página <%= currentPage %> de <%= totalPages %></span>
+
+        <%
+            if (currentPage < totalPages) {
+        %>
+        <a href="?page=<%= currentPage + 1 %>" class="btn btn-primary">Próxima</a>
+        <% } else { %>
+        <button class="btn btn-secondary" disabled>Próxima</button>
+        <% } %>
+    </div>
 </main>
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

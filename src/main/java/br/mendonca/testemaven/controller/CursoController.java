@@ -93,10 +93,30 @@ public class CursoController extends HttpServlet {
         //TODO página de update
     }
 
+    // No controlador (CursoController)
     private void getListPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
-            List<Curso> list = cursoService.listAllCurso();
-            req.setAttribute("cursos", list);
+            // Pega o número da página
+            int page = 1;
+            if (req.getParameter("page") != null) {
+                page = Integer.parseInt(req.getParameter("page"));
+            }
+
+            int pageSize = 3; // Número de cursos por página
+            List<Curso> listaCursos = cursoService.listCursosPaginated(page);
+            req.setAttribute("cursos", listaCursos);
+
+            // Passa o número da página atual
+            req.setAttribute("currentPage", page);
+
+            // Conta o número total de cursos
+            int totalCursos = cursoService.getTotalPages();
+            req.setAttribute("totalCursos", totalCursos);
+
+            // Calcula o número total de páginas
+            int totalPages = (int) Math.ceil((double) totalCursos / pageSize);
+            req.setAttribute("totalPages", totalPages);
+
             req.getRequestDispatcher("/cursos/listar-cursos.jsp").forward(req, resp);
         } catch (Exception e) {
             System.out.println("Erro ao listar cursos");
@@ -104,6 +124,8 @@ public class CursoController extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
     private void getViewPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {

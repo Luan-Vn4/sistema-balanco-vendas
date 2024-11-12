@@ -46,11 +46,11 @@
       <td><a href="cursos?uuid=<%= curso.getUuid() %>" class="text-decoration-none text-light">
         Visualizar <i class="bi-eye"></i></a>
       </td>
-        <form action="cursos/delete?uuid=<%= curso.getUuid() %>" method="post">
-          <button class="text-decoration-none text-light btn btn-link p-0">
-            Deletar <i class="bi-trash"></i>
-          </button>
-        </form>
+<%--        <form action="cursos/delete?uuid=<%= curso.getUuid() %>" method="post">--%>
+<%--          <button class="text-decoration-none text-light btn btn-link p-0">--%>
+<%--            Deletar <i class="bi-trash"></i>--%>
+<%--          </button>--%>
+<%--        </form>--%>
       </td>
     </tr>
     <%
@@ -58,6 +58,22 @@
     %>
     </tbody>
   </table>
+  <p>Página Atual: <%= (int) request.getAttribute("currentPage") %></p>
+
+  <div class="d-flex justify-content-between">
+    <!-- Botão "Anterior" -->
+    <a href="?page=<%= (int) request.getAttribute("currentPage") - 1 %>" class="btn btn-primary"
+       <% if ((int) request.getAttribute("currentPage") <= 1) { %>style="pointer-events: none;"<% } %>>
+      Anterior
+    </a>
+
+    <a href="?page=<%= (int) request.getAttribute("currentPage") + 1 %>" class="btn btn-primary"
+       <% if ((int) request.getAttribute("currentPage") >= (int) request.getAttribute("totalPages")) { %>style="pointer-events: none;"<% } %>>
+      Próxima
+    </a>
+
+  </div>
+
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

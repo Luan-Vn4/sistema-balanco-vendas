@@ -27,8 +27,6 @@
         <thead>
         <tr>
             <th>Nome</th>
-            <th>Carga horária</th>
-            <th>Ativo</th>
             <th></th>
         </tr>
         </thead>
@@ -39,8 +37,6 @@
         %>
         <tr>
             <td><a href="disciplina?uuid=<%= disciplina.getUuid() %>"><%= disciplina.getNome() %></a></td>
-            <td><%= disciplina.getCargaHoraria() %></td>
-            <td><%= disciplina.getIsAtiva() ? "Ativo ✅" : "Inativo ❌" %></td>
         </tr>
         </tr>
         <%

@@ -101,4 +101,6 @@ public class InstallService {
             + "    FOREIGN KEY (user_uuid) REFERENCES users(uuid) ON DELETE SET NULL"
             + ")");
     }
+
+
 }

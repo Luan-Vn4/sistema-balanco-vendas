@@ -33,7 +33,7 @@ public class CursoDAO {
         conn.setAutoCommit(true);
 
         Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery("SELECT * FROM cursos");
+        ResultSet rs = st.executeQuery("SELECT * FROM cursos ORDER BY data_criacao DESC");
 
         ArrayList<Curso> lista = unwrapResultSet(rs);
         rs.close();

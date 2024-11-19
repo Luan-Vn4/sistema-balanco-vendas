@@ -126,9 +126,12 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 
 ### Semana 4 - Melissa
 - Preencher com a regra de negócio escolhida a página About, entre 2 e 5
+- O usuário pode visualizar uma lista de atividades pelo tempo (timeline) suas e dos outros usuários que cadastraram uma entidade
+- E curtir a atividade, a atividade na timeline mostra a quantidade de curtidas
 
 ### Semana 4 - Erick
 - Preencher com a regra de negócio escolhida a página About, entre 2 e 5
 - O usuário pode, na listagem de usuários, selecionar um usuário para seguir
 - O usuário pode, atraves do endpoint 'seguindo' visualizar quem ele segue
 - O usuário pode, deixar de seguir
+

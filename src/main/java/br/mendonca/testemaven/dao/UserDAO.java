@@ -103,4 +103,86 @@ public class UserDAO {
 		
 		return lista;
 	}
+
+	public void followUser(String followerEmail, String followedEmail) throws ClassNotFoundException, SQLException {
+		Connection conn = ConnectionPostgres.getConexao();
+		conn.setAutoCommit(true);
+
+		PreparedStatement ps = conn.prepareStatement(
+				"INSERT INTO user_followers (follower_email, followed_email) VALUES (?, ?)"
+		);
+		ps.setString(1, followerEmail);
+		ps.setString(2, followedEmail);
+		ps.execute();
+		ps.close();
+	}
+
+	public void unfollowUser(String followerEmail, String followedEmail) throws ClassNotFoundException, SQLException {
+		Connection conn = ConnectionPostgres.getConexao();
+		conn.setAutoCommit(true);
+
+		PreparedStatement ps = conn.prepareStatement(
+				"DELETE FROM user_followers WHERE follower_email = ? AND followed_email = ?"
+		);
+		ps.setString(1, followerEmail);
+		ps.setString(2, followedEmail);
+		ps.execute();
+		ps.close();
+	}
+
+	public List<User> getFollowedUsers(String followerEmail) throws ClassNotFoundException, SQLException {
+		List<User> followedUsers = new ArrayList<>();
+		Connection conn = ConnectionPostgres.getConexao();
+		conn.setAutoCommit(true);
+
+		PreparedStatement ps = conn.prepareStatement(
+				"SELECT u.* FROM users u "
+						+ "INNER JOIN user_followers uf ON u.email = uf.followed_email "
+						+ "WHERE uf.follower_email = ?"
+		);
+		ps.setString(1, followerEmail);
+		ResultSet rs = ps.executeQuery();
+
+		while (rs.next()) {
+			User user = new User();
+			user.setUuid((UUID) rs.getObject("uuid"));
+			user.setName(rs.getString("name"));
+			user.setEmail(rs.getString("email"));
+			user.setPassword(rs.getString("password"));
+			followedUsers.add(user);
+		}
+
+		rs.close();
+		ps.close();
+		return followedUsers;
+	}
+
+	public List<User> getFollowers(String followedEmail) throws ClassNotFoundException, SQLException {
+		List<User> followers = new ArrayList<>();
+		Connection conn = ConnectionPostgres.getConexao();
+		conn.setAutoCommit(true);
+
+		PreparedStatement ps = conn.prepareStatement(
+				"SELECT u.* FROM users u "
+						+ "INNER JOIN user_followers uf ON u.email = uf.follower_email "
+						+ "WHERE uf.followed_email = ?"
+		);
+		ps.setString(1, followedEmail);
+		ResultSet rs = ps.executeQuery();
+
+		while (rs.next()) {
+			User user = new User();
+			user.setUuid((UUID) rs.getObject("uuid"));
+			user.setName(rs.getString("name"));
+			user.setEmail(rs.getString("email"));
+			user.setPassword(rs.getString("password"));
+			followers.add(user);
+		}
+
+		rs.close();
+		ps.close();
+		return followers;
+	}
+
+
 }

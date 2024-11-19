@@ -14,7 +14,7 @@
 <body>
 <jsp:include page="../resources/components/header.jsp"/>
 <h1>Adicionar Curso</h1>
-<form action="" method="post" class="d-flex flex-column" style="margin: 0 30%">
+<form action="/cursos/create" method="post" class="d-flex flex-column" style="margin: 0 30%">
     <label for="nome" style="font-size: 1.5em">Nome</label>
     <input type="text" id="nome" name="nome" required style="font-size: 2em">
 

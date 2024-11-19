@@ -28,10 +28,17 @@
   <h1>Listagem de Cursos</h1>
   <br>
   <h3>Total: <%= pagedResult.getTotalElements() %></h3>
-  <a class="d-flex justify-content-end text-decoration-none text-light" style="font-size:1.25em"
-     href="${pageContext.request.contextPath}/cursos/create">
-    <p>Adicionar <i class="bi bi-plus-circle"></i></p>
-  </a>
+  <div class="d-flex justify-content-end text-decoration-none text-light" style="font-size:1.25em">
+    <a class="text-decoration-none text-light me-3"
+       href="${pageContext.request.contextPath}/cursos/deleted?page=0&page-size=<%= pageSize %>">
+      <p>Ver Deletados <i class="bi bi-eye-slash"></i></p>
+    </a>
+    <a class="text-decoration-none text-light"
+       href="${pageContext.request.contextPath}/cursos/create">
+      <p>Adicionar <i class="bi bi-plus-circle"></i></p>
+    </a>
+  </div>
+
   <table class="table">
     <thead>
     <tr>
@@ -49,7 +56,15 @@
       <td><%= curso.getNome() %></td>
       <td><%= String.format("%.2f", curso.getMediaMec()) %></td>
       <td><%= curso.getAtivo() ? "Ativo ✅" : "Inativo ❌" %></td>
-      <td><a href="cursos?uuid=<%= curso.getUuid() %>">Visualizar</a></td>
+      <td><a href="cursos?uuid=<%= curso.getUuid() %>"  class="text-decoration-none text-light btn btn-link p-0"
+      >Visualizar <i class="bi bi-eye"></i></a></td>
+      <td>
+        <form action="cursos/delete?uuid=<%= curso.getUuid() %>" method="post">
+          <button class="text-decoration-none text-light btn btn-link p-0">
+            Deletar <i class="bi-trash"></i>
+          </button>
+        </form>
+      </td>
     </tr>
     <%
       }

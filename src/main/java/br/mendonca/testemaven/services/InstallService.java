@@ -120,19 +120,20 @@ public class InstallService {
                 + "    uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
                 + "    nome VARCHAR(255) NOT NULL,"
                 + "    media_mec DOUBLE PRECISION,"
-                + "    is_ativo BOOLEAN)"
+                + "    is_ativo BOOLEAN,"
+				+ "	is_deleted BOOLEAN DEFAULT false NOT NULL)"
 		);
     }
 
 	public void populateCursosTable() throws ClassNotFoundException, SQLException {
-		statement("INSERT INTO cursos (nome, media_mec, is_ativo) VALUES " +
-				"('Psicologia', 4, true)," +
-				"('Matematica', 3, true)," +
-				"('Farmacia', 1, false)," +
-				"('Engenharia de Software', 4, true)," +
-				"('Pedagogia', 2, false)," +
-				"('Medicina', 4, false)," +
-				"('Letras', 3, true)"
+		statement("INSERT INTO cursos (nome, media_mec, is_ativo, is_deleted) VALUES " +
+				"('Psicologia', 4, true, false)," +
+				"('Matematica', 3, true, false)," +
+				"('Farmacia', 1, false, true)," +
+				"('Engenharia de Software', 4, true, false)," +
+				"('Pedagogia', 2, false, true)," +
+				"('Medicina', 4, false, true)," +
+				"('Letras', 3, true, false)"
 		);
 	}
 }

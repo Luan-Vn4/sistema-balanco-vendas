@@ -93,9 +93,9 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 - [X] O usuário pode deletar um professor cadastrado na listagem,
   mas o indivíduo não é apagado do banco, ele é marcado para
   não visualização
-- [ ] O usuário, por meio de um item de menu, pode listas os
+- [X] O usuário, por meio de um item de menu, pode listas os
   usuários ocultos
-- [ ] Atualizei o README.md com as demandas de hoje
+- [X] Atualizei o README.md com as demandas de hoje
 
 ### Semana 3 - Erick
 - O usuário instala as novas tabelas do banco com 7 indivíduos pelo endpoint "install"

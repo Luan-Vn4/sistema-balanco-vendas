@@ -7,6 +7,7 @@ public class TimelineItemDTO {
     private String entityType;
     private String displayName;
     private long creationOrder;
+    private int curtidas;
 
     public UUID getEntityId() {
         return entityId;
@@ -38,5 +39,13 @@ public class TimelineItemDTO {
 
     public void setCreationOrder(long creationOrder) {
         this.creationOrder = creationOrder;
+    }
+
+    public int getCurtidas() {
+        return curtidas;
+    }
+
+    public void setCurtidas(int curtidas) {
+        this.curtidas = curtidas;
     }
 }

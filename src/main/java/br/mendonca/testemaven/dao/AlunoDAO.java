@@ -34,7 +34,7 @@ public class AlunoDAO {
         conn.setAutoCommit(true);
 
         Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery("SELECT * FROM alunos");
+        ResultSet rs = st.executeQuery("SELECT * FROM alunos ORDER BY data_criacao DESC");
 
         while (rs.next()) {
             Aluno aluno = new Aluno();

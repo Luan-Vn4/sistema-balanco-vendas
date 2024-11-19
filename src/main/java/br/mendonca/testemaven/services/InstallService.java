@@ -46,7 +46,8 @@ public class InstallService {
                 + "carga_horaria INT NOT NULL,"
                 + "is_ativo BOOLEAN NOT NULL," +
 				"visualizacao BOOLEAN NOT NULL," +
-				"data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)");
+				"data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL," +
+				"numero_curtidas INT DEFAULT 0)");
     }
 
 	public void populateDisciplinaTable() throws ClassNotFoundException, SQLException {
@@ -73,7 +74,8 @@ public class InstallService {
 			+ "salario DECIMAL(10,2) NOT NULL,"
 			+ "ativo BOOLEAN NOT NULL,"
 			+ "deleted BOOLEAN DEFAULT false NOT NULL," +
-			"data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)");
+			"data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL," +
+				"numero_curtidas INT DEFAULT 0)");
 	}
 
 	public void populateProfessoresTable() throws ClassNotFoundException, SQLException {
@@ -99,7 +101,8 @@ public class InstallService {
                 + " media DECIMAL NOT NULL,"
                 + " deletado BOOLEAN NOT NULL,"
                 + " isAtivo BOOLEAN NOT NULL," +
-				"data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)");
+				"data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL," +
+				"numero_curtidas INT DEFAULT 0)");
     }
 
     public void populateAlunosTable() throws ClassNotFoundException, SQLException {
@@ -124,7 +127,8 @@ public class InstallService {
                 + "    media_mec DOUBLE PRECISION,"
                 + "    is_ativo BOOLEAN,"
 				+ "	is_deleted BOOLEAN DEFAULT false NOT NULL," +
-				"data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)"
+				"data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL," +
+				"numero_curtidas INT DEFAULT 0)"
 		);
     }
 
@@ -140,5 +144,7 @@ public class InstallService {
 				"('Letras', 3, true, false)"
 		);
 	}
+
+
 
 }

@@ -31,7 +31,7 @@ public class DisciplinaDAO {
         conn.setAutoCommit(true);
 
         Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery("SELECT * FROM disciplinas WHERE visualizacao = true");
+        ResultSet rs = st.executeQuery("SELECT * FROM disciplinas WHERE visualizacao = true ORDER BY data_criacao DESC");
 
         while (rs.next()) {
             Disciplina disciplina = new Disciplina();

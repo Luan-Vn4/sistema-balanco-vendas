@@ -29,7 +29,7 @@ public class ProfessorDAO {
         conn.setAutoCommit(true);
 
         Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery("SELECT * FROM professores");
+        ResultSet rs = st.executeQuery("SELECT * FROM professores ORDER BY data_criacao DESC");
 
         ArrayList<Professor> lista = unwrapResultSet(rs);
 

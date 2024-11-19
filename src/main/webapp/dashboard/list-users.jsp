@@ -55,7 +55,7 @@
 					<% if (!loggedUser.getEmail().equals(user.getEmail())) { %>
 					<form method="post" action="<%= request.getContextPath() + "/dashboard/users" %>">
 						<input type="hidden" name="userEmail" value="<%= user.getEmail() %>">
-						<input type="hidden" name="action" value="<%= isFollowing ? "unfollow" : "follow" %>">
+						<input type="hidden" name="action" value="<%= isFollowing ? "" : "follow" %>">
 						<button type="submit" class="btn btn-sm <%= isFollowing ? "btn-success" : "btn-primary" %>">
 							<%= isFollowing ? "Seguindo" : "Seguir" %>
 						</button>

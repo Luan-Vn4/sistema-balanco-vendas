@@ -104,7 +104,6 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 - O usuário através de um item de menu pode listar os "ocultos"
 - atualização do README com demandas de hoje.
 
-<<<<<<< HEAD
 ### Semana 3 - Ana
 - pendencia da S2: - o usuario consegue ver as propriedades da entidade
 - por meio do endpoint install povoar o BD com 7 entidades de Cursos

@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List"%>
 <%@ page import="br.mendonca.testemaven.services.dto.UserDTO"%>
+<%@ page import="br.mendonca.testemaven.dao.UserDAO" %>
+<%@ page import="br.mendonca.testemaven.services.UserService" %>
+<%@ page import="java.sql.SQLException" %>
 
 <% if (session.getAttribute("user") != null && request.getAttribute("lista") != null) { %>
 
@@ -34,6 +37,7 @@
 			<thead>
 				<tr>
 					<th scope="col"></th>
+					<th scope="col"></th>
 					<th scope="col">Nome</th>
 					<th scope="col">E-mail</th>
 					<th scope="col"></th>
@@ -41,11 +45,34 @@
 			</thead>
 			<tbody>
 			<%
+			UserDTO loggedUser = (UserDTO) session.getAttribute("user");
 			List<UserDTO> lista = (List<UserDTO>) request.getAttribute("lista");
 			for (UserDTO user : lista) {
-			%>
+				UserService userService = new UserService();
+                boolean isFollowing = false;
+                try {
+                    isFollowing = userService.getFollowedUsers(loggedUser.getEmail())
+                            .stream()
+                            .anyMatch(followed -> followed.getEmail().equals(user.getEmail()));
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            %>
 			<tr>
 				<td>Editar</td>
+				<td>
+					<% if (!loggedUser.getEmail().equals(user.getEmail())) { %>
+					<form method="post" action="<%= request.getContextPath() + "/dashboard/users" %>">
+						<input type="hidden" name="userEmail" value="<%= user.getEmail() %>">
+						<input type="hidden" name="action" value="<%= isFollowing ? "" : "follow" %>">
+						<button type="submit" class="btn btn-sm <%= isFollowing ? "btn-success" : "btn-primary" %>">
+							<%= isFollowing ? "Seguindo" : "Seguir" %>
+						</button>
+					</form>
+					<% } %>
+				</td>
 				<td><%= user.getName() %></td>
 				<td><%= user.getEmail() %></td>
 				<td>Apagar</td>

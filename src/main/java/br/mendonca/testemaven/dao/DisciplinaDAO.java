@@ -97,7 +97,7 @@ public class DisciplinaDAO {
 
         int rowsAffected = ps.executeUpdate();
         if (rowsAffected > 0) {
-            System.out.println("Disciplina com UUID " + uuid + " foi marcada como invisível.");
+            System.out.println("Disciplina com UUID " + uuid + " foi marcada como invisivel.");
         } else {
             System.out.println("Nenhuma disciplina encontrada com UUID " + uuid);
         }

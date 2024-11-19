@@ -29,12 +29,12 @@ public class InstallService {
 
 	public void createUserTable() throws ClassNotFoundException, SQLException {
 		statement("CREATE TABLE users ("
-					+ "    uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
-					+ "    name VARCHAR(255) NOT NULL,"
-					+ "    email VARCHAR(255) NOT NULL,"
-					+ "    password VARCHAR(255) NOT NULL,"
-					+ "		idade INT NOT NULL,"
-					+ "    status BOOLEAN NOT NULL)"
+				+ "uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
+				+ "name VARCHAR(255) NOT NULL,"
+				+ "password VARCHAR(255) NOT NULL,"
+				+ "idade INT NOT NULL,"
+				+ "status BOOLEAN NOT NULL,"
+				+ "email VARCHAR(255) NOT NULL UNIQUE)"
 		);
 	}
 
@@ -48,16 +48,17 @@ public class InstallService {
                 + "nome VARCHAR(255) NOT NULL,"
                 + "carga_horaria INT NOT NULL,"
                 + "is_ativo BOOLEAN NOT NULL," +
-				"visualizacao BOOLEAN NOT NULL)");
+				"visualizacao BOOLEAN NOT NULL," +
+				"data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)");
     }
 
 	public void populateDisciplinaTable() throws ClassNotFoundException, SQLException {
 		statement("INSERT INTO disciplinas (nome, carga_horaria, is_ativo, visualizacao) VALUES "
-				+ "('Matemática', 60, true, true), "
-				+ "('Física', 45, true, true), "
-				+ "('Química', 50, true, true), "
+				+ "('Matematica', 60, true, true), "
+				+ "('Fisica', 45, true, true), "
+				+ "('Quimica', 50, true, true), "
 				+ "('Biologia', 40, true, true), "
-				+ "('História', 35, true, true), "
+				+ "('Historia', 35, true, true), "
 				+ "('Geografia', 30, true, true), "
 				+ "('Literatura', 55, true, true)"
 		);
@@ -74,8 +75,8 @@ public class InstallService {
 			+ "nome VARCHAR(255) NOT NULL,"
 			+ "salario DECIMAL(10,2) NOT NULL,"
 			+ "ativo BOOLEAN NOT NULL,"
-			+ "deleted BOOLEAN DEFAULT false NOT NULL)"
-		);
+			+ "deleted BOOLEAN DEFAULT false NOT NULL," +
+			"data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)");
 	}
 
 	public void populateProfessoresTable() throws ClassNotFoundException, SQLException {
@@ -100,7 +101,8 @@ public class InstallService {
                 + " nome VARCHAR(255) NOT NULL,"
                 + " media DECIMAL NOT NULL,"
                 + " deletado BOOLEAN NOT NULL,"
-                + " isAtivo BOOLEAN NOT NULL)");
+                + " isAtivo BOOLEAN NOT NULL," +
+				"data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)");
     }
 
     public void populateAlunosTable() throws ClassNotFoundException, SQLException {
@@ -124,9 +126,11 @@ public class InstallService {
                 + "    nome VARCHAR(255) NOT NULL,"
                 + "    media_mec DOUBLE PRECISION,"
                 + "    is_ativo BOOLEAN,"
-				+ "	is_deleted BOOLEAN DEFAULT false NOT NULL)"
+				+ "	is_deleted BOOLEAN DEFAULT false NOT NULL," +
+				"data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)"
 		);
     }
+
 
 	public void populateCursosTable() throws ClassNotFoundException, SQLException {
 		statement("INSERT INTO cursos (nome, media_mec, is_ativo, is_deleted) VALUES " +
@@ -146,10 +150,10 @@ public class InstallService {
 
 	public void createChatsTable() throws ClassNotFoundException, SQLException {
 		statement("CREATE TABLE chats ("
-		+ "uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
-		+ "uuid_user1 UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,"
-		+ "uuid_user2 UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,"
-		+ "CONSTRAINT chats_unique_uuid_users UNIQUE (uuid_user1, uuid_user2))");
+				+ "uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
+				+ "uuid_user1 UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,"
+				+ "uuid_user2 UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,"
+				+ "CONSTRAINT chats_unique_uuid_users UNIQUE (uuid_user1, uuid_user2))");
 	}
 
 	public void deleteMessagesTable() throws ClassNotFoundException, SQLException {
@@ -158,11 +162,22 @@ public class InstallService {
 
 	public void createMessagesTable() throws ClassNotFoundException, SQLException {
 		statement("CREATE TABLE messages ("
-			+ "uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
-			+ "uuid_chat UUID NOT NULL REFERENCES chats(uuid) ON DELETE CASCADE,"
-			+ "uuid_sender UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,"
-			+ "uuid_receiver UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,"
-			+ "date_time TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP)");
+				+ "uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
+				+ "uuid_chat UUID NOT NULL REFERENCES chats(uuid) ON DELETE CASCADE,"
+				+ "uuid_sender UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,"
+				+ "uuid_receiver UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,"
+				+ "date_time TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP)");
 	}
 
+	public void createUserFollowersTable() throws ClassNotFoundException, SQLException {
+		statement("CREATE TABLE user_followers ("
+				+ "follower_email VARCHAR(255) NOT NULL REFERENCES users(email) ON DELETE CASCADE,"
+				+ "followed_email VARCHAR(255) NOT NULL REFERENCES users(email) ON DELETE CASCADE,"
+				+ "PRIMARY KEY (follower_email, followed_email)"
+				+ ")");
+	}
+
+	public void deleteFollowersTable() throws ClassNotFoundException, SQLException {
+		statement("DROP TABLE IF EXISTS user_followers CASCADE");
+	}
 }

@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List"%>
 <%@ page import="br.mendonca.testemaven.services.dto.UserDTO"%>
+<%@ page import="br.mendonca.testemaven.dao.UserDAO" %>
+<%@ page import="br.mendonca.testemaven.services.UserService" %>
+<%@ page import="java.sql.SQLException" %>
 
 <% if (session.getAttribute("user") != null && request.getAttribute("lista") != null) { %>
 
@@ -19,9 +22,21 @@
 		<jsp:include page="../resources/components/header.jsp"/>
     
     	<h1 class="h3 mb-3 fw-normal">Usuários</h1>
+
+		<!-- Formulário de Busca -->
+		<form action="/dashboard/users" method="get" class="mb-4">
+			<div class="input-group">
+				<input type="text" class="form-control" id="search" name="search"
+					   placeholder="Buscar por nome..."
+					   value="<%= request.getAttribute("search") != null ? request.getAttribute("search").toString() : "" %>">
+				<button class="btn btn-primary" type="submit">Buscar</button>
+			</div>
+		</form>
+
 		<table class="table">
 			<thead>
 				<tr>
+					<th scope="col"></th>
 					<th scope="col"></th>
 					<th scope="col">Nome</th>
 					<th scope="col">E-mail</th>
@@ -30,11 +45,34 @@
 			</thead>
 			<tbody>
 			<%
+			UserDTO loggedUser = (UserDTO) session.getAttribute("user");
 			List<UserDTO> lista = (List<UserDTO>) request.getAttribute("lista");
 			for (UserDTO user : lista) {
-			%>
+				UserService userService = new UserService();
+                boolean isFollowing = false;
+                try {
+                    isFollowing = userService.getFollowedUsers(loggedUser.getEmail())
+                            .stream()
+                            .anyMatch(followed -> followed.getEmail().equals(user.getEmail()));
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            %>
 			<tr>
 				<td>Editar</td>
+				<td>
+					<% if (!loggedUser.getEmail().equals(user.getEmail())) { %>
+					<form method="post" action="<%= request.getContextPath() + "/dashboard/users" %>">
+						<input type="hidden" name="userEmail" value="<%= user.getEmail() %>">
+						<input type="hidden" name="action" value="<%= isFollowing ? "" : "follow" %>">
+						<button type="submit" class="btn btn-sm <%= isFollowing ? "btn-success" : "btn-primary" %>">
+							<%= isFollowing ? "Seguindo" : "Seguir" %>
+						</button>
+					</form>
+					<% } %>
+				</td>
 				<td><%= user.getName() %></td>
 				<td><%= user.getEmail() %></td>
 				<td>Apagar</td>

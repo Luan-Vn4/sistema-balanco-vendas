@@ -25,6 +25,16 @@
     			<input type="password" name="password" class="form-control" id="floatingInput" placehholder="Digite sua senha." />
     			<label for="floatingInput">Senha</label>
     		</div>
+			<div class="form-floating">
+				<input type="number" name="idade" class="form-control" id="floatingAge" placeholder="Digite sua idade." />
+				<label for="floatingAge">Idade</label>
+			</div>
+			<div class="mt-3">
+				<label for="status">Status:</label>
+				<select name="status" id="status" class="form-select">
+					<option value="true">Ativo</option>
+					<option value="false">Inativo</option>
+				</select>
     		<button class="btn btn-primary w-100 py-2 mt-2">Cadastrar-se</button>
     	</form>
     </main>

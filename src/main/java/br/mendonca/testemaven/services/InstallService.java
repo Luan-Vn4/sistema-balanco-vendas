@@ -29,10 +29,13 @@ public class InstallService {
 
 	public void createUserTable() throws ClassNotFoundException, SQLException {
 		statement("CREATE TABLE users ("
-					+ "    uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
-					+ "    name VARCHAR(255) NOT NULL,"
-					+ "    email VARCHAR(255) NOT NULL,"
-					+ "    password VARCHAR(255) NOT NULL)");
+				+ "uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
+				+ "name VARCHAR(255) NOT NULL,"
+				+ "password VARCHAR(255) NOT NULL,"
+				+ "idade INT NOT NULL,"
+				+ "status BOOLEAN NOT NULL,"
+				+ "email VARCHAR(255) NOT NULL UNIQUE)"
+		);
 	}
 
     public void deleteDisciplinaTable() throws ClassNotFoundException, SQLException {
@@ -145,6 +148,40 @@ public class InstallService {
 		);
 	}
 
+	public void deleteChatsTable() throws ClassNotFoundException, SQLException {
+		statement("DROP TABLE IF EXISTS chats CASCADE");
+	}
 
+	public void createChatsTable() throws ClassNotFoundException, SQLException {
+		statement("CREATE TABLE chats ("
+				+ "uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
+				+ "uuid_user1 UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,"
+				+ "uuid_user2 UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,"
+				+ "CONSTRAINT chats_unique_uuid_users UNIQUE (uuid_user1, uuid_user2))");
+	}
 
+	public void deleteMessagesTable() throws ClassNotFoundException, SQLException {
+		statement("DROP TABLE IF EXISTS messages CASCADE");
+	}
+
+	public void createMessagesTable() throws ClassNotFoundException, SQLException {
+		statement("CREATE TABLE messages ("
+				+ "uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
+				+ "uuid_chat UUID NOT NULL REFERENCES chats(uuid) ON DELETE CASCADE,"
+				+ "uuid_sender UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,"
+				+ "uuid_receiver UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,"
+				+ "date_time TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP)");
+	}
+
+	public void createUserFollowersTable() throws ClassNotFoundException, SQLException {
+		statement("CREATE TABLE user_followers ("
+				+ "follower_email VARCHAR(255) NOT NULL REFERENCES users(email) ON DELETE CASCADE,"
+				+ "followed_email VARCHAR(255) NOT NULL REFERENCES users(email) ON DELETE CASCADE,"
+				+ "PRIMARY KEY (follower_email, followed_email)"
+				+ ")");
+	}
+
+	public void deleteFollowersTable() throws ClassNotFoundException, SQLException {
+		statement("DROP TABLE IF EXISTS user_followers CASCADE");
+	}
 }

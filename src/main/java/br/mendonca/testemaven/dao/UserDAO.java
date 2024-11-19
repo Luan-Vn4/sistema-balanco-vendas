@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
-
 import br.mendonca.testemaven.model.entities.User;
 
 public class UserDAO {
@@ -76,6 +76,30 @@ public class UserDAO {
 		rs.close();
 		
 		return user;
+	}
+
+	public Optional<User> findByUUID(UUID uuid) throws ClassNotFoundException, SQLException {
+		Connection conn = ConnectionPostgres.getConexao();
+		conn.setAutoCommit(true);
+
+		PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE uuid = ?");
+		ps.setObject(1, uuid);
+		System.out.println(ps);
+
+		User user = null;
+		ResultSet rs = ps.executeQuery();
+		if (rs.next()) {
+			user = new User();
+			user.setUuid((UUID) rs.getObject("uuid"));
+			user.setName(rs.getString("name"));
+			user.setEmail(rs.getString("email"));
+			user.setPassword(rs.getString("password"));
+		}
+
+		ps.close();
+		rs.close();
+
+		return Optional.ofNullable(user);
 	}
 
 	// TODO: No testado

@@ -124,4 +124,16 @@ public class InstallService {
                 + "('Gabriela', 8.7, false, false)");
     }
 
+	public void createUserFollowersTable() throws ClassNotFoundException, SQLException {
+		statement("CREATE TABLE user_followers ("
+				+ "follower_uuid UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,"
+				+ "followed_uuid UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,"
+				+ "PRIMARY KEY (follower_uuid, followed_uuid)"
+				+ ")");
+	}
+
+	public void deleteFollowersTable() throws ClassNotFoundException, SQLException {
+		statement("DROP TABLE IF EXISTS user_followers CASCADE");
+	}
+
 }

@@ -114,4 +114,5 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 
 ### Semana 4 - Ana
 - pendencia da S3: o user pode deletar ocultando e ver os ocultados pelo menu
+- atualizar about - task 3
 - atualizar o readme

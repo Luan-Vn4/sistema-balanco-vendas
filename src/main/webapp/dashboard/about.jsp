@@ -51,7 +51,9 @@
         <tr>
             <td scope="col">Ana Beatriz de Oliveira Cavalcanti</td>
             <td scope="col">Curso</td>
-            <td scope="col">Lógica de Despesas</td>
+            <td scope="col">3 - O usuário pode, na listagem de usuários, procurar por um usuário por parte do nome
+             e utilizar filtros: um para a propriedade de número idade e outro para a propriedade booleana
+             status. Os dados do banco devem vir filtrados por um ou mais endpoints.</td>
 				<tr>
             <td scope="col">Luan Vilaça Nogueira</td>
             <td scope="col">Professor</td>

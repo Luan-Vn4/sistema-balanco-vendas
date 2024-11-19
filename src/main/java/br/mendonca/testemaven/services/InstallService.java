@@ -53,11 +53,11 @@ public class InstallService {
 
 	public void populateDisciplinaTable() throws ClassNotFoundException, SQLException {
 		statement("INSERT INTO disciplinas (nome, carga_horaria, is_ativo, visualizacao) VALUES "
-				+ "('Matem�tica', 60, true, true), "
-				+ "('F�sica', 45, true, true), "
-				+ "('Qu�mica', 50, true, true), "
+				+ "('Matemática', 60, true, true), "
+				+ "('Física', 45, true, true), "
+				+ "('Química', 50, true, true), "
 				+ "('Biologia', 40, true, true), "
-				+ "('Hist�ria', 35, true, true), "
+				+ "('História', 35, true, true), "
 				+ "('Geografia', 30, true, true), "
 				+ "('Literatura', 55, true, true)"
 		);
@@ -128,6 +128,7 @@ public class InstallService {
 		);
     }
 
+
 	public void populateCursosTable() throws ClassNotFoundException, SQLException {
 		statement("INSERT INTO cursos (nome, media_mec, is_ativo, is_deleted) VALUES " +
 				"('Psicologia', 4, true, false)," +
@@ -139,4 +140,5 @@ public class InstallService {
 				"('Letras', 3, true, false)"
 		);
 	}
+
 }

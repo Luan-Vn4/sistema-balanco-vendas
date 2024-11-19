@@ -26,6 +26,15 @@ public class UserDTO {
 		this.email = email;
 	}
 
+	public UserDTO() {
+	}
+
+	public UserDTO(UUID uuid, String name, String email) {
+		this.uuid = uuid;
+		this.name = name;
+		this.email = email;
+	}
+
 	public UUID getUuid() {
 		return uuid;
 	}

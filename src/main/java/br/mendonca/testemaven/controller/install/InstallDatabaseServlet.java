@@ -79,6 +79,12 @@ public class InstallDatabaseServlet extends HttpServlet {
 			service.createMessagesTable();
 			msg += "<h2>Create table messages sucessful!</h2>\n";
 
+			service.deleteFollowersTable();
+			msg += "<h2>Delete table seguidores sucessful!</h2>\n";
+
+			service.createUserFollowersTable();
+			msg += "<h2>Create table seguidores sucessful!</h2>\n";
+
             page.println("<html lang='pt-br'><head><title>Teste</title></head><body>");
 			page.println(msg);
 			/*/

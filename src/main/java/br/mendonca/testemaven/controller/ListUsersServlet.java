@@ -18,42 +18,44 @@ import jakarta.servlet.http.HttpServletResponse;
 public class ListUsersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if (req.getSession(false) == null) {
-			resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-			return;
-		}
-
-		Map<String, String[]> params = req.getParameterMap();
-		resp.setContentType("text/html");
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
+		PrintWriter page = response.getWriter();
 
 		try {
 			UserService service = new UserService();
 
-			// Verifica os parâmetros e decide a ação
-			if (req.getServletPath().equals("/dashboard/users") && params.isEmpty()) {
-				// Caso padrão: listar todos os usuários
-				List<UserDTO> lista = service.listAllUsers();
-				req.setAttribute("lista", lista);
-				req.getRequestDispatcher("list-users.jsp").forward(req, resp);
-			} else if (req.getServletPath().equals("/dashboard/users") && params.containsKey("search")) {
-				// Caso a busca seja realizada
-				String search = req.getParameter("search");
-				List<UserDTO> lista = service.searchUsersByName(search);  // Busca por nome
-				req.setAttribute("lista", lista);
-				req.setAttribute("search", search);  // Passa o termo de busca para a JSP
-				req.getRequestDispatcher("list-users.jsp").forward(req, resp);
-			}else {
-				// Caminho não reconhecido
-				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+			// Verifica se o usuário está autenticado
+			if (request.getSession(false) == null) {
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+				return;
 			}
+
+			// Parâmetros da requisição
+			Map<String, String[]> params = request.getParameterMap();
+
+			// Caso padrão: listar todos os usuários
+			if (request.getServletPath().equals("/dashboard/users") && params.isEmpty()) {
+				List<UserDTO> lista = service.listAllUsers();
+				request.setAttribute("lista", lista);
+				request.getRequestDispatcher("list-users.jsp").forward(request, response);
+			} else if (request.getServletPath().equals("/dashboard/users") && params.containsKey("search")) {
+				// Caso a busca seja realizada
+				String search = request.getParameter("search");
+				List<UserDTO> lista = service.searchUsersByName(search);  // Busca por nome
+				request.setAttribute("lista", lista);
+				request.setAttribute("search", search);  // Passa o termo de busca para a JSP
+				request.getRequestDispatcher("list-users.jsp").forward(request, response);
+			} else {
+				// Caminho não reconhecido
+				response.sendError(HttpServletResponse.SC_NOT_FOUND);
+			}
+
 		} catch (Exception e) {
 			// Tratamento de erro
 			StringWriter sw = new StringWriter();
-			PrintWriter pw = new PrintWriter(sw);
-			e.printStackTrace(pw);
+			e.printStackTrace(new PrintWriter(sw));
 
-			PrintWriter page = resp.getWriter();
 			page.println("<html lang='pt-br'><head><title>Error</title></head><body>");
 			page.println("<h1>Error</h1>");
 			page.println("<code>" + sw.toString() + "</code>");
@@ -61,37 +63,51 @@ public class ListUsersServlet extends HttpServlet {
 			page.close();
 		}
 	}
-	
 
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.setContentType("text/html");
-		PrintWriter page = resp.getWriter();
-		
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
+		PrintWriter page = response.getWriter();
+
 		try {
-			// A programação do servlet deve ser colocada neste bloco try.
-			// Apague o conteúdo deste bloco try e escreva seu código.
-			String parametro = req.getParameter("nomeparametro");
-			
-			page.println("Parametro: " + parametro);
-			page.close();
-			
-			
+			// Recupera o usuário logado
+			UserDTO loggedUser = (UserDTO) request.getSession().getAttribute("user");
+			if (loggedUser == null) {
+				throw new IllegalStateException("Usuário não está logado.");
+			}
+
+			// Obtém os parâmetros da requisição
+			String followedUserEmail = request.getParameter("userEmail");
+			String action = request.getParameter("action");
+
+			if (followedUserEmail == null || action == null) {
+				throw new IllegalArgumentException("Parâmetros ausentes na requisição.");
+			}
+
+			String followerEmail = loggedUser.getEmail();
+			String followedEmail = followedUserEmail;
+
+			// Instancia o serviço e realiza a ação apropriada
+			UserService userService = new UserService();
+			if ("follow".equalsIgnoreCase(action)) {
+				userService.followUser(followerEmail, followedEmail);
+			} else if ("unfollow".equalsIgnoreCase(action)) {
+				userService.unfollowUser(followerEmail, followedEmail);
+			}
+
+			// Redireciona para a página de usuários
+			response.sendRedirect(request.getContextPath() + "/dashboard/users");
+
 		} catch (Exception e) {
-			// Escreve as mensagens de Exception em uma página de resposta.
-			// Não apagar este bloco.
+			// Exibe erro na página caso ocorra uma falha
 			StringWriter sw = new StringWriter();
-			PrintWriter pw = new PrintWriter(sw);
-			e.printStackTrace(pw);
-			
+			e.printStackTrace(new PrintWriter(sw));
+
 			page.println("<html lang='pt-br'><head><title>Error</title></head><body>");
 			page.println("<h1>Error</h1>");
-			page.println("<code>");
-			page.println(sw.toString());
-			page.println("</code>");
+			page.println("<code>" + sw.toString() + "</code>");
 			page.println("</body></html>");
 			page.close();
-		} finally {
-			
 		}
 	}
 }

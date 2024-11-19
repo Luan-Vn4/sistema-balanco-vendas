@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="br.mendonca.testemaven.model.entities.Disciplina" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8" %>
 <!doctype html>
 <html lang="pt-br" data-bs-theme="dark">
 

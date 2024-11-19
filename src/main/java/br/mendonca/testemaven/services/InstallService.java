@@ -45,16 +45,17 @@ public class InstallService {
                 + "nome VARCHAR(255) NOT NULL,"
                 + "carga_horaria INT NOT NULL,"
                 + "is_ativo BOOLEAN NOT NULL," +
-				"visualizacao BOOLEAN NOT NULL)");
+				"visualizacao BOOLEAN NOT NULL," +
+				"data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)");
     }
 
 	public void populateDisciplinaTable() throws ClassNotFoundException, SQLException {
 		statement("INSERT INTO disciplinas (nome, carga_horaria, is_ativo, visualizacao) VALUES "
-				+ "('Matemática', 60, true, true), "
-				+ "('Física', 45, true, true), "
-				+ "('Química', 50, true, true), "
+				+ "('Matematica', 60, true, true), "
+				+ "('Fisica', 45, true, true), "
+				+ "('Quimica', 50, true, true), "
 				+ "('Biologia', 40, true, true), "
-				+ "('História', 35, true, true), "
+				+ "('Historia', 35, true, true), "
 				+ "('Geografia', 30, true, true), "
 				+ "('Literatura', 55, true, true)"
 		);
@@ -71,8 +72,8 @@ public class InstallService {
 			+ "nome VARCHAR(255) NOT NULL,"
 			+ "salario DECIMAL(10,2) NOT NULL,"
 			+ "ativo BOOLEAN NOT NULL,"
-			+ "deleted BOOLEAN DEFAULT false NOT NULL)"
-		);
+			+ "deleted BOOLEAN DEFAULT false NOT NULL," +
+			"data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)");
 	}
 
 	public void populateProfessoresTable() throws ClassNotFoundException, SQLException {
@@ -97,7 +98,8 @@ public class InstallService {
                 + " nome VARCHAR(255) NOT NULL,"
                 + " media DECIMAL NOT NULL,"
                 + " deletado BOOLEAN NOT NULL,"
-                + " isAtivo BOOLEAN NOT NULL)");
+                + " isAtivo BOOLEAN NOT NULL," +
+				"data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)");
     }
 
     public void populateAlunosTable() throws ClassNotFoundException, SQLException {
@@ -121,7 +123,8 @@ public class InstallService {
                 + "    nome VARCHAR(255) NOT NULL,"
                 + "    media_mec DOUBLE PRECISION,"
                 + "    is_ativo BOOLEAN,"
-				+ "	is_deleted BOOLEAN DEFAULT false NOT NULL)"
+				+ "	is_deleted BOOLEAN DEFAULT false NOT NULL," +
+				"data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)"
 		);
     }
 

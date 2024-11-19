@@ -19,6 +19,17 @@
 		<jsp:include page="../resources/components/header.jsp"/>
     
     	<h1 class="h3 mb-3 fw-normal">Usuários</h1>
+
+		<!-- Formulário de Busca -->
+		<form action="/dashboard/users" method="get" class="mb-4">
+			<div class="input-group">
+				<input type="text" class="form-control" id="search" name="search"
+					   placeholder="Buscar por nome..."
+					   value="<%= request.getAttribute("search") != null ? request.getAttribute("search").toString() : "" %>">
+				<button class="btn btn-primary" type="submit">Buscar</button>
+			</div>
+		</form>
+
 		<table class="table">
 			<thead>
 				<tr>

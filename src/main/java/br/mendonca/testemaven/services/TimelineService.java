@@ -65,7 +65,9 @@ public class TimelineService {
             timeline.add(item);
         }
 
-        timeline.sort(Comparator.comparingLong(TimelineItemDTO::getCreationOrder).reversed());
+        timeline.sort(Comparator.comparingLong(TimelineItemDTO::getCreationOrder)
+                .thenComparing(TimelineItemDTO::getDisplayName)
+                .reversed());
 
         return timeline;
     }

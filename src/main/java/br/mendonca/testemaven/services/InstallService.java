@@ -31,7 +31,7 @@ public class InstallService {
 		statement("CREATE TABLE users ("
 					+ "    uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
 					+ "    name VARCHAR(255) NOT NULL,"
-					+ "    email VARCHAR(255) NOT NULL,"
+					+ "    email VARCHAR(255) NOT NULL UNIQUE,"
 					+ "    password VARCHAR(255) NOT NULL)");
 	}
 
@@ -126,9 +126,9 @@ public class InstallService {
 
 	public void createUserFollowersTable() throws ClassNotFoundException, SQLException {
 		statement("CREATE TABLE user_followers ("
-				+ "follower_uuid UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,"
-				+ "followed_uuid UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,"
-				+ "PRIMARY KEY (follower_uuid, followed_uuid)"
+				+ "follower_email VARCHAR(255) NOT NULL REFERENCES users(email) ON DELETE CASCADE,"
+				+ "followed_email VARCHAR(255) NOT NULL REFERENCES users(email) ON DELETE CASCADE,"
+				+ "PRIMARY KEY (follower_email, followed_email)"
 				+ ")");
 	}
 

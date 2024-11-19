@@ -136,4 +136,30 @@ public class InstallService {
 				"('Letras', 3, true, false)"
 		);
 	}
+
+	public void deleteChatsTable() throws ClassNotFoundException, SQLException {
+		statement("DROP TABLE IF EXISTS chats CASCADE");
+	}
+
+	public void createChatsTable() throws ClassNotFoundException, SQLException {
+		statement("CREATE TABLE chats ("
+		+ "uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
+		+ "uuid_user1 UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,"
+		+ "uuid_user2 UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,"
+		+ "CONSTRAINT chats_unique_uuid_users UNIQUE (uuid_user1, uuid_user2))");
+	}
+
+	public void deleteMessagesTable() throws ClassNotFoundException, SQLException {
+		statement("DROP TABLE IF EXISTS messages CASCADE");
+	}
+
+	public void createMessagesTable() throws ClassNotFoundException, SQLException {
+		statement("CREATE TABLE messages ("
+			+ "uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
+			+ "uuid_chat UUID NOT NULL REFERENCES chats(uuid) ON DELETE CASCADE,"
+			+ "uuid_sender UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,"
+			+ "uuid_receiver UUID NOT NULL REFERENCES users(uuid) ON DELETE CASCADE,"
+			+ "date_time TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP)");
+	}
+
 }

@@ -57,7 +57,7 @@
 				<tr>
             <td scope="col">Luan Vilaça Nogueira</td>
             <td scope="col">Professor</td>
-            <td scope="col">Coloque aqui sua regra de negócio</td>
+            <td scope="col">Chat entre usuários</td>
 				</tr>
         <tbody>
         </tbody>

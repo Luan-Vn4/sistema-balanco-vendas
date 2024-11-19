@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-@WebServlet({"/cursos", "/cursos/create", "/cursos/delete"})
+@WebServlet({"/cursos", "/cursos/create", "/cursos/deleted", "/cursos/delete"})
 public class CursoController extends HttpServlet {
 
     private static final CursoService cursoService = new CursoService();
@@ -26,34 +26,30 @@ public class CursoController extends HttpServlet {
             return;
         }
 
-
         Map<String, String[]> params = req.getParameterMap();
-        if (params.isEmpty() || !params.containsKey("nome") || !params.containsKey("mediaMec") ||
-                !params.containsKey("isAtivo")) {
+        if (req.getServletPath().equals("/cursos/create") && !params.isEmpty() && params.containsKey("nome")
+                && params.containsKey("mediaMec") && params.containsKey("isAtivo")) {
             create(req, resp);
-        }else if (req.getServletPath().equals("/cursos/delete") && params.containsKey("uuid")) {
+        } else if (req.getServletPath().equals("/cursos/delete") && params.containsKey("uuid")) {
             delete(req, resp);
-        }else{
+        } else {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
-
     private void create(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Curso curso = new Curso();
         curso.setNome(req.getParameter("nome"));
         curso.setMediaMec(Double.parseDouble(req.getParameter("mediaMec")));
         curso.setAtivo(Boolean.parseBoolean(req.getParameter("isAtivo")));
-
         try {
             cursoService.register(curso);
             resp.sendRedirect(req.getContextPath() + "/cursos");
         } catch (Exception e) {
-            System.out.println("Erro ao registrar curso: " + curso);
+            System.out.println("Erro ao registrar o curso: " + curso);
             e.printStackTrace();
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
-
     private void delete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             cursoService.delete(UUID.fromString(req.getParameter("uuid")));
@@ -85,10 +81,15 @@ public class CursoController extends HttpServlet {
             getCreationPage(req, resp);
         } else if (req.getServletPath().equals("/cursos") && params.isEmpty()) {
             resp.sendRedirect("/cursos?page=0&page-size=3");
+        } else if (req.getServletPath().equals("/cursos/deleted") && params.isEmpty()) {
+            resp.sendRedirect("/cursos/deleted?page=0&page-size=3");
+        } else if (req.getServletPath().equals("/cursos/deleted") && params.containsKey("page")
+                && params.containsKey("page-size")) {
+            getDeletedList(req, resp);
         } else if (req.getServletPath().equals("/cursos") && params.containsKey("uuid")) {
             getViewPage(req, resp);
         } else if (req.getServletPath().equals("/cursos") && params.containsKey("page")
-            && params.containsKey("page-size")) {
+                && params.containsKey("page-size")) {
             getPaginatedListPage(req, resp);
         } else {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -105,6 +106,23 @@ public class CursoController extends HttpServlet {
         }
     }
 
+    private void getDeletedList(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        int page = Integer.parseInt(req.getParameter("page"));
+        int pageSize = Integer.parseInt(req.getParameter("page-size"));
+        PageRequest pageRequest = new PageRequest(page, pageSize);
+
+        try {
+            PagedResult<Curso> cursos = cursoService.getAllDeleted(pageRequest);
+            req.setAttribute("cursos", cursos);
+            req.getRequestDispatcher("/cursos/listar-cursos-deletados.jsp").forward(req, resp);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
 
     private void getPaginatedListPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         int page = Integer.parseInt(req.getParameter("page"));
@@ -123,9 +141,6 @@ public class CursoController extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
-
-
-
 
     private void getViewPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
@@ -149,9 +164,4 @@ public class CursoController extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
-
-
-
-
-
 }

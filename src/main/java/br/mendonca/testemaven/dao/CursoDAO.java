@@ -48,7 +48,7 @@ public class CursoDAO {
             curso.setNome(rs.getString("nome"));
             curso.setMediaMec(rs.getDouble("media_mec"));
             curso.setAtivo(rs.getBoolean("is_ativo"));
-            curso.setDeleted(rs.getBoolean("deleted"));
+            curso.setDeleted(rs.getBoolean("is_deleted"));
             lista.add(curso);
         }
         return lista;
@@ -58,20 +58,52 @@ public class CursoDAO {
         if (pageRequest.getSize() < 0 || pageRequest.getPage() < 0) {
             throw new IllegalArgumentException("O tamanho e número da página devem ser positivos");
         }
+
         Connection conn = ConnectionPostgres.getConexao();
         conn.setAutoCommit(true);
+
         int totalElements = countAll();
         int totalPages = (int) Math.ceil(totalElements / (double) pageRequest.getSize());
 
-        PreparedStatement st = conn.prepareStatement("SELECT * FROM cursos WHERE deleted=false LIMIT ? OFFSET ?");
+        PreparedStatement st = conn.prepareStatement("SELECT * FROM cursos WHERE is_deleted=false LIMIT ? OFFSET ?");
         st.setInt(1, pageRequest.getSize());
         st.setInt(2, pageRequest.getSize() * (pageRequest.getPage()));
         ResultSet rs = st.executeQuery();
+
         ArrayList<Curso> lista = unwrapResultSet(rs);
+
         var result = new PagedResult<>(lista, pageRequest.getPage(), totalPages, totalElements,
                 pageRequest.getSize());
 
         System.out.println(lista);
+
+        rs.close();
+        return result;
+    }
+
+    public PagedResult<Curso> findAllDeleted(PageRequest pageRequest) throws ClassNotFoundException, SQLException {
+        if (pageRequest.getSize() < 0 || pageRequest.getPage() < 0) {
+            throw new IllegalArgumentException("O tamanho e número da página devem ser positivos");
+        }
+
+        Connection conn = ConnectionPostgres.getConexao();
+        conn.setAutoCommit(true);
+
+        int totalElements = countAllDeleted();
+        int totalPages = (int) Math.ceil(totalElements / (double) pageRequest.getSize());
+
+        PreparedStatement st = conn.prepareStatement("SELECT * FROM cursos WHERE is_deleted=true LIMIT ? OFFSET ?");
+        st.setInt(1, pageRequest.getSize());
+        st.setInt(2, pageRequest.getSize() * pageRequest.getPage());
+        ResultSet rs = st.executeQuery();
+
+        ArrayList<Curso> lista = unwrapResultSet(rs);
+
+        var result = new PagedResult<>(lista, pageRequest.getPage(), totalPages, totalElements,
+                pageRequest.getSize());
+
+        System.out.println(lista);
+
         rs.close();
         return result;
     }
@@ -80,7 +112,22 @@ public class CursoDAO {
         Connection conn = ConnectionPostgres.getConexao();
         conn.setAutoCommit(true);
         Statement st = conn.createStatement();
-        ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM cursos WHERE deleted=false");
+        ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM cursos WHERE is_deleted=false");
+
+        rs.next();
+        int count = rs.getInt(1);
+
+        st.close();
+        rs.close();
+        return count;
+    }
+
+    public int countAllDeleted() throws ClassNotFoundException, SQLException {
+        Connection conn = ConnectionPostgres.getConexao();
+        conn.setAutoCommit(true);
+
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM cursos WHERE is_deleted=true");
 
         rs.next();
         int count = rs.getInt(1);
@@ -158,33 +205,17 @@ public class CursoDAO {
 //        return curso;
 //    }
 
-//    public void deletar(UUID uuid) throws ClassNotFoundException, SQLException {
-//        Connection conn = ConnectionPostgres.getConexao();
-//        conn.setAutoCommit(true);
-//
-//        PreparedStatement statement = conn.prepareStatement("DELETE FROM cursos WHERE uuid = ?");
-//        statement.setObject(1, uuid);
-//        int deleted = statement.executeUpdate();
-//
-//        statement.close();
-//
-//        if (deleted < 1) {
-//            throw new RuntimeException("Não foi possível achar um curso com UUID: " + uuid);
-//        }
-//    }
-
-    public void deleteCurso(UUID uuid) throws SQLException, ClassNotFoundException {
+    public void deletar(UUID uuid) throws ClassNotFoundException, SQLException {
         Connection conn = ConnectionPostgres.getConexao();
         conn.setAutoCommit(true);
-        PreparedStatement ps = conn.prepareStatement("UPDATE cursos SET deleted=true WHERE uuid=?");
-        ps.setObject(1, uuid);
-        System.out.println(ps);
-        ps.executeUpdate();
-        ps.close();
+
+        PreparedStatement statement = conn.prepareStatement("UPDATE cursos SET is_deleted=true WHERE uuid = ?");
+        statement.setObject(1, uuid);
+        System.out.println(statement);
+
+        statement.executeUpdate();
+        statement.close();
     }
-
-
-
 
 
 }

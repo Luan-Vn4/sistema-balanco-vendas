@@ -37,8 +37,16 @@ public class CursoService {
         return dao.findByUID(uuid);
     }
 
+    public PagedResult<Curso> getAllDeleted(PageRequest pageRequest) throws SQLException, ClassNotFoundException {
+        if (pageRequest.getSize() < 0 || pageRequest.getPage() < 0) {
+            throw new IllegalArgumentException("O tamanho e número da página devem ser positivos");
+        }
+
+        return dao.findAllDeleted(pageRequest);
+    }
+
     public void delete(UUID uuid) throws SQLException, ClassNotFoundException {
-        dao.deleteCurso(uuid);
+        dao.deletar(uuid);
     }
 
 

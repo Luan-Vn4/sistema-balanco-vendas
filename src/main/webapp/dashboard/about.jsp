@@ -46,7 +46,7 @@
         <tr>
             <td scope="col">Erick Vinícius Bezerra Martins</td>
             <td scope="col">Aluno</td>
-            <td scope="col">Coloque aqui sua regra de negócio</td>
+            <td scope="col">O usuário pode, na listagem de usuários, selecionar um usuário para seguir e através do endpoint 'seguindo' visualizar quem ele segue e deixar de seguir.</td>
         </tr>
         <tr>
             <td scope="col">Ana Beatriz de Oliveira Cavalcanti</td>

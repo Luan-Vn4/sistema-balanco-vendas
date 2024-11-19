@@ -32,7 +32,10 @@ public class InstallService {
 					+ "    uuid UUID DEFAULT gen_random_uuid() PRIMARY KEY,"
 					+ "    name VARCHAR(255) NOT NULL,"
 					+ "    email VARCHAR(255) NOT NULL,"
-					+ "    password VARCHAR(255) NOT NULL)");
+					+ "    password VARCHAR(255) NOT NULL,"
+					+ "		idade INT NOT NULL,"
+					+ "    status BOOLEAN NOT NULL)"
+		);
 	}
 
     public void deleteDisciplinaTable() throws ClassNotFoundException, SQLException {
@@ -50,11 +53,11 @@ public class InstallService {
 
 	public void populateDisciplinaTable() throws ClassNotFoundException, SQLException {
 		statement("INSERT INTO disciplinas (nome, carga_horaria, is_ativo, visualizacao) VALUES "
-				+ "('Matem�tica', 60, true, true), "
-				+ "('F�sica', 45, true, true), "
-				+ "('Qu�mica', 50, true, true), "
+				+ "('Matemática', 60, true, true), "
+				+ "('Física', 45, true, true), "
+				+ "('Química', 50, true, true), "
 				+ "('Biologia', 40, true, true), "
-				+ "('Hist�ria', 35, true, true), "
+				+ "('História', 35, true, true), "
 				+ "('Geografia', 30, true, true), "
 				+ "('Literatura', 55, true, true)"
 		);

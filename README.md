@@ -104,3 +104,11 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 - O usuário pode deletar um indivíduo cadastrado da listagem, sem apagá-lo do banco
 - O usuário através de um item de menu pode listar os "ocultos"
 - atualização do README com demandas de hoje.
+
+---
+
+### Semana 4 - Erick
+- Preencher com a regra de negócio escolhida a página About, entre 2 e 5
+- O usuário pode, na listagem de usuários, selecionar um usuário para seguir
+- O usuário pode, atraves do endpoint 'seguindo' visualizar quem ele segue
+- O usuário pode, deixar de seguir

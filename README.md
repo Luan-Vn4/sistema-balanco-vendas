@@ -123,3 +123,6 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
   listagem de usuários
 - [ ] Na tela de chat, ficam listadas todas as pessoas com as quais foi iniciada alguma conversa
 - [ ] Na tela de chat, as mensagens são diferenciadas pelo nome dos usuários
+
+### Semana 4 - Melissa
+- Preencher com a regra de negócio escolhida a página About, entre 2 e 5

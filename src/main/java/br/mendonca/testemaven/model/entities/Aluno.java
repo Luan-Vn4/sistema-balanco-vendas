@@ -6,6 +6,7 @@ public class Aluno {
     private UUID uuid;
     private String nome;
     private double media;
+    private boolean deletado;
     private boolean isAtivo;
 
     public UUID getUuid() {
@@ -30,6 +31,14 @@ public class Aluno {
 
     public void setMedia(double media) {
         this.media = media;
+    }
+
+    public boolean isDeletado() {
+        return deletado;
+    }
+
+    public void setDeletado(boolean deletado) {
+        this.deletado = deletado;
     }
 
     public boolean isAtivo() {

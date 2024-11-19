@@ -17,11 +17,12 @@ public class AlunoDAO {
         Connection conn = ConnectionPostgres.getConexao();
         conn.setAutoCommit(true);
 
-        PreparedStatement ps = conn.prepareStatement("INSERT INTO alunos (uuid, nome, media, isAtivo) VALUES (?, ?, ?, ?)");
+        PreparedStatement ps = conn.prepareStatement("INSERT INTO alunos (uuid, nome, media, deletado, isAtivo) VALUES (?, ?, ?, ?, ?)");
         ps.setObject(1, UUID.randomUUID());
         ps.setString(2, aluno.getNome());
         ps.setDouble(3, aluno.getMedia());
-        ps.setBoolean(4, aluno.isAtivo());
+        ps.setBoolean(4, aluno.isDeletado());
+        ps.setBoolean(5, aluno.isAtivo());
         ps.execute();
         ps.close();
     }
@@ -98,4 +99,67 @@ public class AlunoDAO {
 
         return aluno;
     }
+
+    public List<Aluno> listAlunosPaginated(int pageNumber, int pageSize, boolean deletado) throws ClassNotFoundException, SQLException {
+        List<Aluno> lista = new ArrayList<>();
+        int offset = (pageNumber - 1) * pageSize;
+
+        Connection conn = ConnectionPostgres.getConexao();
+        conn.setAutoCommit(true);
+        String sql = "SELECT * FROM alunos WHERE deletado = ? ORDER BY nome LIMIT ? OFFSET ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setBoolean(1, deletado);
+        ps.setInt(2, pageSize);
+        ps.setInt(3, offset);
+
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Aluno aluno = new Aluno();
+            aluno.setUuid((UUID) rs.getObject("uuid"));
+            aluno.setNome(rs.getString("nome"));
+            aluno.setMedia(rs.getDouble("media"));
+            aluno.setAtivo(rs.getBoolean("isAtivo"));
+
+            lista.add(aluno);
+        }
+
+        rs.close();
+        ps.close();
+
+        return lista;
+    }
+
+    public int countAllAlunos(boolean deletado) throws ClassNotFoundException, SQLException {
+        int count = 0;
+
+        Connection conn = ConnectionPostgres.getConexao();
+        conn.setAutoCommit(true);
+
+        String sql = "SELECT COUNT(*) FROM alunos WHERE deletado = ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setBoolean(1, deletado);
+
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            count = rs.getInt(1);
+        }
+
+        rs.close();
+        ps.close();
+
+        return count;
+    }
+
+    public void deleteByUuid(UUID uuid) throws ClassNotFoundException, SQLException {
+        Connection conn = ConnectionPostgres.getConexao();
+        conn.setAutoCommit(true);
+
+        String sql = "UPDATE alunos SET deletado = true WHERE uuid = ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setObject(1, uuid);
+
+        ps.executeUpdate();
+        ps.close();
+    }
+
 }

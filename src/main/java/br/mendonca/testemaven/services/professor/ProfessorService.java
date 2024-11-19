@@ -2,6 +2,8 @@ package br.mendonca.testemaven.services.professor;
 
 import br.mendonca.testemaven.dao.ProfessorDAO;
 import br.mendonca.testemaven.model.entities.Professor;
+import br.mendonca.testemaven.utils.PageRequest;
+import br.mendonca.testemaven.utils.PagedResult;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -20,8 +22,31 @@ public class ProfessorService {
         return professorDAO.findAll();
     }
 
+    /**
+     * @throws IllegalArgumentException caso o tamanho da página ou o número da página sejam negativos
+     */
+    public PagedResult<Professor> getAll(PageRequest pageRequest) throws SQLException, ClassNotFoundException {
+        if (pageRequest.getSize() < 0 || pageRequest.getPage() < 0) {
+            throw new IllegalArgumentException("O tamanho e número da página devem ser positivos");
+        }
+
+        return professorDAO.findAll(pageRequest);
+    }
+
+    public PagedResult<Professor> getAllDeleted(PageRequest pageRequest) throws SQLException, ClassNotFoundException {
+        if (pageRequest.getSize() < 0 || pageRequest.getPage() < 0) {
+            throw new IllegalArgumentException("O tamanho e número da página devem ser positivos");
+        }
+
+        return professorDAO.findAllDeleted(pageRequest);
+    }
+
     public Optional<Professor> getByUuid(UUID uuid) throws SQLException, ClassNotFoundException {
         return professorDAO.findByUID(uuid);
+    }
+
+    public void delete(UUID uuid) throws SQLException, ClassNotFoundException {
+        professorDAO.deleteProfessor(uuid);
     }
 
 }

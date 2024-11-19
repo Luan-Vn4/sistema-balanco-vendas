@@ -1,6 +1,8 @@
 package br.mendonca.testemaven.dao;
 
 import br.mendonca.testemaven.model.entities.Professor;
+import br.mendonca.testemaven.utils.PageRequest;
+import br.mendonca.testemaven.utils.PagedResult;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -23,13 +25,20 @@ public class ProfessorDAO {
     }
 
     public List<Professor> findAll() throws ClassNotFoundException, SQLException {
-        ArrayList<Professor> lista = new ArrayList<>();
-
         Connection conn = ConnectionPostgres.getConexao();
         conn.setAutoCommit(true);
 
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery("SELECT * FROM professores");
+
+        ArrayList<Professor> lista = unwrapResultSet(rs);
+
+        rs.close();
+        return lista;
+    }
+
+    private ArrayList<Professor> unwrapResultSet(ResultSet rs) throws SQLException {
+        ArrayList<Professor> lista = new ArrayList<>();
 
         while (rs.next()) {
             Professor professor = new Professor();
@@ -37,13 +46,96 @@ public class ProfessorDAO {
             professor.setNome(rs.getString("nome"));
             professor.setSalario(rs.getDouble("salario"));
             professor.setAtivo(rs.getBoolean("ativo"));
+            professor.setDeleted(rs.getBoolean("deleted"));
 
             lista.add(professor);
         }
 
-        rs.close();
-
         return lista;
+    }
+
+    public PagedResult<Professor> findAll(PageRequest pageRequest) throws ClassNotFoundException, SQLException {
+        if (pageRequest.getSize() < 0 || pageRequest.getPage() < 0) {
+            throw new IllegalArgumentException("O tamanho e número da página devem ser positivos");
+        }
+
+        Connection conn = ConnectionPostgres.getConexao();
+        conn.setAutoCommit(true);
+
+        int totalElements = countAll();
+        int totalPages = (int) Math.ceil(totalElements / (double) pageRequest.getSize());
+
+        PreparedStatement st = conn.prepareStatement("SELECT * FROM professores WHERE deleted=false LIMIT ? OFFSET ?");
+        st.setInt(1, pageRequest.getSize());
+        st.setInt(2, pageRequest.getSize() * pageRequest.getPage());
+        ResultSet rs = st.executeQuery();
+
+        ArrayList<Professor> lista = unwrapResultSet(rs);
+
+        var result = new PagedResult<>(lista, pageRequest.getPage(), totalPages, totalElements,
+                                       pageRequest.getSize());
+
+        System.out.println(lista);
+
+        rs.close();
+        return result;
+    }
+
+    public PagedResult<Professor> findAllDeleted(PageRequest pageRequest) throws ClassNotFoundException, SQLException {
+        if (pageRequest.getSize() < 0 || pageRequest.getPage() < 0) {
+            throw new IllegalArgumentException("O tamanho e número da página devem ser positivos");
+        }
+
+        Connection conn = ConnectionPostgres.getConexao();
+        conn.setAutoCommit(true);
+
+        int totalElements = countAllDeleted();
+        int totalPages = (int) Math.ceil(totalElements / (double) pageRequest.getSize());
+
+        PreparedStatement st = conn.prepareStatement("SELECT * FROM professores WHERE deleted=true LIMIT ? OFFSET ?");
+        st.setInt(1, pageRequest.getSize());
+        st.setInt(2, pageRequest.getSize() * pageRequest.getPage());
+        ResultSet rs = st.executeQuery();
+
+        ArrayList<Professor> lista = unwrapResultSet(rs);
+
+        var result = new PagedResult<>(lista, pageRequest.getPage(), totalPages, totalElements,
+            pageRequest.getSize());
+
+        System.out.println(lista);
+
+        rs.close();
+        return result;
+    }
+
+    public int countAll() throws ClassNotFoundException, SQLException {
+        Connection conn = ConnectionPostgres.getConexao();
+        conn.setAutoCommit(true);
+
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM professores WHERE deleted=false");
+
+        rs.next();
+        int count = rs.getInt(1);
+
+        st.close();
+        rs.close();
+        return count;
+    }
+
+    public int countAllDeleted() throws ClassNotFoundException, SQLException {
+        Connection conn = ConnectionPostgres.getConexao();
+        conn.setAutoCommit(true);
+
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM professores WHERE deleted=true");
+
+        rs.next();
+        int count = rs.getInt(1);
+
+        st.close();
+        rs.close();
+        return count;
     }
 
     public Optional<Professor> findByUID(UUID uuid) throws SQLException, ClassNotFoundException {
@@ -67,6 +159,18 @@ public class ProfessorDAO {
         rs.close();
 
         return Optional.ofNullable(professor);
+    }
+
+    public void deleteProfessor(UUID uuid) throws SQLException, ClassNotFoundException {
+        Connection conn = ConnectionPostgres.getConexao();
+        conn.setAutoCommit(true);
+
+        PreparedStatement ps = conn.prepareStatement("UPDATE professores SET deleted=true WHERE uuid=?");
+        ps.setObject(1, uuid);
+        System.out.println(ps);
+
+        ps.executeUpdate();
+        ps.close();
     }
 
 }

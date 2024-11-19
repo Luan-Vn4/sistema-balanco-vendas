@@ -13,6 +13,8 @@ public class Professor {
 
     private boolean ativo;
 
+    private boolean deleted;
+
     public UUID getUuid() {
         return uuid;
     }
@@ -43,6 +45,14 @@ public class Professor {
 
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override

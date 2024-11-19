@@ -33,6 +33,10 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 ### Semana 1 - Erick
 - atualizar o .gitignore
 - atualizar o about.jsp
+- estrutura de branchs
+- github actions
+- atualizar pagina about com meu nome
+- atualizar README com demandas
 
 ### Semana 1 - Ana
 - atualizar o .gitgnore
@@ -62,7 +66,6 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 - o usuario consegue instalar as tabelas BD no install
 - o usuario consegue adicionar dado da entidade atraves do menu
 - o usuario consegue listar a entidade atraves do menu
-- o usuario consegue ver as propriedades da entidade
 - preencher about
 - preencher readme
 
@@ -79,3 +82,36 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 - o usuário pode deletar uma entidade cadastrada da listagem, mas a entidade não é apagada do banco, so muda sua visualização
 - o usuario atraves de um item do menu pode listar os "ocultos"
 - README atualizado com as demandas de hoje
+
+---
+
+### Semana 3 - Luan Vilaça Nogueira
+- [X] O usuário instala as novas tabelas do banco com 7 registros de professores pelo
+  endpoint "/install"
+- [X] O usuário visualiza todos os professores listados, mas com paginação de três
+  indivíduos
+- [X] O usuário pode deletar um professor cadastrado na listagem,
+  mas o indivíduo não é apagado do banco, ele é marcado para
+  não visualização
+- [X] O usuário, por meio de um item de menu, pode listas os
+  usuários ocultos
+- [X] Atualizei o README.md com as demandas de hoje
+
+### Semana 3 - Erick
+- O usuário instala as novas tabelas do banco com 7 indivíduos pelo endpoint "install"
+- O usuário visualiza todos os indivíduos listados com paginação de 3 indivíduos
+- O usuário pode deletar um indivíduo cadastrado da listagem, sem apagá-lo do banco
+- O usuário através de um item de menu pode listar os "ocultos"
+- atualização do README com demandas de hoje.
+
+### Semana 3 - Ana
+- pendencia da S2: - o usuario consegue ver as propriedades da entidade
+- por meio do endpoint install povoar o BD com 7 entidades de Cursos
+- o usuario pode visualizar por meio de paginaçao
+- atualizar o readme
+
+---
+
+### Semana 4 - Ana
+- pendencia da S3: o user pode deletar ocultando e ver os ocultados pelo menu
+- atualizar o readme

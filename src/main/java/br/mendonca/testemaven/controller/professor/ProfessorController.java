@@ -2,18 +2,18 @@ package br.mendonca.testemaven.controller.professor;
 
 import br.mendonca.testemaven.model.entities.Professor;
 import br.mendonca.testemaven.services.professor.ProfessorService;
+import br.mendonca.testemaven.utils.PageRequest;
+import br.mendonca.testemaven.utils.PagedResult;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @SuppressWarnings("CallToPrintStackTrace")
-@WebServlet(value = {"/professores", "/professores/create"})
+@WebServlet(value = {"/professores", "/professores/create", "/professores/delete",
+    "/professores/deleted"})
 public class ProfessorController extends HttpServlet {
 
     ProfessorService professorService = new ProfessorService();
@@ -26,11 +26,17 @@ public class ProfessorController extends HttpServlet {
         }
 
         Map<String, String[]> params = req.getParameterMap();
-        if (params.isEmpty() | !params.containsKey("nome") | !params.containsKey("salario")
-            | !params.containsKey("ativo")) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Há dados do professor que estão faltando");
+        if (req.getServletPath().equals("/professores/create") && !params.isEmpty() && params.containsKey("nome")
+            && params.containsKey("salario") && params.containsKey("ativo")) {
+            create(req, resp);
+        } else if (req.getServletPath().equals("/professores/delete") && params.containsKey("uuid")) {
+            delete(req, resp);
+        } else {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
+    }
 
+    private void create(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         Professor professor = new Professor();
         professor.setNome(req.getParameter("nome"));
         professor.setSalario(Double.parseDouble(req.getParameter("salario")));
@@ -41,6 +47,25 @@ public class ProfessorController extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/professores");
         } catch (Exception e) {
             System.out.println("Erro ao cadastrar professor: " + professor);
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private void delete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        try {
+            professorService.delete(UUID.fromString(req.getParameter("uuid")));
+
+            Map<String, String[]> params = req.getParameterMap();
+            if (params.containsKey("page") && params.containsKey("page-size")) {
+                resp.sendRedirect(String.format("/professores?page=%d&page-size=%d",
+                    Integer.parseInt(req.getParameter("page")),
+                    Integer.parseInt(req.getParameter("page-size")))
+                );
+                return;
+            }
+            resp.sendRedirect("/professores");
+        } catch (Exception e) {
             e.printStackTrace();
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
@@ -57,9 +82,17 @@ public class ProfessorController extends HttpServlet {
         if (req.getServletPath().equals("/professores/create")) {
             getCreationPage(req, resp);
         } else if (req.getServletPath().equals("/professores") && params.isEmpty()) {
-            getListPage(req, resp);
+            resp.sendRedirect("/professores?page=0&page-size=3");
+        } else if (req.getServletPath().equals("/professores/deleted") && params.isEmpty()) {
+            resp.sendRedirect("professores/deleted?page=0&page-size=3");
+        } else if (req.getServletPath().equals("/professores/deleted") && params.containsKey("page")
+            && params.containsKey("page-size") ) {
+            getDeletedList(req, resp);
         } else if (req.getServletPath().equals("/professores") && params.containsKey("uuid")) {
             getViewPage(req, resp);
+        } else if (req.getServletPath().equals("/professores") && params.containsKey("page")
+            && params.containsKey("page-size")) {
+            getPaginatedListPage(req, resp);
         } else {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
@@ -75,6 +108,25 @@ public class ProfessorController extends HttpServlet {
             e.printStackTrace();
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    private void getPaginatedListPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        int page = Integer.parseInt(req.getParameter("page"));
+        int pageSize = Integer.parseInt(req.getParameter("page-size"));
+        PageRequest pageRequest = new PageRequest(page, pageSize);
+
+        try {
+            PagedResult<Professor> professores = professorService.getAll(pageRequest);
+            req.setAttribute("professores", professores);
+            req.getRequestDispatcher("/professor/listar-professores.jsp").forward(req, resp);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     private void getCreationPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -105,6 +157,24 @@ public class ProfessorController extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         } catch (Exception e) {
             System.out.println("Erro ao obter página de criar professor");
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private void getDeletedList(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        int page = Integer.parseInt(req.getParameter("page"));
+        int pageSize = Integer.parseInt(req.getParameter("page-size"));
+        PageRequest pageRequest = new PageRequest(page, pageSize);
+
+        try {
+            PagedResult<Professor> professores = professorService.getAllDeleted(pageRequest);
+            req.setAttribute("professores", professores);
+            req.getRequestDispatcher("/professor/listar-professores-deletados.jsp").forward(req, resp);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        } catch (Exception e) {
             e.printStackTrace();
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }

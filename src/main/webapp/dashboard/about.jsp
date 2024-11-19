@@ -40,9 +40,10 @@
             <td scope="col">Autenticação</td>
         </tr>
       <tr>
-					<td scope="col">Melissa Rêgo Rodrigues</td>
+        <td scope="col">Melissa Rêgo Rodrigues</td>
         <td scope="col">Disciplina</td>
-        <td scope="col">Lógica de disciplina do curso</td>
+        <td scope="col">Lógica de disciplina do curso e função 4: o usúario pode visualizar uma lista de atividades pelo tempo (timeline)
+            seus e dos outros usuários que cadastraram alguma entidade e curtir a atividade, a atividade na timeline mostra a quantidade de curtidas</td>
         <tr>
             <td scope="col">Erick Vinícius Bezerra Martins</td>
             <td scope="col">Aluno</td>

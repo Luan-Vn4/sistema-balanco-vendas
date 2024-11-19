@@ -29,6 +29,7 @@
                 <li class="nav-item"><a class="nav-link" href="/cursos">Cursos</a></li>
                 <li class="nav-item"><a class="nav-link" href="/professores">Professores</a></li>
                 <li class="nav-item"><a class="nav-link" href="/timeline">Timeline</a></li>
+                <li class="nav-item"><a class="nav-link" href="/dashboard/seguindo">Seguindo</a></li>
                 <li class="nav-item"><a class="nav-link" href="/dashboard/about.jsp">About</a></li>
             </ul>
             <span class="navbar-text">

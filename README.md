@@ -108,12 +108,18 @@ Sistema busca fazer um gerenciamento das seguintes entidades: Professor, Aluno, 
 - pendencia da S2: - o usuario consegue ver as propriedades da entidade
 - por meio do endpoint install povoar o BD com 7 entidades de Cursos
 - o usuario pode visualizar por meio de paginaçao
+- atualizar o readme
 
 ---
 
+### Semana 4 - Ana
+- pendencia da S3: o user pode deletar ocultando e ver os ocultados pelo menu
+- atualizar about - task 3
+- atualizar o readme
+
 ### Semana 4 - Luan Vilaça Nogueira
 - [X] Preencher com a regra de negócio escolhida a página About, entre 2 e 5
-- [ ] O usuário pode trocar mensagens com outros usuários ao clicar em um botão de chat na 
+- [ ] O usuário pode trocar mensagens com outros usuários ao clicar em um botão de chat na
   listagem de usuários
 - [ ] Na tela de chat, ficam listadas todas as pessoas com as quais foi iniciada alguma conversa
 - [ ] Na tela de chat, as mensagens são diferenciadas pelo nome dos usuários

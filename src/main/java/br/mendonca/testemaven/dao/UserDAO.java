@@ -79,14 +79,15 @@ public class UserDAO {
 	}
 
 	// TODO: No testado
-	public List<User> search(String name) throws ClassNotFoundException, SQLException {
+	public List<User> searchByName(String name) throws ClassNotFoundException, SQLException {
 		ArrayList<User> lista = new ArrayList<User>();
 		
 		Connection conn = ConnectionPostgres.getConexao();
 		conn.setAutoCommit(true);
 
 		// Apesar de qualquer SQL funcionar com Statement, a abordagem de usar Prepared Statement evita SQL Injection.
-		PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE ? LIKE LOWER(?) || LOWER(name) || '%'");
+		PreparedStatement ps = conn.prepareStatement("SELECT * FROM users WHERE "+
+						"LOWER(name) LIKE ('%' || LOWER(?) || '%')");
 		ps.setString(1, name);
 		
 		ResultSet rs = ps.executeQuery();
@@ -97,6 +98,8 @@ public class UserDAO {
 			user.setName(rs.getString("name"));
 			user.setEmail(rs.getString("email"));
 			user.setPassword(rs.getString("password"));
+			user.setIdade(rs.getInt("idade"));
+			user.setStatus(rs.getBoolean("status"));
 			
 			lista.add(user);
 		}

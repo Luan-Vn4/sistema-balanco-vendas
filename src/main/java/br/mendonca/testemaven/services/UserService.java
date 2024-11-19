@@ -35,4 +35,17 @@ public class UserService {
 		
 		return resp;
 	}
+
+	public List<UserDTO> searchUsersByName(String name) throws ClassNotFoundException, SQLException {
+		ArrayList<UserDTO> resp = new ArrayList<>();
+
+		UserDAO dao = new UserDAO();
+		List<User> users = dao.searchByName(name);
+
+		for (User user : users) {
+			resp.add(UserDTO.userMapper(user));
+		}
+
+		return resp;
+	}
 }
